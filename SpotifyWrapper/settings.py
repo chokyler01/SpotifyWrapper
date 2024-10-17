@@ -12,6 +12,14 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
+# Spotify API Credentials (Replace these with your actual credentials from Spotify Developer Dashboard)
+SPOTIFY_CLIENT_ID = 'e1c53cf948ff4cddaa379b88861b2714'
+SPOTIFY_CLIENT_SECRET = '5d13bd1a4a1c41e193d7546b4b9585b6'
+SPOTIFY_REDIRECT_URI = 'http://127.0.0.1:8000/spotify/callback/'  # Update this as needed
+SPOTIFY_SCOPE = 'user-top-read'  # Scope for accessing user's top artists/tracks
+
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
