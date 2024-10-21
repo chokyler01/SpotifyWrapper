@@ -119,3 +119,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'view_wraps'
 LOGOUT_REDIRECT_URL = 'login'
+
+SPOTIFY_CLIENT_ID = 'e1c53cf948ff4cddaa379b88861b2714'
+SPOTIFY_REDIRECT_URI = 'http://127.0.0.1:8000/'

@@ -16,8 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from Wrapped import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('Wrapped.urls')),
+    path('spotify/login/', views.spotify_login, name='spotify_login'),
 ]
+
