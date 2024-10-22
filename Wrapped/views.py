@@ -71,3 +71,21 @@ def spotify_login(request):
     scopes = ['user-top-read', 'user-follow-read', 'user-read-recently-played', 'streaming']
     auth_url = f"{auth_endpoint}?{urlencode({'client_id': client_id, 'redirect_uri': redirect_uri, 'scope': ' '.join(scopes), 'response_type': 'token', 'show_dialog': 'true'})}"
     return redirect(auth_url)
+
+def wrapped_page(request):
+    access_token = API_request.get_token('access_token')
+
+    if not access_token:
+        return redirect('wrapped_page')  # Redirect to login if no token
+
+    # Fetch top artists and tracks using the correct access token
+    artist_names = get_top_artists(access_token)
+    top_tracks = get_top_tracks(access_token)
+
+    context = {
+        'total_minutes_played': total_minutes_played,
+        'artist_names': artist_names,
+        'top_tracks': top_tracks,
+    }
+
+    return render(request, 'wrapped_page.html', context)

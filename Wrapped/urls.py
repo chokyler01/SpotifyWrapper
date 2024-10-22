@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     path('', views.home_view, name='home'),  # Add this as the default home view
     path('register/', views.register_view, name='register'),
+    path('wrapped/', views.wrapped_page, name='wrapped_page'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('wraps/', views.view_wraps, name='view_wraps'),

@@ -50,3 +50,29 @@ def fetch_spotify_data(endpoint):
         return response.json()
     else:
         return {'error': f'Failed to fetch data: {response.status_code}'}
+
+
+def get_top_artists(access_token):
+    headers = {
+        'Authorization': f'Bearer {access_token}'
+    }
+    response = requests.get('https://api.spotify.com/v1/me/top/artists?limit=10', headers=headers)
+
+    if response.status_code == 200:
+        artists = response.json()['items']
+        artist_names = [artist['name'] for artist in artists]
+        return artist_names
+    else:
+        return {'error': 'Failed to fetch top artists'}
+
+
+def get_top_tracks(access_token):
+    headers = {
+        'Authorization': f'Bearer {access_token}'
+    }
+    response = requests.get('https://api.spotify.com/v1/me/top/tracks?limit=10', headers=headers)
+
+    if response.status_code == 200:
+        return response.json()['items']  # List of top tracks
+    else:
+        return {'error': 'Failed to fetch top tracks'}
