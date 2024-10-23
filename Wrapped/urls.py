@@ -10,4 +10,5 @@ urlpatterns = [
     path('wraps/', views.view_wraps, name='view_wraps'),
     path('wraps/delete/<int:wrap_id>/', views.delete_wrap, name='delete_wrap'),
     path('delete_account/', views.delete_account, name='delete_account'),
+    path('callback/', views.callback, name='callback'),
 ]

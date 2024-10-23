@@ -1,11 +1,40 @@
-<h2>Your Spotify Wraps</h2>
-<ul>
-    {% for wrap in wraps %}
-        <li>{{ wrap.created_at }} - <a href="{% url 'delete_wrap' wrap.id %}">Delete</a></li>
-    {% endfor %}
-</ul>
-<a href="{% url 'delete_account' %}">Delete Account</a>
-<form method="POST" action="{% url 'logout' %}">
-    {% csrf_token %}
-    <button type="submit">Logout</button>
-</form>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Spotify Wrapped</title>
+</head>
+<body>
+    <h1>Your Spotify Wrapped</h1>
+
+    <h2>Top Tracks</h2>
+    <ul>
+    {% if top_tracks %}
+        {% for track in top_tracks %}
+            <li>
+                <strong>{{ track.name }}</strong> by {{ track.artists.0.name }} <br>
+                <img src="{{ track.album.images.0.url }}" alt="Album cover" width="100px"><br>
+                <a href="{{ track.external_urls.spotify }}" target="_blank">Listen on Spotify</a>
+            </li>
+        {% endfor %}
+    {% else %}
+        <li>No top tracks available.</li>
+    {% endif %}
+    </ul>
+
+    <h2>Top Artists</h2>
+    <ul>
+    {% if top_artists %}
+        {% for artist in top_artists %}
+            <li>
+                <strong>{{ artist.name }}</strong><br>
+                <img src="{{ artist.images.0.url }}" alt="Artist image" width="100px"><br>
+                <a href="{{ artist.external_urls.spotify }}" target="_blank">View on Spotify</a>
+            </li>
+        {% endfor %}
+    {% else %}
+        <li>No top artists available.</li>
+    {% endif %}
+    </ul>
+
+</body>
+</html>
