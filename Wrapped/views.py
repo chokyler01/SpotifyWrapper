@@ -16,6 +16,7 @@ from django.conf import settings
 def home_view(request):
     return render(request, 'home.html')
 
+
 def register_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -59,25 +60,26 @@ def view_wraps(request):
     top_tracks_url = 'https://api.spotify.com/v1/me/top/tracks'
     top_artists_url = 'https://api.spotify.com/v1/me/top/artists'
 
-    # Fetch top tracks using the utility function
-    top_tracks_data = fetch_spotify_data(top_tracks_url)
+    # Fetch top tracks and top artists using the access token from the session
+    top_tracks_data = fetch_spotify_data(top_tracks_url, access_token)
+    top_artists_data = fetch_spotify_data(top_artists_url, access_token)
+
     if 'error' in top_tracks_data:
         top_tracks = None
     else:
-        top_tracks = top_tracks_data['items']
+        top_tracks = top_tracks_data.get('items', [])
 
-    # Fetch top artists using the utility function
-    top_artists_data = fetch_spotify_data(top_artists_url)
     if 'error' in top_artists_data:
         top_artists = None
     else:
-        top_artists = top_artists_data['items']
+        top_artists = top_artists_data.get('items', [])
 
     # Pass the data to the template
     return render(request, 'wraps.html', {
         'top_tracks': top_tracks,
         'top_artists': top_artists
     })
+
 
 @login_required
 def delete_wrap(request, wrap_id):
@@ -133,4 +135,5 @@ def callback(request):
 
         return redirect('view_wraps')
 
-    return redirect('home_view')
+
+
