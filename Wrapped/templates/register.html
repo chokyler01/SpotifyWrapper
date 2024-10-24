@@ -2,6 +2,6 @@
 <form method="POST">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Register</button>
+    <button type="submit">Register and Link Spotify</button>
 </form>
 <a href="{% url 'login' %}">Already have an account? Log in</a>
