@@ -7,6 +7,7 @@ import requests
 from .models import SpotifyWrap
 from django.conf import settings
 from .API_requests import fetch_spotify_data
+from django.http import HttpResponse
 
 def home_view(request):
     return render(request, 'home.html')
@@ -18,7 +19,7 @@ def register_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)  # Log the user in after registration
-            return redirect('spotify_link')  # Redirect to Spotify link after registration
+            return spotify_login(request)  # Redirect to Spotify authorization
     else:
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
@@ -36,10 +37,13 @@ def login_view(request):
     return render(request, 'login.html', {'form': form})
 
 def logout_view(request):
-    """Handle user logout."""
+    """Handle user logout and clear Spotify session data."""
     if request.method == 'POST':
+        # Clear Spotify session data if it exists
+        request.session.pop('access_token', None)
+        request.session.pop('refresh_token', None)
         logout(request)
-        return redirect('login')
+    return redirect('login')
 
 @login_required
 def view_wraps(request):
@@ -81,6 +85,7 @@ def delete_account(request):
         return redirect('register')
     return render(request, 'delete_account.html')
 
+
 def spotify_login(request):
     """Redirect user to Spotify for authentication."""
     auth_endpoint = "https://accounts.spotify.com/authorize"
@@ -88,8 +93,12 @@ def spotify_login(request):
     redirect_uri = settings.SPOTIFY_REDIRECT_URI
     scopes = ['user-top-read', 'user-follow-read', 'user-read-recently-played', 'streaming']
 
-    auth_url = f"{auth_endpoint}?{urlencode({'client_id': client_id, 'redirect_uri': redirect_uri, 'scope': ' '.join(scopes), 'response_type': 'code'})}"
+    # Add `show_dialog=true` to force re-authentication
+    auth_url = f"{auth_endpoint}?{urlencode({'client_id': client_id, 'redirect_uri': redirect_uri, 'scope': ' '.join(scopes), 'response_type': 'code', 'show_dialog': 'true'})}"
     return redirect(auth_url)
+
+import json  # Import json for pretty printing (optional)
+
 
 def callback(request):
     """Handle Spotify callback and store tokens."""
@@ -108,18 +117,50 @@ def callback(request):
             'client_secret': client_secret
         })
 
+        if response.status_code != 200:
+            print("Error obtaining access token: ", response.status_code)
+            print("Response Text: ", response.text)
+            return HttpResponse("An error occurred while retrieving the access token. Please try again.", status=500)
+
         token_data = response.json()
+
         access_token = token_data.get('access_token')
         refresh_token = token_data.get('refresh_token')
         expires_in = token_data.get('expires_in')
 
-        # Save tokens in the session (or store in the database if needed)
+        # Debugging: print token data
+        print("Access Token:", access_token)
+        print("Refresh Token:", refresh_token)
+
+        user_profile_url = 'https://api.spotify.com/v1/me'
+        profile_response = requests.get(user_profile_url, headers={
+            'Authorization': f'Bearer {access_token}'
+        })
+
+        # Debugging: print profile response status code and text
+        print("Profile Response Status Code:", profile_response.status_code)
+        print("Profile Response Text:", profile_response.text)
+
+        if profile_response.status_code != 200:
+            print("Error fetching user profile: ", profile_response.status_code)
+            print("Response Text: ", profile_response.text)
+            return HttpResponse("An error occurred while fetching user profile data. Please try again.", status=500)
+
+        profile_data = profile_response.json()
+        print("User Profile Data:", json.dumps(profile_data, indent=2))
+
+        if 'error' in token_data:
+            print("Error in token response:", token_data['error'])
+            return HttpResponse("An error occurred with the token data. Please try again.", status=500)
+
         request.session['access_token'] = access_token
         request.session['refresh_token'] = refresh_token
 
         return redirect('view_wraps')  # After linking, redirect to view wraps
 
-@login_required
+    return HttpResponse("No authorization code provided.", status=400)
+
+
 def spotify_link(request):
     """Redirect user to Spotify to link their account."""
     # Redirect to Spotify authentication
