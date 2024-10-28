@@ -48,26 +48,25 @@ def logout_view(request):
 @login_required
 def view_wraps(request):
     """View user's Spotify data after linking their account."""
-    try:
-        spotify_token = request.session.get('access_token')
-        if not spotify_token:
-            return redirect('spotify_link')
-    except SpotifyWrap.DoesNotExist:
-        return redirect('spotify_link')  # Redirect to Spotify link if account not linked
+    spotify_token = request.session.get('access_token')
+    if not spotify_token:
+        return redirect('spotify_link')
 
-    # Spotify API URLs for top tracks and top artists
+    # Spotify API URLs for top tracks
     top_tracks_url = 'https://api.spotify.com/v1/me/top/tracks'
-    top_artists_url = 'https://api.spotify.com/v1/me/top/artists'
 
-    # Fetch top tracks and top artists using the access token from the session
-    top_tracks_data = fetch_spotify_data(top_tracks_url, spotify_token)
-    top_artists_data = fetch_spotify_data(top_artists_url, spotify_token)
+    # Fetch top tracks data
+    top_tracks_data = fetch_spotify_data(top_tracks_url, spotify_token, params={'limit': 50})
 
-    # Handle error cases
-    top_tracks = top_tracks_data.get('items', []) if 'error' not in top_tracks_data else None
-    top_artists = top_artists_data.get('items', []) if 'error' not in top_artists_data else None
+    # Calculate total listening time in minutes
+    top_tracks = top_tracks_data.get('items', []) if 'error' not in top_tracks_data else []
+    total_duration_ms = sum(track['duration_ms'] for track in top_tracks)
+    total_minutes_listened = total_duration_ms / (1000 * 60)  # Convert ms to minutes
 
-    return render(request, 'wraps.html', {'top_tracks': top_tracks, 'top_artists': top_artists})
+    return render(request, 'wraps.html', {
+        'top_tracks': top_tracks,
+        'total_minutes_listened': total_minutes_listened
+    })
 
 @login_required
 def delete_wrap(request, wrap_id):
