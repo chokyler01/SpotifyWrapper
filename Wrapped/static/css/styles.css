@@ -1,0 +1,59 @@
+ /* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Background gradient */
+body {
+    background: linear-gradient(135deg, #2e2e2e, #4a4a4a);
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: white;
+}
+
+/* Container styling */
+.container {
+    text-align: center;
+}
+
+/* Heading styling */
+.container h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+/* Spotify logo styling */
+.spotify-logo {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 20px;
+}
+
+/* Button container */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Button styling */
+.button {
+    background-color: #1DB954;
+    color: black;
+    font-size: 1em;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.button:hover {
+    background-color: #17a34a;
+}
