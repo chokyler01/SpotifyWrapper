@@ -1,3 +1,23 @@
-<h1>Welcome to Wrapped!</h1>
-<p>This is the homepage.</p>
-<a href="{% url 'login' %}">Login</a> | <a href="{% url 'register' %}">Register</a>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Welcome to Spotify Wrapped</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Welcome to Spotify Wrapped!</h1>
+        <img src="{% static 'images/spotify_logo.png' %}" alt="Spotify Logo" class="spotify-logo">
+        <div class="button-container">
+            <a href="{% url 'login' %}" class="button">Login</a>
+            <a href="{% url 'register' %}" class="button">Register</a>
+        </div>
+    </div>
+</body>
+</html>
