@@ -1,7 +1,25 @@
-<h2>Login</h2>
+<!DOCTYPE html>
+<html lang="en">
+
+ <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Login</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+<div class="container">
+        <h1>Log in to Spotify Account</h1>
 <form method="POST">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Login</button>
+    <div class="button-container">
+        <button class = "button" type="submit">Login</button>
+    </div>
 </form>
 <a href="{% url 'register' %}">Don't have an account? Register here</a>
+</div>
+</body>
+
+</html>
