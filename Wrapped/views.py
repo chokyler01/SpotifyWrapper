@@ -52,20 +52,32 @@ def view_wraps(request):
     if not spotify_token:
         return redirect('spotify_link')
 
-    # Spotify API URLs for top tracks
+    # Spotify API URLs for top tracks and top artists (to deduce albums)
     top_tracks_url = 'https://api.spotify.com/v1/me/top/tracks'
+    top_artists_url = 'https://api.spotify.com/v1/me/top/artists'
 
     # Fetch top tracks data
     top_tracks_data = fetch_spotify_data(top_tracks_url, spotify_token, params={'limit': 50})
-
-    # Calculate total listening time in minutes
     top_tracks = top_tracks_data.get('items', []) if 'error' not in top_tracks_data else []
     total_duration_ms = sum(track['duration_ms'] for track in top_tracks)
-    total_minutes_listened = total_duration_ms / (1000 * 60)  # Convert ms to minutes
+    total_minutes_listened = total_duration_ms / (1000 * 60)
+
+    # Fetch top artists data to infer albums
+    top_artists_data = fetch_spotify_data(top_artists_url, spotify_token, params={'limit': 10})
+    top_artists = top_artists_data.get('items', []) if 'error' not in top_artists_data else []
+
+    # Deduce albums from top artists by fetching albums from each artist
+    top_albums = []
+    for artist in top_artists:
+        artist_albums_url = f'https://api.spotify.com/v1/artists/{artist["id"]}/albums'
+        albums_data = fetch_spotify_data(artist_albums_url, spotify_token, params={'limit': 4})  # Fetch 4 top albums
+        albums = albums_data.get('items', [])
+        top_albums.extend(albums)
 
     return render(request, 'wraps.html', {
         'top_tracks': top_tracks,
-        'total_minutes_listened': total_minutes_listened
+        'total_minutes_listened': total_minutes_listened,
+        'top_albums': top_albums,
     })
 
 @login_required
@@ -145,24 +157,4 @@ def callback(request):
             print("Response Text: ", profile_response.text)
             return HttpResponse("An error occurred while fetching user profile data. Please try again.", status=500)
 
-        profile_data = profile_response.json()
-        print("User Profile Data:", json.dumps(profile_data, indent=2))
-
-        if 'error' in token_data:
-            print("Error in token response:", token_data['error'])
-            return HttpResponse("An error occurred with the token data. Please try again.", status=500)
-
-        request.session['access_token'] = access_token
-        request.session['refresh_token'] = refresh_token
-
-        return redirect('view_wraps')  # After linking, redirect to view wraps
-
-    return HttpResponse("No authorization code provided.", status=400)
-
-
-def spotify_link(request):
-    """Redirect user to Spotify to link their account."""
-    # Redirect to Spotify authentication
-    return spotify_login(request)
-
-
+        profile_data = profile_response.json
