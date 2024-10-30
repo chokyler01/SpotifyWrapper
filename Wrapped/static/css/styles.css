@@ -57,3 +57,22 @@ body {
 .button:hover {
     background-color: #17a34a;
 }
+
+/* Contact Developers Button Styling */
+.contact-button {
+    background-color: #1DB954;
+    color: black;
+    font-size: 1em;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+    margin: 10px 0;
+}
+
+.contact-button:hover {
+    background-color: #17a34a;
+}

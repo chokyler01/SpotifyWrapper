@@ -9,6 +9,10 @@ from django.conf import settings
 from .API_requests import fetch_spotify_data
 from django.http import HttpResponse
 
+def contact_view(request):
+    """Display the Contact Developers page."""
+    return render(request, 'contact.html')
+
 def home_view(request):
     return render(request, 'home.html')
 
@@ -179,5 +183,3 @@ def spotify_link(request):
     """Redirect user to Spotify to link their account."""
     # Redirect to Spotify authentication
     return spotify_login(request)
-
-
