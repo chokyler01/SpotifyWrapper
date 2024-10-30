@@ -8,6 +8,7 @@ from .models import SpotifyWrap
 from django.conf import settings
 from .API_requests import fetch_spotify_data
 from django.http import HttpResponse
+from collections import Counter
 
 def home_view(request):
     return render(request, 'home.html')
@@ -45,7 +46,6 @@ def logout_view(request):
         logout(request)
     return redirect('login')
 
-@login_required
 def view_wraps(request):
     """View user's Spotify data after linking their account."""
     spotify_token = request.session.get('access_token')
@@ -64,9 +64,14 @@ def view_wraps(request):
     top_artists_data = fetch_spotify_data(top_artists_url, spotify_token, params={'limit': 10})
     top_artists = top_artists_data.get('items', []) if 'error' not in top_artists_data else []
 
-    # Calculate total listening time in minutes for top tracks
-    total_duration_ms = sum(track['duration_ms'] for track in top_tracks)
-    total_minutes_listened = total_duration_ms / (1000 * 60)  # Convert ms to minutes
+    # Aggregate genres from top artists
+    genres = []
+    for artist in top_artists:
+        genres.extend(artist.get('genres', []))
+
+    # Calculate top genres
+    genre_counts = Counter(genres)
+    top_genres = genre_counts.most_common(5)  # Get top 5 genres
 
     # Fetch top albums based on each top artist
     top_albums = []
@@ -80,7 +85,7 @@ def view_wraps(request):
         'top_tracks': top_tracks,
         'top_artists': top_artists,
         'top_albums': top_albums,
-        'total_minutes_listened': total_minutes_listened
+        'top_genres': top_genres  # Pass top genres to template
     })
 
 @login_required
