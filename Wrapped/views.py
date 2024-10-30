@@ -52,19 +52,34 @@ def view_wraps(request):
     if not spotify_token:
         return redirect('spotify_link')
 
-    # Spotify API URLs for top tracks
+    # Spotify API URLs for top tracks and top artists
     top_tracks_url = 'https://api.spotify.com/v1/me/top/tracks'
+    top_artists_url = 'https://api.spotify.com/v1/me/top/artists'
 
     # Fetch top tracks data
-    top_tracks_data = fetch_spotify_data(top_tracks_url, spotify_token, params={'limit': 50})
-
-    # Calculate total listening time in minutes
+    top_tracks_data = fetch_spotify_data(top_tracks_url, spotify_token, params={'limit': 10})
     top_tracks = top_tracks_data.get('items', []) if 'error' not in top_tracks_data else []
+
+    # Fetch top artists data
+    top_artists_data = fetch_spotify_data(top_artists_url, spotify_token, params={'limit': 10})
+    top_artists = top_artists_data.get('items', []) if 'error' not in top_artists_data else []
+
+    # Calculate total listening time in minutes for top tracks
     total_duration_ms = sum(track['duration_ms'] for track in top_tracks)
     total_minutes_listened = total_duration_ms / (1000 * 60)  # Convert ms to minutes
 
+    # Fetch top albums based on each top artist
+    top_albums = []
+    for artist in top_artists:
+        artist_albums_url = f'https://api.spotify.com/v1/artists/{artist["id"]}/albums'
+        albums_data = fetch_spotify_data(artist_albums_url, spotify_token, params={'limit': 3})
+        albums = albums_data.get('items', []) if 'error' not in albums_data else []
+        top_albums.extend(albums)
+
     return render(request, 'wraps.html', {
         'top_tracks': top_tracks,
+        'top_artists': top_artists,
+        'top_albums': top_albums,
         'total_minutes_listened': total_minutes_listened
     })
 

@@ -34,10 +34,23 @@
     {% else %}
         <li>No top artists available.</li>
     {% endif %}
-
-    <h3>Total Minutes Listened: {{ total_minutes_listened|floatformat:0 }}</h3>
-
     </ul>
 
+    <h2>Top Albums</h2>
+    <ul>
+    {% if top_albums %}
+        {% for album in top_albums %}
+            <li>
+                <strong>{{ album.name }}</strong> by {{ album.artists.0.name }} <br>
+                <img src="{{ album.images.0.url }}" alt="Album cover" width="100px"><br>
+                <a href="{{ album.external_urls.spotify }}" target="_blank">View on Spotify</a>
+            </li>
+        {% endfor %}
+    {% else %}
+        <li>No top albums available.</li>
+    {% endif %}
+    </ul>
+
+    <h3>Total Minutes Listened: {{ total_minutes_listened|floatformat:0 }}</h3>
 </body>
 </html>
