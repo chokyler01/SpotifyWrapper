@@ -50,47 +50,78 @@ def logout_view(request):
         logout(request)
     return redirect('login')
 
+
+
+
+
 def view_wraps(request):
-    """View user's Spotify data after linking their account."""
+    """Sequential view for user's Spotify data (top songs, top albums, top artists)."""
     spotify_token = request.session.get('access_token')
     if not spotify_token:
         return redirect('spotify_link')
 
-    # Spotify API URLs for top tracks and top artists
+    # Get the current step (default to 1, which shows top songs)
+    step = int(request.GET.get('step', 1))
+
+    # Spotify API URLs
     top_tracks_url = 'https://api.spotify.com/v1/me/top/tracks'
     top_artists_url = 'https://api.spotify.com/v1/me/top/artists'
 
-    # Fetch top tracks data
-    top_tracks_data = fetch_spotify_data(top_tracks_url, spotify_token, params={'limit': 10})
-    top_tracks = top_tracks_data.get('items', []) if 'error' not in top_tracks_data else []
+    top_tracks, top_artists, top_genres, top_albums = [], [], [], []
 
-    # Fetch top artists data
-    top_artists_data = fetch_spotify_data(top_artists_url, spotify_token, params={'limit': 10})
-    top_artists = top_artists_data.get('items', []) if 'error' not in top_artists_data else []
+    if step == 1:
+        # Fetch top tracks with album images
+        top_tracks_data = fetch_spotify_data(top_tracks_url, spotify_token, params={'limit': 10})
+        top_tracks = [
+            {
+                'name': track['name'],
+                'artists': track['artists'],
+                'album_name': track['album']['name'],
+                'image_url': track['album']['images'][0]['url'] if track['album']['images'] else None
+            }
+            for track in top_tracks_data.get('items', [])
+        ]
+    elif step == 2:
+        # Fetch top artists with images and genres
+        top_artists_data = fetch_spotify_data(top_artists_url, spotify_token, params={'limit': 10})
+        top_artists = [
+            {
+                'name': artist['name'],
+                'genres': artist.get('genres', []),
+                'image_url': artist['images'][0]['url'] if artist.get('images') else None
+            }
+            for artist in top_artists_data.get('items', [])
+        ]
 
-    # Aggregate genres from top artists
-    genres = []
-    for artist in top_artists:
-        genres.extend(artist.get('genres', []))
-
-    # Calculate top genres
-    genre_counts = Counter(genres)
-    top_genres = genre_counts.most_common(5)  # Get top 5 genres
-
-    # Fetch top albums based on each top artist
-    top_albums = []
-    for artist in top_artists:
-        artist_albums_url = f'https://api.spotify.com/v1/artists/{artist["id"]}/albums'
-        albums_data = fetch_spotify_data(artist_albums_url, spotify_token, params={'limit': 3})
-        albums = albums_data.get('items', []) if 'error' not in albums_data else []
-        top_albums.extend(albums)
+        # Aggregate genres from top artists
+        genres = [genre for artist in top_artists for genre in artist['genres']]
+        genre_counts = Counter(genres)
+        top_genres = genre_counts.most_common(5)
+    elif step == 3:
+        # Fetch top albums for each top artist
+        top_artists_data = fetch_spotify_data(top_artists_url, spotify_token, params={'limit': 10})
+        top_artists = top_artists_data.get('items', []) if 'error' not in top_artists_data else []
+        for artist in top_artists:
+            artist_albums_url = f'https://api.spotify.com/v1/artists/{artist["id"]}/albums'
+            albums_data = fetch_spotify_data(artist_albums_url, spotify_token, params={'limit': 3})
+            albums = [
+                {
+                    'name': album['name'],
+                    'artists': album['artists'],
+                    'image_url': album['images'][0]['url'] if album['images'] else None
+                }
+                for album in albums_data.get('items', [])
+            ]
+            top_albums.extend(albums)
 
     return render(request, 'wraps.html', {
+        'step': step,
         'top_tracks': top_tracks,
         'top_artists': top_artists,
-        'top_albums': top_albums,
-        'top_genres': top_genres  # Pass top genres to template
+        'top_genres': top_genres,
+        'top_albums': top_albums
     })
+
 
 @login_required
 def delete_wrap(request, wrap_id):

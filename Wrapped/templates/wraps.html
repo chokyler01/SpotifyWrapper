@@ -1,49 +1,56 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Your Spotify Wrapped</title>
-</head>
-<body>
-    <h1>Your Spotify Wrapped</h1>
+<h2>Your Spotify Wrapped</h2>
 
-    <h2>Top Genres</h2>
+{% if step == 1 %}
+    <h3>Top Songs</h3>
     <ul>
-    {% for genre, count in top_genres %}
-        <li>{{ genre }} ({{ count }} plays)</li>
-    {% endfor %}
+        {% for track in top_tracks %}
+            <li>
+                {% if track.image_url %}
+                    <img src="{{ track.image_url }}" alt="{{ track.name }}" width="50" height="50">
+                {% endif %}
+                {{ track.name }} by {{ track.artists.0.name }}
+            </li>
+        {% endfor %}
     </ul>
+    <a href="{% url 'view_wraps' %}?step=2">
+        <button>Next: Top Artists</button>
+    </a>
 
-    <h2>Top Tracks</h2>
+{% elif step == 2 %}
+    <h3>Top Artists</h3>
     <ul>
-    {% for track in top_tracks %}
-        <li>
-            <strong>{{ track.name }}</strong> by {{ track.artists.0.name }} <br>
-            <img src="{{ track.album.images.0.url }}" alt="Album cover" width="100px"><br>
-            <a href="{{ track.external_urls.spotify }}" target="_blank">Listen on Spotify</a>
-        </li>
-    {% endfor %}
+        {% for artist in top_artists %}
+            <li>
+                {% if artist.image_url %}
+                    <img src="{{ artist.image_url }}" alt="{{ artist.name }}" width="50" height="50">
+                {% endif %}
+                {{ artist.name }}
+            </li>
+        {% endfor %}
     </ul>
+    <h4>Top Genres</h4>
+    <ul>
+        {% for genre, count in top_genres %}
+            <li>{{ genre }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'view_wraps' %}?step=3">
+        <button>Next: Top Albums</button>
+    </a>
 
-    <h2>Top Artists</h2>
+{% elif step == 3 %}
+    <h3>Top Albums</h3>
     <ul>
-    {% for artist in top_artists %}
-        <li>
-            <strong>{{ artist.name }}</strong><br>
-            <img src="{{ artist.images.0.url }}" alt="Artist image" width="100px"><br>
-            <a href="{{ artist.external_urls.spotify }}" target="_blank">View on Spotify</a>
-        </li>
-    {% endfor %}
+        {% for album in top_albums %}
+            <li>
+                {% if album.image_url %}
+                    <img src="{{ album.image_url }}" alt="{{ album.name }}" width="50" height="50">
+                {% endif %}
+                {{ album.name }} by {{ album.artists.0.name }}
+            </li>
+        {% endfor %}
     </ul>
-
-    <h2>Top Albums</h2>
-    <ul>
-    {% for album in top_albums %}
-        <li>
-            <strong>{{ album.name }}</strong> by {{ album.artists.0.name }} <br>
-            <img src="{{ album.images.0.url }}" alt="Album cover" width="100px"><br>
-            <a href="{{ album.external_urls.spotify }}" target="_blank">View on Spotify</a>
-        </li>
-    {% endfor %}
-    </ul>
-</body>
-</html>
+    <a href="{% url 'view_wraps' %}?step=1">
+        <button>Back to Top Songs</button>
+    </a>
+{% endif %}
