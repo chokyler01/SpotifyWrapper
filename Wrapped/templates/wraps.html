@@ -1,5 +1,8 @@
 <h2>Your Spotify Wrapped</h2>
 
+<!-- Add this link in spotify_wrapper.html or your wrapper page template -->
+<a href="{% url 'profile' %}">View Profile</a>
+
 {% if step == 1 %}
     <h3>Top Songs</h3>
     <ul>

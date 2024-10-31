@@ -12,4 +12,5 @@ urlpatterns = [
     path('callback/', views.callback, name='callback'),
     path('spotify/link/', views.spotify_link, name='spotify_link'),  # Spotify link route
     path('contact/', views.contact_view, name='contact'),  # Contact Developers route
+    path('profile/', views.profile_view, name='profile'),
 ]

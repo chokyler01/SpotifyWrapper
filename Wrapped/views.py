@@ -10,6 +10,14 @@ from .API_requests import fetch_spotify_data
 from django.http import HttpResponse
 from collections import Counter
 
+@login_required
+def profile_view(request):
+    user = request.user  # Get the currently logged-in user
+    context = {
+        'user': user
+    }
+    return render(request, 'profile.html', context)
+
 def contact_view(request):
     """Display the Contact Developers page."""
     return render(request, 'contact.html')
