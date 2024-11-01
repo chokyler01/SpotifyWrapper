@@ -1,6 +1,6 @@
 <h2>Your Spotify Wrapped</h2>
 
-<!-- Add this link in spotify_wrapper.html or your wrapper page template -->
+<!-- Link to the user's profile -->
 <a href="{% url 'profile' %}">View Profile</a>
 
 {% if step == 1 %}
@@ -11,7 +11,10 @@
                 {% if track.image_url %}
                     <img src="{{ track.image_url }}" alt="{{ track.name }}" width="50" height="50">
                 {% endif %}
-                {{ track.name }} by {{ track.artists.0.name }}
+                <strong>{{ track.name }}</strong> by
+                {% for artist in track.artists %}
+                    {{ artist }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
             </li>
         {% endfor %}
     </ul>
@@ -27,14 +30,14 @@
                 {% if artist.image_url %}
                     <img src="{{ artist.image_url }}" alt="{{ artist.name }}" width="50" height="50">
                 {% endif %}
-                {{ artist.name }}
+                <strong>{{ artist.name }}</strong>
             </li>
         {% endfor %}
     </ul>
     <h4>Top Genres</h4>
     <ul>
         {% for genre, count in top_genres %}
-            <li>{{ genre }}</li>
+            <li>{{ genre }} ({{ count }})</li>
         {% endfor %}
     </ul>
     <a href="{% url 'view_wraps' %}?step=3">
@@ -49,7 +52,10 @@
                 {% if album.image_url %}
                     <img src="{{ album.image_url }}" alt="{{ album.name }}" width="50" height="50">
                 {% endif %}
-                {{ album.name }} by {{ album.artists.0.name }}
+                <strong>{{ album.name }}</strong> by
+                {% for artist in album.artists %}
+                    {{ artist.name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
             </li>
         {% endfor %}
     </ul>
@@ -57,3 +63,4 @@
         <button>Back to Top Songs</button>
     </a>
 {% endif %}
+

@@ -10,11 +10,16 @@ from .API_requests import fetch_spotify_data
 from django.http import HttpResponse
 from collections import Counter
 
-@login_required
+@login_required()
 def profile_view(request):
-    user = request.user  # Get the currently logged-in user
+    user = request.user
+    wraps = SpotifyWrap.objects.filter(user=user).order_by('-created_at')  # Get all wraps for the user
+    # Create a list of wraps with formatted dates
+    for wrap in wraps:
+        wrap.wrap_date = wrap.created_at.date()  # or whatever date logic you prefer
     context = {
-        'user': user
+        'user': user,
+        'wraps': wraps,
     }
     return render(request, 'profile.html', context)
 
@@ -59,7 +64,10 @@ def logout_view(request):
     return redirect('login')
 
 
-
+from django.shortcuts import render, redirect
+from .models import SpotifyWrap
+import json
+from collections import Counter
 
 
 def view_wraps(request):
@@ -75,20 +83,30 @@ def view_wraps(request):
     top_tracks_url = 'https://api.spotify.com/v1/me/top/tracks'
     top_artists_url = 'https://api.spotify.com/v1/me/top/artists'
 
+    # Initialize data variables
     top_tracks, top_artists, top_genres, top_albums = [], [], [], []
 
+    # Retrieve and save data based on the current step
     if step == 1:
         # Fetch top tracks with album images
         top_tracks_data = fetch_spotify_data(top_tracks_url, spotify_token, params={'limit': 10})
         top_tracks = [
             {
                 'name': track['name'],
-                'artists': track['artists'],
+                'artists': [artist['name'] for artist in track['artists']],
                 'album_name': track['album']['name'],
                 'image_url': track['album']['images'][0]['url'] if track['album']['images'] else None
             }
             for track in top_tracks_data.get('items', [])
         ]
+
+        # Save top tracks data to SpotifyWrap
+        wrap_data = {
+            'step': step,
+            'top_tracks': top_tracks,
+        }
+        SpotifyWrap.objects.create(user=request.user, wrap_data=json.dumps(wrap_data))
+
     elif step == 2:
         # Fetch top artists with images and genres
         top_artists_data = fetch_spotify_data(top_artists_url, spotify_token, params={'limit': 10})
@@ -105,6 +123,15 @@ def view_wraps(request):
         genres = [genre for artist in top_artists for genre in artist['genres']]
         genre_counts = Counter(genres)
         top_genres = genre_counts.most_common(5)
+
+        # Save top artists and genres data to SpotifyWrap
+        wrap_data = {
+            'step': step,
+            'top_artists': top_artists,
+            'top_genres': top_genres,
+        }
+        SpotifyWrap.objects.create(user=request.user, wrap_data=json.dumps(wrap_data))
+
     elif step == 3:
         # Fetch top albums for each top artist
         top_artists_data = fetch_spotify_data(top_artists_url, spotify_token, params={'limit': 10})
@@ -115,13 +142,21 @@ def view_wraps(request):
             albums = [
                 {
                     'name': album['name'],
-                    'artists': album['artists'],
+                    'artists': [artist['name'] for artist in album['artists']],
                     'image_url': album['images'][0]['url'] if album['images'] else None
                 }
                 for album in albums_data.get('items', [])
             ]
             top_albums.extend(albums)
 
+        # Save top albums data to SpotifyWrap
+        wrap_data = {
+            'step': step,
+            'top_albums': top_albums,
+        }
+        SpotifyWrap.objects.create(user=request.user, wrap_data=json.dumps(wrap_data))
+
+    # Render the wraps page with the collected data
     return render(request, 'wraps.html', {
         'step': step,
         'top_tracks': top_tracks,

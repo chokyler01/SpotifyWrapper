@@ -1,23 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Profile Page</title>
-</head>
-<body>
-    <h1>User Profile</h1>
+<h1>User Profile</h1>
+<p><strong>Username:</strong> {{ user.username }}</p>
+<p><strong>Email:</strong> {{ user.email }}</p>
 
-    <p><strong>Username:</strong> {{ user.username }}</p>
-    <p><strong>Email:</strong> {{ user.email }}</p>
-
-    <!-- Additional user information -->
-    <p><strong>First Name:</strong> {{ user.first_name }}</p>
-    <p><strong>Last Name:</strong> {{ user.last_name }}</p>
-
-    <a href="{% url 'view_wraps' %}">Back to Wrapper</a>
-    <form method="POST" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button type="submit">Logout</button>
-    </form>
-</body>
-</html>
+<h3>Your Spotify Wrapped Data:</h3>
+{% if wraps %}
+    <ul>
+        {% regroup wraps by wrap_date as grouped_wraps %}
+        {% for group in grouped_wraps %}
+            <li>
+                Wrap Date: {{ group.grouper }}  <!-- Directly display the wrap_date -->
+                <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}">
+                    <button>View Wrap Details</button>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No wraps saved yet.</p>
+{% endif %}
