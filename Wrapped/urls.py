@@ -7,10 +7,11 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('wraps/', views.view_wraps, name='view_wraps'),
-    path('wraps/delete/<int:wrap_id>/', views.delete_wrap, name='delete_wrap'),
+    #path('wraps/delete/<int:wrap_id>/', views.delete_wrap, name='delete_wrap'),
     path('delete_account/', views.delete_account, name='delete_account'),
     path('callback/', views.callback, name='callback'),
     path('spotify/link/', views.spotify_link, name='spotify_link'),  # Spotify link route
     path('contact/', views.contact_view, name='contact'),  # Contact Developers route
     path('profile/', views.profile_view, name='profile'),
+    path('choose_time/', views.choose_wrap_time, name='choose_wrap_time'),
 ]
