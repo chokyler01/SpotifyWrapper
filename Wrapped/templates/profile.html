@@ -1,20 +1,34 @@
-<h1>User Profile</h1>
-<p><strong>Username:</strong> {{ user.username }}</p>
-<p><strong>Email:</strong> {{ user.email }}</p>
+<h2>{{ user.username }}'s Spotify Wraps</h2>
 
-<h3>Your Spotify Wrapped Data:</h3>
-{% if wraps %}
-    <ul>
-        {% regroup wraps by wrap_date as grouped_wraps %}
-        {% for group in grouped_wraps %}
-            <li>
-                Wrap Date: {{ group.grouper }}  <!-- Directly display the wrap_date -->
-                <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}">
-                    <button>View Wrap Details</button>
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No wraps saved yet.</p>
-{% endif %}
+<h3>Short Term Wraps</h3>
+{% for wrap in short_term_wraps %}
+    <div>
+        <p>Date: {{ wrap.created_at.date }}</p>
+        <p>Wrap Data: {{ wrap.wrap_data }}</p>
+        <!-- Add any other wrap details here -->
+    </div>
+{% empty %}
+    <p>No short-term wraps available.</p>
+{% endfor %}
+
+<h3>Medium Term Wraps</h3>
+{% for wrap in medium_term_wraps %}
+    <div>
+        <p>Date: {{ wrap.created_at.date }}</p>
+        <p>Wrap Data: {{ wrap.wrap_data }}</p>
+        <!-- Add any other wrap details here -->
+    </div>
+{% empty %}
+    <p>No medium-term wraps available.</p>
+{% endfor %}
+
+<h3>Long Term Wraps</h3>
+{% for wrap in long_term_wraps %}
+    <div>
+        <p>Date: {{ wrap.created_at.date }}</p>
+        <p>Wrap Data: {{ wrap.wrap_data }}</p>
+        <!-- Add any other wrap details here -->
+    </div>
+{% empty %}
+    <p>No long-term wraps available.</p>
+{% endfor %}
