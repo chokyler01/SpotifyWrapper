@@ -1,31 +1,38 @@
- /* Basic reset */
+/* Basic reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Background gradient */
+/* Light Mode Background Gradient */
 body {
-    background: linear-gradient(135deg, #2e2e2e, #4a4a4a);
+    background: linear-gradient(135deg, #ffffff, #f0f0f0); /* Light mode background */
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    color: white;
+    color: #000000;  /* Default text color is black for light mode */
+    transition: background 0.3s, color 0.3s;  /* Smooth transition */
+}
+
+/* Dark Mode Background Gradient */
+body.dark-mode {
+    background: linear-gradient(135deg, #121212, #282828); /* Dark mode background */
+    color: #ffffff;  /* Text color changes to white in dark mode */
 }
 
 /* Container styling */
 .container {
     text-align: center;
-    color: black;
 }
 
 /* Heading styling */
 .container h1 {
     font-size: 2.5em;
     margin-bottom: 20px;
+    color: inherit; /* Adapts to light or dark mode */
 }
 
 /* Spotify logo styling */
@@ -45,13 +52,13 @@ body {
 /* Button styling */
 .button {
     background-color: #1DB954;
-    color: black;
+    color: #000000;
     font-size: 1em;
     padding: 10px 20px;
     text-align: center;
     border-radius: 20px;
     text-decoration: none;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;  /* Smooth transition */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
@@ -59,16 +66,26 @@ body {
     background-color: #17a34a;
 }
 
+/* Dark Mode Button Styling */
+body.dark-mode .button {
+    background-color: #1db954;
+    color: #000000;
+}
+
+body.dark-mode .button:hover {
+    background-color: #17a34a;
+}
+
 /* Contact Developers Button Styling */
 .contact-button {
     background-color: #1DB954;
-    color: black;
+    color: #000000;
     font-size: 1em;
     padding: 10px 20px;
     text-align: center;
     border-radius: 20px;
     text-decoration: none;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     display: inline-block;
     margin: 10px 0;
@@ -76,4 +93,40 @@ body {
 
 .contact-button:hover {
     background-color: #17a34a;
+}
+
+/* Dark Mode Contact Button Styling */
+body.dark-mode .contact-button {
+    background-color: #1db954;
+    color: #000000;
+}
+
+body.dark-mode .contact-button:hover {
+    background-color: #17a34a;
+}
+
+/* Dark Mode Toggle Button Styling */
+#dark-mode-toggle {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    background-color: #1DB954;
+    color: black;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+#dark-mode-toggle:hover {
+    background-color: #17a34a;
+}
+
+/* Dark Mode Styling for the Toggle Button */
+body.dark-mode #dark-mode-toggle {
+    background-color: #1db954;
+    color: #000000;
 }

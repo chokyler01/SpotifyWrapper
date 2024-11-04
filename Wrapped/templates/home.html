@@ -20,5 +20,10 @@
         </div>
         <a href="{% url 'contact' %}" class="contact-button">Contact Developers</a>
     </div>
+    <button id="dark-mode-toggle" class="button">Toggle Dark Mode</button>
+
+    {% block content %}{% endblock %}
+
+    <script src="{% static 'dark-mode-toggle.js' %}"></script>
 </body>
 </html>
