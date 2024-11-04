@@ -12,23 +12,29 @@
 
 <body>
 <div class="container">
-        <h1>Log in to Spotify Account</h1>
+    <h1 style="color: white">Log in to Spotify Account</h1>
 <form method="POST">
     {% csrf_token %}
-    <div class="mb-3">
-        {{ form.username.label_tag }}
-        {{ form.username|add_class:"form-control" }}
+    <div class="form-floating mb-3">
+        {{ form.username|add_class:"form-control"}}
+        <label for="{{ form.username.id_for_label }}" class="floating-label" style="color: #1BD760">Username</label>
     </div>
-    <div class="mb-3">
-        {{ form.password.label_tag }}
+    <div class="form-floating mb-3">
         {{ form.password|add_class:"form-control" }}
+        <label for="{{ form.password.id_for_label }}" class="floating-label" style="color: #1BD760">Password</label>
     </div>
     <div class="button-container">
-        <button class="btn btn-primary" type="submit">Login</button>
+        <button class="btn btn-primary" type="submit" >Login</button>
     </div>
 </form>
 <a href="{% url 'register' %}">Don't have an account? Register here</a>
 </div>
 </body>
-
+<style>
+    .form-control {
+        background-color: #000;
+        color: #fff;
+        border: 1px solid #333;
+    }
+</style>
 </html>
