@@ -10,20 +10,34 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 
-<body>
-<div class = "container">
-    <h1 style="font-weight: bold; font-size: 40px;">Register</h1>
+
+<body class="container d-flex flex-column align-items-center">
+<div>
+    <h1 style="font-weight: bold; font-size: 50px;">Create an Account</h1>
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
+{#        {{ form.as_p }}#}
+    <div class="form-floating mb-3">
+        <input type = "text", class ="form-control" id ="username_field", placeholder=" "/>
+        <label for="username_field" class="form-label" style = "color: #1DB954;">Username</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type = "text", class ="form-control" id ="password_field", placeholder=" "/>
+        <label for="password_field" class="form-label" style = "color: #1DB954;">Password</label>
+   </div>
+    <div class="form-floating mb-3">
+        <input type = "text", class ="form-control" id ="confirm_password_field", placeholder=" "/>
+        <label for="confirm_password_field" class="form-label" style = "color: #1DB954;">Confirm Password</label>
+        <br><a>Your password can’t be too similar to your other personal information. <br> Your password must contain at least 8 characters and cannot be entirely numeric. <br> Your password can’t be a commonly used password. </a>
+    </div>
         <button class = "button" type="submit">Register and Link Spotify</button>
     </form>
     <br>
     <a href="{% url 'login' %}" style = "color: #1DB954;">Already have an account? Log in</a>
 </div>
 <button id="dark-mode-toggle" class="button">Toggle Dark Mode</button>
+</body>
 
 {% block content %}{% endblock %}
 
 <script src="{% static 'dark-mode-toggle.js' %}"></script>
-</body>
