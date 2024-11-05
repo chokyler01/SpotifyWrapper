@@ -16,20 +16,32 @@
     <h1 style="font-weight: bold; font-size: 50px;">Create an Account</h1>
     <form method="POST">
         {% csrf_token %}
-{#        {{ form.as_p }}#}
-    <div class="form-floating mb-3">
-        <input type = "text", class ="form-control" id ="username_field", placeholder=" "/>
-        <label for="username_field" class="form-label" style = "color: #1DB954;">Username</label>
-    </div>
-    <div class="form-floating mb-3">
-        <input type = "text", class ="form-control" id ="password_field", placeholder=" "/>
-        <label for="password_field" class="form-label" style = "color: #1DB954;">Password</label>
-   </div>
-    <div class="form-floating mb-3">
-        <input type = "text", class ="form-control" id ="confirm_password_field", placeholder=" "/>
-        <label for="confirm_password_field" class="form-label" style = "color: #1DB954;">Confirm Password</label>
+        <div class="form-floating mb-3">
+            {{ form.username|add_class:"form-control" }}
+            <label class="form-label" style = "color: #1DB954;">Username</label>
+        </div>
+        <div class="form-floating mb-3">
+            {{ form.password1|add_class:"form-control"}}
+            <label class="form-label" style = "color: #1DB954;">Password</label>
+        </div>
+        <div class="form-floating mb-3">
+            {{ form.password2|add_class:"form-control"}}
+            <label class="form-label" style = "color: #1DB954;">Confirm Password</label>
+        </div>
+{#    <div class="form-floating mb-3">#}
+{#        <input type = "text", class ="form-control" id ="username_field", placeholder=" "/>#}
+{#        <label for="username_field" class="form-label" style = "color: #1DB954;">Username</label>#}
+{#    </div>#}
+{#    <div class="form-floating mb-3">#}
+{#        <input type = "text", class ="form-control" id ="password_field", placeholder=" "/>#}
+{#        <label for="password_field" class="form-label" style = "color: #1DB954;">Password</label>#}
+{#   </div>#}
+{#    <div class="form-floating mb-3">#}
+{#        <input type = "text", class ="form-control" id ="confirm_password_field", placeholder=" "/>#}
+{#        <label for="confirm_password_field" class="form-label" style = "color: #1DB954;">Confirm Password</label>#}
+        {#    </div>#}
         <br><a>Your password can’t be too similar to your other personal information. <br> Your password must contain at least 8 characters and cannot be entirely numeric. <br> Your password can’t be a commonly used password. </a>
-    </div>
+        <br><br>
         <button class = "button" type="submit">Register and Link Spotify</button>
     </form>
     <br>

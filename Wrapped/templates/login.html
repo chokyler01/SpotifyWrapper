@@ -16,15 +16,24 @@
     <br>
     <form method="POST">
         {% csrf_token %}
-    <div class="form-floating mb-3">
-        <input type = "text", class ="form-control" id ="username_field", placeholder = " "/>
-        <label for="username_field" class="form-label" style = "color: #1DB954;">Username</label>
-    </div>
-    <br>
-    <div class="form-floating mb-3">
-        <input type = "text", class ="form-control" id ="password_field", placeholder=" "/>
-        <label for="password_field" class="form-label" style = "color: #1DB954;">Password</label>
-    </div>
+        <div class="form-floating mb-3">
+            {{ form.username|add_class:"form-control" }}
+            <label class="form-label" style = "color: #1DB954;">Username</label>
+        </div>
+        <br>
+        <div class="form-floating mb-3">
+            {{ form.password|add_class:"form-control"}}
+            <label class="form-label" style = "color: #1DB954;">Password</label>
+        </div>
+{#    <div class="form-floating mb-3">#}
+{#        <input type = "text", class ="form-control" id ="username_field", placeholder = " "/>#}
+{#        <label for="username_field" class="form-label" style = "color: #1DB954;">Username</label>#}
+{#    </div>#}
+{#    <br>#}
+{#    <div class="form-floating mb-3">#}
+{#        <input type = "text", class ="form-control" id ="password_field", placeholder=" "/>#}
+{#        <label for="password_field" class="form-label" style = "color: #1DB954;">Password</label>#}
+{#    </div>#}
         <br>
         <button class="button" type="submit" >Login</button>
     </form>
