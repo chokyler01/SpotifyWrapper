@@ -14,24 +14,23 @@
 <div class="container">
     <h1 style="font-weight: bold; font-size: 50px;">Log in to Your <br> Spotify Wrapped Account</h1>
     <br>
-    <duv
     <form method="POST">
         {% csrf_token %}
-        <div class="form-floating mb-3">
-            <input type = "text", class ="form-control" id ="username_field", placeholder = " "/>
-            <label for="username_field" class="form-label" style = "color: #1DB954;">Username</label>
-            <br>
-        <div class="form-floating mb-3">
-            <input type = "text", class ="form-control" id ="password_field", placeholder=" "/>
-            <label for="password_field" class="form-label" style = "color: #1DB954;">Password</label>
-        </div>
-        <div class="button-container">
-            <button class="button" type="submit" >Login</button>
-        </div>
+    <div class="form-floating mb-3">
+        <input type = "text", class ="form-control" id ="username_field", placeholder = " "/>
+        <label for="username_field" class="form-label" style = "color: #1DB954;">Username</label>
+    </div>
+    <br>
+    <div class="form-floating mb-3">
+        <input type = "text", class ="form-control" id ="password_field", placeholder=" "/>
+        <label for="password_field" class="form-label" style = "color: #1DB954;">Password</label>
+    </div>
+        <button class="button" type="submit" >Login</button>
     </form>
 <br>
 <a href="{% url 'register' %}" style = "color: #1DB954;">Don't have an account? Register here</a>
 </div>
+
 <button id="dark-mode-toggle" class="button">Toggle Dark Mode</button>
 
 {% block content %}{% endblock %}
