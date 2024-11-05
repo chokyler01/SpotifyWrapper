@@ -31,10 +31,18 @@ body.dark-mode {
 /* Heading styling */
 .container h1 {
     font-size: 2.5em;
+    text-shadow: 1px 1px 2.5px;
     margin-bottom: 20px;
     color: inherit; /* Adapts to light or dark mode */
 }
-.form-control {
+body.dark-mode .form-control{
+    background-color: rgba(237, 237, 237, 0.25);
+    box-shadow: 0 4px 6px rgb(169, 169, 169, .3);
+    border-width: medium;
+    border-color: darkgrey;
+}
+
+.form-control{
     background-color: rgba(237, 237, 237, 0.25);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     border-width: medium;
@@ -118,11 +126,11 @@ body.dark-mode .contact-button:hover {
 #dark-mode-toggle {
     position: fixed;
     bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 10px 20px;
-    background-color: #1DB954;
-    color: black;
+    left: 2%;
+    padding: 6px 12px;
+    font-size: 80%;
+    background-color: darkgrey;
+    color: #ffffff;
     border: none;
     border-radius: 20px;
     cursor: pointer;
@@ -131,11 +139,12 @@ body.dark-mode .contact-button:hover {
 }
 
 #dark-mode-toggle:hover {
-    background-color: #17a34a;
+    background-color: darkgrey;
 }
 
 /* Dark Mode Styling for the Toggle Button */
 body.dark-mode #dark-mode-toggle {
-    background-color: #1db954;
-    color: #000000;
+    background-color: darkgrey;
+    color: #ffffff;
+    box-shadow: 0 4px 6px rgb(255, 255, 255, 0.2);
 }
