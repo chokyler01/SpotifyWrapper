@@ -3,6 +3,8 @@
 <!-- Link to the user's profile -->
 <a href="{% url 'profile' %}">View Profile</a>
 
+<h2>View Your Spotify Wrap</h2>
+
 {% if step == 1 %}
     <h3>Top Songs</h3>
     <ul>
@@ -18,7 +20,7 @@
             </li>
         {% endfor %}
     </ul>
-    <a href="{% url 'view_wraps' %}?step=2">
+    <a href="{% url 'view_wraps' %}?step=2&time_range={{ time_range }}">
         <button>Next: Top Artists</button>
     </a>
 
@@ -40,7 +42,7 @@
             <li>{{ genre }} ({{ count }})</li>
         {% endfor %}
     </ul>
-    <a href="{% url 'view_wraps' %}?step=3">
+    <a href="{% url 'view_wraps' %}?step=3&time_range={{ time_range }}">
         <button>Next: Top Albums</button>
     </a>
 
@@ -59,8 +61,7 @@
             </li>
         {% endfor %}
     </ul>
-    <a href="{% url 'view_wraps' %}?step=1">
+    <a href="{% url 'view_wraps' %}?step=1&time_range={{ time_range }}">
         <button>Back to Top Songs</button>
     </a>
 {% endif %}
-

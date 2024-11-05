@@ -29,6 +29,11 @@
 </form>
 <a href="{% url 'register' %}">Don't have an account? Register here</a>
 </div>
+<button id="dark-mode-toggle" class="button">Toggle Dark Mode</button>
+
+{% block content %}{% endblock %}
+
+<script src="{% static 'dark-mode-toggle.js' %}"></script>
 </body>
 <style>
     .form-control {

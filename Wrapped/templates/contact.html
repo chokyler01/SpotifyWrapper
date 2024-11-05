@@ -24,6 +24,11 @@
             <button type="submit" class="button">Submit</button>
         </form>
     </div>
+    <button id="dark-mode-toggle" class="button">Toggle Dark Mode</button>
+
+    {% block content %}{% endblock %}
+
+    <script src="{% static 'dark-mode-toggle.js' %}"></script>
 </body>
 
 </html>
