@@ -1,55 +1,52 @@
 <h2>{{ user.username }}'s Spotify Wraps</h2>
 
-<!-- Link to go back to the wrapped page -->
-<a href="{% url 'choose_wrap_time' %}"><button>Go Back to Wrapped Page</button></a>
-
 <h3>Short Term Wraps</h3>
 {% if short_term_wraps %}
-   <ul>
-       {% regroup short_term_wraps by created_at.date as grouped_short_term_wraps %}
-       {% for group in grouped_short_term_wraps %}
-           <li>
-               Wrap Date: {{ group.grouper }}
-               <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}">
-                   <button>View Wrap Details</button>
-               </a>
-           </li>
-       {% endfor %}
-   </ul>
+    <ul>
+        {% regroup short_term_wraps by created_at.date as grouped_short_term_wraps %}
+        {% for group in grouped_short_term_wraps %}
+            <li>
+                Wrap Date: {{ group.grouper }}
+                <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}">
+                    <button>View Wrap Details</button>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
 {% else %}
-   <p>No short-term wraps available.</p>
+    <p>No short-term wraps available.</p>
 {% endif %}
 
 <h3>Medium Term Wraps</h3>
 {% if medium_term_wraps %}
-   <ul>
-       {% regroup medium_term_wraps by created_at.date as grouped_medium_term_wraps %}
-       {% for group in grouped_medium_term_wraps %}
-           <li>
-               Wrap Date: {{ group.grouper }}
-               <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}">
-                   <button>View Wrap Details</button>
-               </a>
-           </li>
-       {% endfor %}
-   </ul>
+    <ul>
+        {% regroup medium_term_wraps by created_at.date as grouped_medium_term_wraps %}
+        {% for group in grouped_medium_term_wraps %}
+            <li>
+                Wrap Date: {{ group.grouper }}
+                <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}">
+                    <button>View Wrap Details</button>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
 {% else %}
-   <p>No medium-term wraps available.</p>
+    <p>No medium-term wraps available.</p>
 {% endif %}
 
 <h3>Long Term Wraps</h3>
 {% if long_term_wraps %}
-   <ul>
-       {% regroup long_term_wraps by created_at.date as grouped_long_term_wraps %}
-       {% for group in grouped_long_term_wraps %}
-           <li>
-               Wrap Date: {{ group.grouper }}
-               <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}">
-                   <button>View Wrap Details</button>
-               </a>
-           </li>
-       {% endfor %}
-   </ul>
+    <ul>
+        {% regroup long_term_wraps by created_at.date as grouped_long_term_wraps %}
+        {% for group in grouped_long_term_wraps %}
+            <li>
+                Wrap Date: {{ group.grouper }}
+                <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}">
+                    <button>View Wrap Details</button>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
 {% else %}
-   <p>No long-term wraps available.</p>
+    <p>No long-term wraps available.</p>
 {% endif %}
