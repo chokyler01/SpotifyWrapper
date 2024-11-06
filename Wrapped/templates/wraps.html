@@ -1,50 +1,72 @@
-<h2>Your Spotify Wrapped</h2>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Spotify Wrapped</title>
+    <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+{% if step == 1 %}
+<body class="top-songs-page">
 
 <!-- Link to the user's profile -->
 <a href="{% url 'profile' %}">View Profile</a>
 
-<h2>View Your Spotify Wrap</h2>
 
-{% if step == 1 %}
-    <h3>Top Songs</h3>
-    <ul>
+    <div class="topSongsTitle">
+        <h2 class="topSongs">Top Songs</h2>
+    </div>
+
+    <!-- Lowered and centered Top Songs chart container -->
+    <div class="chart_topSongs">
         {% for track in top_tracks %}
-            <li>
-                {% if track.image_url %}
-                    <img src="{{ track.image_url }}" alt="{{ track.name }}" width="50" height="50">
-                {% endif %}
-                <strong>{{ track.name }}</strong> by
-                {% for artist in track.artists %}
-                    {{ artist }}{% if not forloop.last %}, {% endif %}
-                {% endfor %}
-            </li>
+            <!-- Podium for each rank with varying heights based on rank -->
+            <div class="pillar_topSongs rank-{{ forloop.counter }}">
+                <div class="song-box_topSongs">
+                    {% if track.image_url %}
+                        <img src="{{ track.image_url }}" alt="{{ track.name }}">
+                    {% endif %}
+                    <div class="song-title_topSongs">{{ track.name }}</div>
+                    <div class="song-artist_topSongs">
+                        {% for artist in track.artists %}
+                            {{ artist }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="rank_topSongs">{{ forloop.counter }}</div>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
+
     <a href="{% url 'view_wraps' %}?step=2&time_range={{ time_range }}">
         <button>Next: Top Artists</button>
     </a>
+    </body>
 
 {% elif step == 2 %}
-    <h3>Top Artists</h3>
-    <ul>
+    <body class = "top-artist-page">
+    <div class="topArtistsTitle">
+        <h2 class="topArtists">Top Artists</h2>
+    </div>
+    <div class="chart_topArtists">
         {% for artist in top_artists %}
-            <li>
-                {% if artist.image_url %}
-                    <img src="{{ artist.image_url }}" alt="{{ artist.name }}" width="50" height="50">
-                {% endif %}
-                <strong>{{ artist.name }}</strong>
-            </li>
+            <div class="pillar_topArtists">
+                <div class="artist-box_topArtists">
+                    {% if artist.image_url %}
+                        <img src="{{ artist.image_url }}" alt="{{ artist.name }}">
+                    {% endif %}
+                    <div class="rank_topArtists">{{ forloop.counter }}</div>
+                </div>
+                <div class="artist-name_topArtists">{{ artist.name }}</div>
+            </div>
         {% endfor %}
-    </ul>
-    <h4>Top Genres</h4>
-    <ul>
-        {% for genre, count in top_genres %}
-            <li>{{ genre }} ({{ count }})</li>
-        {% endfor %}
-    </ul>
+    </div>
     <a href="{% url 'view_wraps' %}?step=3&time_range={{ time_range }}">
         <button>Next: Top Albums</button>
     </a>
+
 
 {% elif step == 3 %}
     <h3>Top Albums</h3>
@@ -61,7 +83,19 @@
             </li>
         {% endfor %}
     </ul>
+    <a href="{% url 'view_wraps' %}?step=4&time_range={{ time_range }}">
+        <button>Next: Top Genres</button>
+    </a>
+    {% elif step == 4 %}
+        <h4>Top Genres</h4>
+    <ul>
+        {% for genre, count in top_genres %}
+            <li>{{ genre }} ({{ count }})</li>
+        {% endfor %}
+    </ul>
     <a href="{% url 'view_wraps' %}?step=1&time_range={{ time_range }}">
         <button>Back to Top Songs</button>
     </a>
 {% endif %}
+</body>
+</html>
