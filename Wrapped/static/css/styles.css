@@ -12,7 +12,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     color: #000000;  /* Default text color is black for light mode */
     transition: background 0.3s, color 0.3s;  /* Smooth transition */
 }
