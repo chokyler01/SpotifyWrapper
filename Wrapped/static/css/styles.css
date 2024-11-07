@@ -146,3 +146,18 @@ body.dark-mode #dark-mode-toggle {
     color: #ffffff;
     box-shadow: 0 4px 6px rgb(255, 255, 255, 0.2);
 }
+
+.card{
+    width: 18rem;
+    text-align: center;
+    border-radius: 20px;
+    padding: -5rem 10rem 5rem 10rem;
+    background-color: rgba(237, 237, 237, 0.25);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    border-width: medium;
+    border-color: darkgrey;
+    color: inherit;
+}
+#length_title{
+    text-align: center;
+}
