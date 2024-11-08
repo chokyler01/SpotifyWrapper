@@ -188,6 +188,9 @@ def view_wraps(request):
             ]
             top_albums.extend(albums)
 
+        # Limit top_albums to the first 10 entries
+        top_albums = top_albums[:10]
+
         # Save or update wrap data with top albums
         wrap_data = {
             'step': step,

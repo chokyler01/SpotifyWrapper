@@ -12,6 +12,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
     color: #000000;  /* Default text color is black for light mode */
     transition: background 0.3s, color 0.3s;  /* Smooth transition */
 }
@@ -29,8 +30,7 @@ body.dark-mode {
 
 /* Heading styling */
 .container h1 {
-    font-size: 2.5em;
-    text-shadow: 1px 1px 2.5px;
+    font-size: 3em;
     margin-bottom: 20px;
     color: inherit; /* Adapts to light or dark mode */
 }
@@ -50,8 +50,8 @@ body.dark-mode .form-control{
 
 /* Spotify logo styling */
 .spotify-logo {
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
     margin-bottom: 20px;
 }
 
@@ -66,8 +66,8 @@ body.dark-mode .form-control{
 .button {
     background-color: #1DB954;
     color: #000000;
-    font-size: 1em;
-    font-weight: bold;
+    font-size: 1.5em;
+    font-weight: normal;
     padding: 10px 20px;
     text-align: center;
     border: none;
@@ -95,7 +95,7 @@ body.dark-mode .button:hover {
 .contact-button {
     background-color: #1DB954;
     color: #000000;
-    font-size: 1em;
+    font-size: 1.5em;
     padding: 10px 20px;
     text-align: center;
     border-radius: 20px;
@@ -160,4 +160,245 @@ body.dark-mode #dark-mode-toggle {
 }
 #length_title{
     text-align: center;
+}
+/* for wrapped top songs */
+body.top-songs-page {
+    background: rgba(211, 96, 96, 0.8); /* To avoid any other body backgrounds interfering */
+}
+/* General Page Styling */
+body.topSongs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: rgba(211, 96, 96, 0.8);
+    color: #ffffff;
+}
+
+/* Title Styling */
+h2.topSongs {
+    color: #ffffff;
+    font-size:70px;
+    position: absolute;
+    top: 75px; /* Adjust this value to control the vertical position */
+    left: 50%; /* Center the title horizontally */
+    transform: translateX(-50%); /* Center the title horizontally */
+    text-align: center;
+}
+h3.topSongs {
+    text-align: center;
+    margin-bottom: 20px; /* Add margin to create space below the title */
+}
+/*Top Songs Layout*/
+.topSongsTitle{
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+/* Chart Layout */
+.chart_topSongs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    align-items: flex-end; /* Align podiums to the bottom */
+    margin-top: 200px; /* Increase this value to lower the chart further */
+}
+
+/* Pillar Styling */
+.pillar_topSongs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: transparent; /* Remove background color */
+}
+
+/* Song Box Styling */
+.song-box_topSongs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 5px;
+    width: 100px;
+    margin-bottom: 10px;
+}
+
+/* Hide the grey background */
+.song-box_topSongs img {
+    border-radius: 8px;
+    width: 100px;
+    height: 80px;
+}
+
+/* Song Title and Artist Styling */
+.song-title_topSongs {
+    font-size: 12px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-top: 5px;
+}
+
+.song-artist_topSongs {
+    font-size: 10px;
+    color: #bbbbbb;
+}
+
+/* Rank Styling */
+.rank_topSongs {
+    width: 100px;
+    height: 40px; /* Reduce height to appear more like a base */
+    background-color: rgba(211, 96, 96, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: rgba(0, 0, 0, 0.5);
+    margin-top: auto; /* Push to the bottom of the pillar */
+}
+
+/* Highlight the middle pillar */
+.pillar.main .rank_topSongs {
+    height: 60px; /* Make the middle pillar a bit taller */
+}
+/* for top artist */
+body.top-artist-page {
+    background: lightskyblue; /* To avoid any other body backgrounds interfering */
+}
+body.topArtists {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: lightskyblue;
+    color: #ffffff;
+}
+h2.topArtists {
+    color: #ffffff;
+    font-size: 50px;
+    position: absolute;
+    top: 70px; /* Adjust this value to control the vertical position */
+    left: 50%; /* Center the title horizontally */
+    transform: translateX(-50%); /* Center the title horizontally */
+    text-align: center;
+}
+/* Top Artists Circle Layout */
+.chart_topArtists {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 200px;
+}
+
+.pillar_topArtists {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+}
+
+.artist-box_topArtists {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.artist-box_topArtists img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.rank_topArtists {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: transparent;
+    color: rgba(255,255,255,.9);
+    font-size: 40px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.artist-name_topArtists {
+    font-size: 18px;
+    font-weight: bolder;
+    color: #ffffff;
+    text-align: center;
+    margin-top: 5px;
+
+}
+/* Page background for top albums */
+body.top-albums-page {
+    background: linear-gradient(135deg, #ffd700, #ffa500);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+/* Title styling for top albums */
+.topAlbumsTitle h2 {
+    font-size: 50px;
+    color: #ffffff;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Container for the albums grid */
+.chart_topAlbums {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 columns */
+    gap: 20px;
+    margin-top: 30px;
+}
+
+/* Album box styling */
+.album-box {
+    background-color: transparent; /* Grey background */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    width: 120px;
+    height: 150px;
+    text-align: center;
+}
+
+/* Album image styling */
+.album-image img {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Album title styling */
+.album-title {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 5px;
+    color: #000000;
+}
+
+/* Album artist styling */
+.album-artist {
+    font-size: 12px;
+    color: #555555;
 }

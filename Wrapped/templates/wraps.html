@@ -48,7 +48,7 @@
 {% elif step == 2 %}
     <body class = "top-artist-page">
     <div class="topArtistsTitle">
-        <h2 class="topArtists">Top Artists</h2>
+        <h2 class="topSongs">Top Artists</h2>
     </div>
     <div class="chart_topArtists">
         {% for artist in top_artists %}
@@ -69,23 +69,35 @@
 
 
 {% elif step == 3 %}
-    <h3>Top Albums</h3>
-    <ul>
+<body class="top-albums-page">
+    <div class="topAlbumsTitle">
+        <h2>Your Top Albums</h2>
+    </div>
+
+    <div class="chart_topAlbums">
         {% for album in top_albums %}
-            <li>
-                {% if album.image_url %}
-                    <img src="{{ album.image_url }}" alt="{{ album.name }}" width="50" height="50">
-                {% endif %}
-                <strong>{{ album.name }}</strong> by
-                {% for artist in album.artists %}
-                    {{ artist.name }}{% if not forloop.last %}, {% endif %}
-                {% endfor %}
-            </li>
+            <div class="album-box">
+                <div class="album-image">
+                    {% if album.image_url %}
+                        <img src="{{ album.image_url }}" alt="{{ album.name }}">
+                    {% endif %}
+                </div>
+                <div class="album-info">
+                    <div class="album-title">{{ album.name }}</div>
+                    <div class="album-artist">
+                        {% for artist in album.artists %}
+                            {{ artist }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
+
     <a href="{% url 'view_wraps' %}?step=4&time_range={{ time_range }}">
         <button>Next: Top Genres</button>
     </a>
+</body>
     {% elif step == 4 %}
         <h4>Top Genres</h4>
     <ul>
