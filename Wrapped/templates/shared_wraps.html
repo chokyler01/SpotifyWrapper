@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Shared Wraps{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center">Shared Wraps</h2>
+    <div class="row">
+        {% if shared_wraps %}
+            {% for wrap in shared_wraps %}
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <div class="card wrap-card">
+                        <div class="card-body text-center">
+                            <h4 class="card-title">{{ wrap.user.username }}</h4>
+                            <p class="card-text">{{ wrap.created_at }}</p>
+                            <a href="{% url 'view_wraps' %}?wrap_id={{ wrap.id }}" class="btn btn-primary">View Wrap Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center">No shared wraps available.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

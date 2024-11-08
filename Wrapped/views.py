@@ -1,16 +1,43 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from urllib.parse import urlencode
 import requests
-from .models import SpotifyWrap
+from .models import SpotifyWrap, Friendship
+from .forms import AddFriendForm
+from django.contrib.auth.models import User
 from django.conf import settings
 from .API_requests import fetch_spotify_data
 from django.http import HttpResponse
 from collections import Counter
 
+@login_required
+def add_friend_view(request):
+    form = AddFriendForm()
+    if request.method == 'POST':
+        form = AddFriendForm(request.POST)
+        if form.is_valid():
+            friend_username = form.cleaned_data['friend_username']
+            friend = User.objects.get(username=friend_username)
+            Friendship.objects.get_or_create(user=request.user, friend=friend)
+            Friendship.objects.get_or_create(user=friend, friend=request.user)
+            return redirect('profile')
 
+    return render(request, 'add_friend.html', {'form': form})
+
+@login_required
+def update_wrap_visibility(request, wrap_id):
+    wrap = get_object_or_404(SpotifyWrap, id=wrap_id, user=request.user)
+    wrap.public = not wrap.public
+    wrap.save()
+    return redirect('profile')
+
+@login_required
+def view_shared_wraps(request):
+    friends = request.user.friendships.all().values_list('friend', flat=True)
+    shared_wraps = SpotifyWrap.objects.filter(user__in=friends, public=True)
+    return render(request, 'shared_wraps.html', {'shared_wraps': shared_wraps})
 
 def choose_wrap_time(request):
     """Allow user to select the time range for their Spotify Wrapped."""

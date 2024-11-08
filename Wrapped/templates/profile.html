@@ -1,86 +1,91 @@
-<html>
-<head>
-    {% load custom_tags%}
-    {% load static %}
-    <link href =" https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-..." crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
+{% extends "base.html" %}
+{% load custom_tags %}
+{% load static %}
 
-<div class = "container">
-<h2>{{ user.username }}'s Spotify Wraps</h2>
-    <div class= "row">
-        <h3 style = "font-weight: bold;">Short Term Wraps</h3>
+{% block title %}Profile - Spotify Wrapped{% endblock %}
+
+{% block content %}
+<div class="container my-4 profile-page">
+    <h2 class="text-center">{{ user.username }}'s Spotify Wraps</h2>
+
+    <!-- Add Friend Link -->
+    <div class="d-flex justify-content-end my-3">
+        <a href="{% url 'add_friend' %}" class="btn btn-success">Add Friend</a>
     </div>
-    <div class = "row" id = "length_title">
-        {% if short_term_wraps %}
-                {% regroup short_term_wraps by created_at.date as grouped_short_term_wraps %}
-                {% for group in grouped_short_term_wraps %}
-                    <div class="card">
-                        <div class="card-body">
-                        <h4 class="card-title" style = "font-weight: bold">{{ group.grouper }}</h4>
-                            <br>
-                        <img src="{% static 'images/spotify_logo.png' %}" class="card-img-top w-50" alt="...">
-                          <br> <br>
-                        <p class="card-text">Spotify Wrapped - 4 Weeks <br> Created on {{ group.grouper }}</p>
-                          <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}"> <button class="button" type = "submit">View Wrap Details</button></a>
-                      </div>
+
+    <!-- Wrap Sections: Short, Medium, Long -->
+    <div class="wrap-sections">
+        <!-- Short Term Wraps -->
+        <h3 class="mt-4">Short Term Wraps - Last 4 Weeks</h3>
+        <div class="row">
+            {% if short_term_wraps %}
+                {% for wrap in short_term_wraps %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="card wrap-card">
+                            <div class="card-body text-center">
+                                <h4 class="card-title">{{ wrap.created_at.date }}</h4>
+                                <img src="{% static 'images/spotify_logo.png' %}" class="card-img-top mx-auto d-block my-2" alt="Spotify Logo" style="width: 60px; height: 60px;">
+                                <p class="card-text">Spotify Wrapped - 4 Weeks <br> Created on {{ wrap.created_at.date }}</p>
+                                <a href="{% url 'view_wraps' %}?wrap_id={{ wrap.id }}" class="btn btn-primary mb-2">View Wrap Details</a>
+                                <a href="{% url 'toggle_visibility' wrap.id %}" class="btn btn-secondary">
+                                    {% if wrap.public %} Make Private {% else %} Make Public {% endif %}
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 {% endfor %}
-        {% else %}
-            <p>No short-term wraps available.</p>
-        {% endif %}
-    </div>
-    <div class = "row">
-        <h3 style = "font-weight: bold;">Medium Term Wraps</h3>
-    </div>
-    <div class = "row" id = "length_title">
-        {% if medium_term_wraps %}
-                {% regroup medium_term_wraps by created_at.date as grouped_medium_term_wraps %}
-                {% for group in grouped_medium_term_wraps %}
-                    <div class="card">
-                        <div class="card-body">
-                        <h4 class="card-title" style = "font-weight: bold">{{ group.grouper }}</h4>
-                            <br>
-                        <img src="{% static 'images/spotify_logo.png' %}" class="card-img-top w-50" alt="...">
-                          <br> <br>
-                        <p class="card-text">Spotify Wrapped - 6 Months <br> Created on {{ group.grouper }}</p>
-                          <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}"> <button class="button" type = "submit">View Wrap Details</button></a>
-                      </div>
+            {% else %}
+                <p class="text-center">No short-term wraps available.</p>
+            {% endif %}
+        </div>
+
+        <!-- Medium Term Wraps -->
+        <h3 class="mt-4">Medium Term Wraps - Last 6 Months</h3>
+        <div class="row">
+            {% if medium_term_wraps %}
+                {% for wrap in medium_term_wraps %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="card wrap-card">
+                            <div class="card-body text-center">
+                                <h4 class="card-title">{{ wrap.created_at.date }}</h4>
+                                <img src="{% static 'images/spotify_logo.png' %}" class="card-img-top mx-auto d-block my-2" alt="Spotify Logo" style="width: 60px; height: 60px;">
+                                <p class="card-text">Spotify Wrapped - 6 Months <br> Created on {{ wrap.created_at.date }}</p>
+                                <a href="{% url 'view_wraps' %}?wrap_id={{ wrap.id }}" class="btn btn-primary mb-2">View Wrap Details</a>
+                                <a href="{% url 'toggle_visibility' wrap.id %}" class="btn btn-secondary">
+                                    {% if wrap.public %} Make Private {% else %} Make Public {% endif %}
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 {% endfor %}
-        {% else %}
-            <p>No medium-term wraps available.</p>
-        {% endif %}
-    </div>
-    <div class = "row" id = "length_title">
-        <h3 style = "font-weight: bold;">Long Term Wraps</h3>
-    </div>
-    <div class = "row">
-        {% if long_term_wraps %}
-            <ul>
-                {% regroup long_term_wraps by created_at.date as grouped_long_term_wraps %}
-                {% for group in grouped_long_term_wraps %}
-                    <div class="card">
-                        <div class="card-body">
-                        <h4 class="card-title" style = "font-weight: bold">{{ group.grouper }}</h4>
-                            <br>
-                        <img src="{% static 'images/spotify_logo.png' %}" class="card-img-top w-50" alt="...">
-                          <br> <br>
-                        <p class="card-text">Spotify Wrapped - All Time <br> Created on {{ group.grouper }}</p>
-                          <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}"> <button class="button" type = "submit">View Wrap Details</button></a>
-                      </div>
+            {% else %}
+                <p class="text-center">No medium-term wraps available.</p>
+            {% endif %}
+        </div>
+
+        <!-- Long Term Wraps -->
+        <h3 class="mt-4">Long Term Wraps - All Time</h3>
+        <div class="row">
+            {% if long_term_wraps %}
+                {% for wrap in long_term_wraps %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="card wrap-card">
+                            <div class="card-body text-center">
+                                <h4 class="card-title">{{ wrap.created_at.date }}</h4>
+                                <img src="{% static 'images/spotify_logo.png' %}" class="card-img-top mx-auto d-block my-2" alt="Spotify Logo" style="width: 60px; height: 60px;">
+                                <p class="card-text">Spotify Wrapped - All Time <br> Created on {{ wrap.created_at.date }}</p>
+                                <a href="{% url 'view_wraps' %}?wrap_id={{ wrap.id }}" class="btn btn-primary mb-2">View Wrap Details</a>
+                                <a href="{% url 'toggle_visibility' wrap.id %}" class="btn btn-secondary">
+                                    {% if wrap.public %} Make Private {% else %} Make Public {% endif %}
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 {% endfor %}
-            </ul>
-        {% else %}
-            <p>No long-term wraps available.</p>
-        {% endif %}
+            {% else %}
+                <p class="text-center">No long-term wraps available.</p>
+            {% endif %}
+        </div>
     </div>
 </div>
-<button id="dark-mode-toggle" class="button">Toggle Dark Mode</button>
-
-{% block content %}{% endblock %}
-
-<script src="{% static 'dark-mode-toggle.js' %}"></script>
-
-</html>
+{% endblock %}

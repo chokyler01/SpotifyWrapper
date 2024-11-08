@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Add a Friend{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center">Add a Friend</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="post" class="p-4 border rounded">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-success w-100">Add Friend</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
