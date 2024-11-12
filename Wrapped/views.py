@@ -76,7 +76,7 @@ def register_view(request):
            user = form.save()
            Profile.objects.create(user=user)  # Create profile for new user
            login(request, user)  # Log in the user immediately after registration
-           return redirect('choose_wrap_time')  # Redirect to choose_wrap_time after login
+           return redirect('login_view')  # Redirect to choose_wrap_time after login
    else:
        form = UserCreationForm()
    return render(request, 'register.html', {'form': form})
@@ -89,7 +89,7 @@ def login_view(request):
        if form.is_valid():
            user = form.get_user()
            login(request, user)
-           return redirect('choose_wrap_time')
+           return redirect('spotify_login')
    else:
        form = AuthenticationForm()
    return render(request, 'login.html', {'form': form})
@@ -280,7 +280,7 @@ def delete_account(request):
 
 
 
-
+@login_required
 def spotify_login(request):
    """Redirect user to Spotify for authentication."""
    auth_endpoint = "https://accounts.spotify.com/authorize"
@@ -367,7 +367,7 @@ def callback(request):
        request.session['refresh_token'] = refresh_token
 
 
-       return redirect('view_wraps')  # After linking, redirect to view wraps
+       return redirect('choose_wrap_time')  # After linking, redirect to view wraps
 
 
    return HttpResponse("No authorization code provided.", status=400)
