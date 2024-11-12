@@ -169,6 +169,7 @@ def view_wraps(request):
        ]
 
 
+
        # Save or update wrap data with top tracks
        wrap_data = {
            'step': step,
@@ -236,6 +237,8 @@ def view_wraps(request):
            ]
            top_albums.extend(albums)
 
+       # Limit top_albums to the first 10 entries
+       top_albums = top_albums[:10]
 
        # Save or update wrap data with top albums
        wrap_data = {
@@ -250,7 +253,25 @@ def view_wraps(request):
        else:
            # Create new wrap for today
            wrap = SpotifyWrap.objects.create(user=request.user, wrap_data=json.dumps(wrap_data), time_range=time_range_param)
+   elif step == 4:
+       # Retrieve top genres if they were saved in step 2
+       if wrap and wrap.wrap_data:
+           wrap_data = json.loads(wrap.wrap_data)
+           top_genres = wrap_data.get('top_genres', [])
 
+       # If top_genres wasn't saved, calculate it again (in case user skipped directly to step 4)
+       if not top_genres:
+           top_artists_data = fetch_spotify_data(top_artists_url, spotify_token, params=params)
+           top_artists = [
+               {
+                   'name': artist['name'],
+                   'genres': artist.get('genres', [])
+               }
+               for artist in top_artists_data.get('items', [])
+           ]
+           genres = [genre for artist in top_artists for genre in artist['genres']]
+           genre_counts = Counter(genres)
+           top_genres = genre_counts.most_common(10)
 
    # Handle "Save to Profile" submission
    if request.method == 'POST' and 'save' in request.POST:
