@@ -77,42 +77,52 @@
 
 
 {% elif step == 3 %}
+<body class="top-albums-page">
+    <div class="topAlbumsTitle">
+        <h2>Your Top Albums</h2>
+    </div>
 
+<div class="chart_topAlbums">
+    {% for album in top_albums %}
+        <div class="album-box">
+            <!-- Ranking number overlay -->
+            <div class="album-rank">
+                {{ forloop.counter }}
+            </div>
+            <!-- Album image -->
+            <div class="album-image">
+                <img src="{{ album.image_url }}" alt="{{ album.name }}">
+            </div>
+            <!-- Album title and artist -->
+            <div class="album-title">{{ album.name }}</div>
+            <div class="album-artist">{{ album.artists|join:", " }}</div>
+        </div>
+    {% endfor %}
+</div>
+    <a href="{% url 'view_wraps' %}?step=4&time_range={{ time_range }}">
+        <button>Next: Top Genres</button>
+    </a>
+</body>
 
-   <h3>Top Albums</h3>
-   <ul>
-       {% for album in top_albums %}
-           <li>
-               {% if album.image_url %}
-                   <img src="{{ album.image_url }}" alt="{{ album.name }}" width="50" height="50">
-               {% endif %}
-               <strong>{{ album.name }}</strong> by
-               {% for artist in album.artists %}
-                   {{ artist.name }}{% if not forloop.last %}, {% endif %}
-               {% endfor %}
-           </li>
-       {% endfor %}
-   </ul>
-   <a href="{% url 'view_wraps' %}?step=4&time_range={{ time_range }}">
-       <button>Next: Top Genres</button>
-   </a>
-   {% elif step == 4 %}
-       <h4>Top Genres</h4>
-   <ul>
-       {% for genre, count in top_genres %}
-           <li>{{ genre }} ({{ count }})</li>
-       {% endfor %}
-   </ul>
+ {% elif step == 4 %}
+    <body class="top-genres-page">
+   <h4 class="topGenresTitle">Top Genres</h4>
 
+   <div class="genre-container">
+    {% for genre, count in top_genres %}
+    <div class="genre-box">
+        <div class="genre-rank">{{ forloop.counter }}</div>
+        <div class="genre-info">
+            <div class="genre-name">{{ genre }}</div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 
    <form method="post" action="{% url 'view_wraps' %}">
-   {% csrf_token %}
-   <!-- Display wrap content as per the step (top tracks, artists, albums) -->
-
-
-   <button type="submit" name="save">Save to Profile</button>
+       {% csrf_token %}
+       <button type="submit" name="save">Save to Profile</button>
    </form>
-
 
    <a href="{% url 'profile' %}">
        <button>Back to Profile</button>
