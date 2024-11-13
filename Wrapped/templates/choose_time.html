@@ -1,19 +1,28 @@
-<!-- choose_time.html -->
-<h2>Select Your Spotify Wrapped Time Range</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Time Range</title>
+</head>
+<body>
+    <h2>Select Your Spotify Wrapped Time Range</h2>
 
-
-<div>
-   <a href="{% url 'view_wraps' %}?step=1&time_range=short">
-       <button>Short Term (Last 4 Weeks)</button>
-   </a>
-</div>
-<div>
-   <a href="{% url 'view_wraps' %}?step=1&time_range=medium">
-       <button>Medium Term (Last 6 Months)</button>
-   </a>
-</div>
-<div>
-   <a href="{% url 'view_wraps' %}?step=1&time_range=long">
-       <button>Long Term (All Time)</button>
-   </a>
-</div>
+    <form method="POST" action="{% url 'choose_wrap_time' %}">
+        {% csrf_token %}
+        <div>
+            <input type="radio" id="short" name="time_range" value="short_term" required>
+            <label for="short">Short Term (Last 4 Weeks)</label>
+        </div>
+        <div>
+            <input type="radio" id="medium" name="time_range" value="medium_term">
+            <label for="medium">Medium Term (Last 6 Months)</label>
+        </div>
+        <div>
+            <input type="radio" id="long" name="time_range" value="long_term">
+            <label for="long">Long Term (All Time)</label>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

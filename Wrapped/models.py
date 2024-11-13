@@ -22,7 +22,6 @@ class SpotifyWrap(models.Model):
            ('medium_term', 'Medium Term'),
            ('long_term', 'Long Term')
        ],
-       default='medium_term'  # Set a default value here
    )
 
 

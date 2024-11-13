@@ -12,32 +12,30 @@ from collections import Counter
 
 
 
-
 def choose_wrap_time(request):
-   if request.method == 'POST':
-       # Get the selected time range from the form
-       time_range = request.POST.get('time_range')
+    if request.method == 'POST':
+        # Get the selected time range from the form
+        time_range = request.POST.get('time_range')
+        print("Selected Time Range:", time_range)  # Debugging
 
+        # Validate the selected time range
+        valid_time_ranges = ['short_term', 'medium_term', 'long_term']
+        if time_range not in valid_time_ranges:
+            time_range = 'medium_term'  # Fallback to 'medium_term' if invalid
 
-       # Create a new wrap for the user
-       wrap = SpotifyWrap.objects.create(
-           time_range=time_range,
-           user=request.user
-       )
+        # Create a new wrap for the user with the selected time range
+        wrap = SpotifyWrap.objects.create(
+            time_range=time_range,
+            user=request.user
+        )
 
+        # Save the wrap to the user's profile
+        save_wrap_to_profile(request.user, wrap)
 
-       # Save the wrap to the user's profile
-       save_wrap_to_profile(request.user, wrap)
+        # Redirect to the view wraps page with the selected time range
+        return redirect(f'/wraps/?time_range={time_range}')
 
-
-       # Redirect to the profile page or wherever you want the user to go
-       return redirect('view_wraps')  # Adjust as necessary
-
-
-   return render(request, 'choose_time.html')
-
-
-
+    return render(request, 'choose_time.html')
 
 @login_required
 def profile_view(request):
@@ -76,7 +74,7 @@ def register_view(request):
            user = form.save()
            Profile.objects.create(user=user)  # Create profile for new user
            login(request, user)  # Log in the user immediately after registration
-           return redirect('login_view')  # Redirect to choose_wrap_time after login
+           return redirect('login')  # Redirect to choose_wrap_time after login
    else:
        form = UserCreationForm()
    return render(request, 'register.html', {'form': form})
@@ -120,20 +118,23 @@ def view_wraps(request):
 
    # Get the current step (default to 1, which shows top songs)
    step = int(request.GET.get('step', 1))
-   time_range = request.GET.get('time_range', 'medium')  # Default to 'medium_term'
+   time_range = request.GET.get('time_range')
 
+   # Define the valid time ranges directly
+   valid_time_ranges = ['short_term', 'medium_term', 'long_term']
 
-   # Define the time range mapping for Spotify API
-   time_ranges = {
-       'short': 'short_term',  # Last 4 weeks
-       'medium': 'medium_term',  # Last 6 months
-       'long': 'long_term'  # Last 12 months
-   }
+   # Check if the time_range is valid; if not, redirect to choose_wrap_time
+   if time_range not in valid_time_ranges:
+       print("Invalid time_range, redirecting to choose_wrap_time.")
+       return redirect('choose_wrap_time')
 
+   # Use the selected time range directly
+   time_range_param = time_range
+   print(f"Time Range in view_wraps: {time_range_param}")
 
-   # Use the time_range parameter to determine the time range
-   time_range_param = time_ranges.get(time_range, 'medium_term')  # Default to 'medium_term' if invalid
-
+   # Your existing code to fetch data using time_range_param
+   # For example:
+   params = {'limit': 10, 'time_range': time_range_param}
 
    # Spotify API URLs
    top_tracks_url = 'https://api.spotify.com/v1/me/top/tracks'
@@ -151,12 +152,39 @@ def view_wraps(request):
 
    # Check if a wrap already exists for the user for this time range and today
    today_date = datetime.today().date()
-   wrap = SpotifyWrap.objects.filter(user=request.user, time_range=time_range_param, created_at__date=today_date).first()
+   # Check if any wrap already exists for the user for today
+   existing_wrap = SpotifyWrap.objects.filter(
+       user=request.user,
+       created_at__date=today_date,
+       time_range=time_range_param
+   ).first()
 
+   if existing_wrap:
+       # If a wrap exists, check if the time range matches the selected one
+       if existing_wrap.time_range != time_range_param:
+           # Create a new wrap for the selected time range
+           wrap = SpotifyWrap.objects.create(
+               user=request.user,
+               time_range=time_range_param,
+               wrap_data=json.dumps({})
+           )
+       else:
+           # Update the existing wrap
+           wrap = existing_wrap
+   else:
+       # No wrap exists, create a new one
+       wrap = SpotifyWrap.objects.create(
+           user=request.user,
+           time_range=time_range_param,
+           wrap_data=json.dumps({})
+       )
 
    # Retrieve and save data based on the current step
    if step == 1:
        # Fetch top tracks with album images
+       print(f"Requesting top tracks from URL: {top_tracks_url} with params: {params}")
+       #top_tracks_data = fetch_spotify_data(top_tracks_url, spotify_token, params=params)
+
        top_tracks_data = fetch_spotify_data(top_tracks_url, spotify_token, params=params)
        top_tracks = [
            {
