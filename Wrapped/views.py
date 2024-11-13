@@ -409,3 +409,6 @@ def save_wrap_to_profile(user, wrap):
    profile, created = Profile.objects.get_or_create(user=user)
    if not profile.spotify_wraps.filter(id=wrap.id).exists():
        profile.spotify_wraps.add(wrap)
+
+def transition_one(request):
+    return render(request, "transitions.html")

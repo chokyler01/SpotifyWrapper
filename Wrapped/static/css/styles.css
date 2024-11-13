@@ -416,6 +416,10 @@ body.top-albums-page {
     font-size: 12px;
     color: #555555;
 }
+
+body.transition-one{
+
+}
 /* Page background for top albums */
 body.top-genres-page {
     background: mediumpurple;

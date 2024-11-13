@@ -6,14 +6,14 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Your Spotify Wrapped</title>
    <!-- Link to the CSS file -->
-   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 {% if step == 1 %}
 <body class="top-songs-page">
 
 
 <!-- Link to the user's profile -->
-<a href="{% url 'profile' %}">View Profile</a>
+<a href="{% url 'profile' %}"></a>
 
 
 
@@ -44,12 +44,11 @@
        {% endfor %}
    </div>
 
-
    <a href="{% url 'view_wraps' %}?step=2&time_range={{ time_range }}">
        <button>Next: Top Artists</button>
    </a>
-   </body>
 
+   </body>
 
 {% elif step == 2 %}
    <body class = "top-artist-page">
