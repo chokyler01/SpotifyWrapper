@@ -9,8 +9,8 @@ from django.conf import settings
 from .API_requests import fetch_spotify_data
 from django.http import HttpResponse
 from collections import Counter
-
-
+from django.contrib import messages
+from django.core.mail import send_mail
 
 
 def choose_wrap_time(request):
@@ -59,9 +59,32 @@ def profile_view(request):
    return render(request, 'profile.html', context)
 
 
+
 def contact_view(request):
-   """Display the Contact Developers page."""
-   return render(request, 'contact.html')
+    """Display the Contact Developers page and handle form submission."""
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+
+        # Construct the email subject and message
+        subject = f"Message from {name} via Contact Form"
+        email_message = f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}"
+
+        # Send the email
+        send_mail(
+            subject,
+            email_message,
+            email,  # From email
+            ['chokyler01@gmail.com'],  # To email
+            fail_silently=False,
+        )
+
+        # Show a success message and redirect back to the contact page
+        messages.success(request, "Your message has been sent successfully!")
+        return redirect('contact')  # Adjust the redirect path if needed
+
+    return render(request, 'contact.html')
 
 
 def home_view(request):

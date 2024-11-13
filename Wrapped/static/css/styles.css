@@ -1,3 +1,83 @@
+/* Default Light Mode */
+:root {
+    --bg-color: #f9f9f9;
+    --text-color: #333;
+    --secondary-text-color: #555;
+    --button-bg-color: #007bff;
+    --button-text-color: #fff;
+    --button-hover-bg-color: #0056b3;
+    --dark-mode-toggle-bg: #333;
+    --dark-mode-toggle-hover-bg: #555;
+}
+
+/* Dark Mode */
+.contact-page.dark-mode {
+    --bg-color: #333;
+    --text-color: #f9f9f9;
+    --secondary-text-color: #ddd;
+    --button-bg-color: #555;
+    --button-text-color: #f9f9f9;
+    --button-hover-bg-color: #777;
+    --dark-mode-toggle-bg: #ddd;
+    --dark-mode-toggle-hover-bg: #bbb;
+}
+
+/* Apply Colors to Contact Page Elements */
+.contact-page .container {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contact-page h1 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: var(--text-color);
+}
+
+.contact-page p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    line-height: 1.5;
+    color: var(--secondary-text-color);
+}
+
+/* Button Styling */
+.contact-page .button {
+    display: inline-block;
+    padding: 12px 20px;
+    font-size: 1rem;
+    color: var(--button-text-color);
+    background-color: var(--button-bg-color);
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.contact-page .button:hover {
+    background-color: var(--button-hover-bg-color);
+}
+
+/* Dark Mode Toggle Button */
+.contact-page #dark-mode-toggle {
+    margin-top: 20px;
+    background-color: var(--dark-mode-toggle-bg);
+    color: var(--button-text-color);
+}
+
+.contact-page #dark-mode-toggle:hover {
+    background-color: var(--dark-mode-toggle-hover-bg);
+}
+
 /* Basic reset */
 * {
     margin: 0;
