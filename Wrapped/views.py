@@ -9,6 +9,9 @@ from django.conf import settings
 from .API_requests import fetch_spotify_data
 from django.http import HttpResponse
 from collections import Counter
+# Ignore Python compiled files
+__pycache__/
+*.pyc
 
 
 

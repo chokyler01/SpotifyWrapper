@@ -1,5 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
+# Ignore Python compiled files
+__pycache__/
+*.pyc
 
 
 class Profile(models.Model):
