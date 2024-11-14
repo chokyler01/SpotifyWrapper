@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
@@ -534,3 +534,36 @@ def save_wrap_to_profile(user, wrap, time_range):
    # Check if a wrap with the same time range exists in the user's profile
    if not profile.spotify_wraps.filter(id=wrap.id, time_range=time_range).exists():
        profile.spotify_wraps.add(wrap)
+
+
+def view_old_wrap(request, wrap_id):
+   """View for displaying details of a specific wrap based on wrap_id."""
+
+
+   # Retrieve the wrap object by wrap_id (ensure it's the current user)
+   wrap = get_object_or_404(SpotifyWrap, id=wrap_id, user=request.user)
+
+
+   # Load the wrap data from the database (assuming it's stored as JSON)
+   wrap_data = json.loads(wrap.wrap_data)
+
+
+   # Extract the necessary data from wrap_data
+   step = wrap_data.get('step')
+   time_range = wrap_data.get('time_range')
+   top_tracks = wrap_data.get('top_tracks', [])
+   top_artists = wrap_data.get('top_artists', [])
+   top_genres = wrap_data.get('top_genres', [])
+   top_albums = wrap_data.get('top_albums', [])
+
+
+   # Render the wrap details in a template
+   return render(request, 'view_old_wrap.html', {
+       'wrap_id': wrap.id,
+       'step': step,
+       'time_range': time_range,
+       'top_tracks': top_tracks,
+       'top_artists': top_artists,
+       'top_genres': top_genres,
+       'top_albums': top_albums,
+   })
