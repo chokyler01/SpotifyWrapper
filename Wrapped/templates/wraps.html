@@ -47,15 +47,23 @@
            </div>
        {% endfor %}
    </div>
-
-
-   <a href="{% url 'view_wraps' %}?step=2&time_range={{ time_range }}">
+   <a href="{% url 'view_wraps' %}?step=2">
        <button class="next-button">Next: Top Artists </button>
    </a>
    </body>
 
-
 {% elif step == 2 %}
+    <body class="transition-page", id="transition-one">
+        <h2>TRANSITION ONE</h2>
+           <a href="{% url 'view_wraps' %}?step=3&time_range={{ time_range }}">
+           <button class="next-button">Next: Top Artist</button>
+       </a>
+        <a href="{% url 'view_wraps' %}?step=1&time_range={{ time_range }}">
+           <button class="back-button">Back: Top Songs</button>
+       </a>
+    </body>
+
+{% elif step == 3 %}
    <body class = "top-artist-page">
    <div class="topArtistsTitle">
        <h2 class="topArtists">Top Artists</h2>
@@ -76,17 +84,27 @@
            </div>
        {% endfor %}
    </div>
-   <a href="{% url 'view_wraps' %}?step=3&time_range={{ time_range }}">
+   <a href="{% url 'view_wraps' %}?step=4">
        <button class="next-button">Next: Top Albums</button>
    </a>
     <a href="{% url 'view_wraps' %}?step=1&time_range={{ time_range }}">
        <button class="back-button">Back: Top Songs</button>
    </a>
 
+{% elif step == 4 %}
+    <body class="transition-page", id="transition-two">
+        <h2>TRANSITION TWO</h2>
+           <a href="{% url 'view_wraps' %}?step=5&time_range={{ time_range }}">
+           <button class="next-button">Next: Top Albums</button>
+       </a>
+        <a href="{% url 'view_wraps' %}?step=3&time_range={{ time_range }}">
+           <button class="back-button">Back: Top Artists</button>
+       </a>
+    </body>
 
 
 
-{% elif step == 3 %}
+{% elif step == 5 %}
 <body class="top-albums-page">
     <div class="topAlbumsTitle">
         <h2>Your Top Albums</h2>
@@ -111,15 +129,26 @@
         </div>
     {% endfor %}
 </div>
-    <a href="{% url 'view_wraps' %}?step=4&time_range={{ time_range }}">
+    <a href="{% url 'view_wraps' %}?step=6">
         <button class="next-button">Next: Top Genres</button>
     </a>
-<a href="{% url 'view_wraps' %}?step=2&time_range={{ time_range }}">
+<a href="{% url 'view_wraps' %}?step=3&time_range={{ time_range }}">
        <button class="back-button">Back: Top Artists</button>
    </a>
 </body>
 
- {% elif step == 4 %}
+{% elif step == 6 %}
+    <body class="transition-page", id="transition-three">
+        <h2>TRANSITION THREE</h2>
+           <a href="{% url 'view_wraps' %}?step=7&time_range={{ time_range }}">
+           <button class="next-button">Next: Top Genres</button>
+       </a>
+        <a href="{% url 'view_wraps' %}?step=3&time_range={{ time_range }}">
+           <button class="back-button">Back: Top Artists</button>
+       </a>
+    </body>
+
+ {% elif step == 7 %}
     <body class="top-genres-page">
    <h4 class="topGenresTitle">Top Genres</h4>
 <a href="{% url 'profile' %}" class="profile-icon" aria-label="View Profile">
