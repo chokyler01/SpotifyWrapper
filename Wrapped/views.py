@@ -251,7 +251,7 @@ def view_wraps(request):
 
 
 
-  elif step == 2:
+  elif step == 3:
       # Fetch top artists with images and genres
       top_artists_data = fetch_spotify_data(top_artists_url, spotify_token, params=params)
       top_artists = [
@@ -292,7 +292,7 @@ def view_wraps(request):
 
 
 
-  elif step == 3:
+  elif step == 5:
       # Fetch top albums for each top artist
       top_artists_data = fetch_spotify_data(top_artists_url, spotify_token, params=params)
       top_artists = top_artists_data.get('items', []) if 'error' not in top_artists_data else []
@@ -327,7 +327,7 @@ def view_wraps(request):
       else:
           # Create new wrap for today
           wrap = SpotifyWrap.objects.create(user=request.user, wrap_data=json.dumps(wrap_data), time_range=time_range_param)
-  elif step == 4:
+  elif step == 7:
       # Retrieve top genres if they were saved in step 2
       if wrap and wrap.wrap_data:
           wrap_data = json.loads(wrap.wrap_data)
