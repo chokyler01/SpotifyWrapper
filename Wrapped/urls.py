@@ -14,4 +14,6 @@ urlpatterns = [
     path('contact/', views.contact_view, name='contact'),  # Contact Developers route
     path('profile/', views.profile_view, name='profile'),
     path('choose_time/', views.choose_wrap_time, name='choose_wrap_time'),
+    path('view_old_wrap/<int:wrap_id>/', views.view_old_wrap, name='view_old_wrap'),
+
 ]
