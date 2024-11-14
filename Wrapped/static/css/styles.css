@@ -161,9 +161,90 @@ body.dark-mode #dark-mode-toggle {
 #length_title{
     text-align: center;
 }
+.profile-icon {
+    position: absolute;
+    top: 10px; /* Position at the top left corner */
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #17a34a; /* Dark background color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+.profile-icon .bi-person {
+    font-size: 24px; /* Adjust size as needed */
+    color: black; /* White color for contrast */
+}
+
+/* Optional: Add a hover effect */
+.profile-icon:hover {
+    background-color: #555; /* Slightly lighter on hover */
+}
+.next-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #1DB954, black); /*gradient */
+    color: #ffffff;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Add shadow for depth */
+    width: 150px; /* Consistent width for all buttons */
+    height: 50px; /* Consistent height for all buttons */
+    text-align: center;
+
+}
+.next-button:hover {
+    background: linear-gradient(135deg, black, #1DB954); /* Reverse the gradient */
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.next-button:active {
+    background: linear-gradient(135deg, #17a34a, black); /* Slightly darker */
+    transform: scale(0.98); /* Pressed effect */
+}
+.back-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: linear-gradient(135deg, #1DB954, black); /*gradient */
+    color: #ffffff;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Add shadow for depth */
+    width: 150px; /* Consistent width for all buttons */
+    height: 50px; /* Consistent height for all buttons */
+    text-align: center;
+
+}
+.back-button:hover {
+    background: linear-gradient(135deg, black, #1DB954); /* Reverse the gradient */
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.back-button:active {
+    background: linear-gradient(135deg, #17a34a, black); /* Slightly darker */
+    transform: scale(0.98); /* Pressed effect */
+}
+
 /* for wrapped top songs */
 body.top-songs-page {
-    background: rgba(211, 96, 96, 0.8); /* To avoid any other body backgrounds interfering */
+    background: linear-gradient(rgba(251, 136,136, 0.8),rgba(211, 96, 96, 0.8)); /* To avoid any other body backgrounds interfering */
 }
 /* General Page Styling */
 body.topSongs {
@@ -242,7 +323,7 @@ h3.topSongs {
 
 .song-artist_topSongs {
     font-size: 10px;
-    color: #bbbbbb;
+    color: #dddddd;
 }
 
 /* Rank Styling */
@@ -264,7 +345,7 @@ h3.topSongs {
 }
 /* for top artist */
 body.top-artist-page {
-    background: lightskyblue; /* To avoid any other body backgrounds interfering */
+    background: radial-gradient(lightskyblue,slategray); /* To avoid any other body backgrounds interfering */
 }
 body.topArtists {
     display: flex;
@@ -330,6 +411,7 @@ h2.topArtists {
     display: flex;
     align-items: center;
     justify-content: center;
+    text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.9); /* Add shadow for better readability */
 
 }
 
@@ -369,13 +451,13 @@ body.top-albums-page {
 /* Overlay for album ranking number */
 .album-rank {
     position: absolute;
-    top: 45%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%); /* Center the rank */
     font-size: 30px;
     font-weight: bold;
     color: #ffffff;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8); /* Add shadow for better readability */
+    text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.9); /* Add shadow for better readability */
     z-index: 1; /* Ensure it stays on top of the image */
 }
 
@@ -388,7 +470,7 @@ body.top-albums-page {
     padding: 10px;
     border-radius: 8px;
     width: 120px;
-    height: 150px;
+    height: auto; /* Adjust to fit content properly */
     text-align: center;
     position: relative; /* Position relative for overlay effect */
 }
@@ -408,7 +490,13 @@ body.top-albums-page {
     font-size: 14px;
     font-weight: bold;
     margin-top: 5px;
-    color: #000000;
+    color: white;
+    width: 100%;  /* Ensure the width is consistent */
+    white-space: nowrap; /* Prevents text from wrapping to the next line */
+    overflow: hidden; /* Hides overflow content */
+    text-overflow: ellipsis; /* Adds '...' to indicate overflow */
+    line-height: normal; /* Adjust this to ensure full text is visible */
+    display: inline-block; /* Helps maintain alignment */
 }
 
 /* Album artist styling */
@@ -418,7 +506,7 @@ body.top-albums-page {
 }
 /* Page background for top albums */
 body.top-genres-page {
-    background: mediumpurple;
+    background: radial-gradient(lightpink,mediumpurple);
     color: #ffffff;
     display: flex;
     align-items: center;
