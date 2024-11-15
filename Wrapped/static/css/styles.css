@@ -243,19 +243,21 @@ body.dark-mode #dark-mode-toggle {
 }
 .profile-icon {
     position: absolute;
-    top: 10px; /* Position at the top left corner */
-    right: 10px;
-    width: 40px;
-    height: 40px;
+    top: 1em; /* Position at the top left corner */
+    right: 2em;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     background-color: #17a34a; /* Dark background color */
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4)
+
 }
 .profile-icon .bi-person {
-    font-size: 24px; /* Adjust size as needed */
+    font-size: 30px; /* Adjust size as needed */
     color: black; /* White color for contrast */
 }
 
@@ -269,16 +271,15 @@ body.dark-mode #dark-mode-toggle {
     right: 20px;
     background: linear-gradient(135deg, #1DB954, black); /*gradient */
     color: white;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
+    padding: 5.5px 5.5px;
+    font-size: 14px;
     border: none;
     border-radius: 25px;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Add shadow for depth */
-    width: 150px; /* Consistent width for all buttons */
-    height: 50px; /* Consistent height for all buttons */
+    width: 120px; /* Consistent width for all buttons */
+    height: 40px; /* Consistent height for all buttons */
     text-align: center;
 
 }
@@ -298,18 +299,15 @@ body.dark-mode #dark-mode-toggle {
     left: 20px;
     background: linear-gradient(135deg, #1DB954, black); /*gradient */
     color: #ffffff;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
+    padding: 5.5px 5.5px;
+    font-size: 14px;
     border: none;
     border-radius: 25px;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Add shadow for depth */
-    width: 150px; /* Consistent width for all buttons */
-    height: 50px; /* Consistent height for all buttons */
-    text-align: center;
-
+    width: 120px;
+    height: 40px;
 }
 .back-button:hover {
     background: linear-gradient(135deg, black, #1DB954); /* Reverse the gradient */
@@ -655,11 +653,12 @@ body.top-genres-page {
     font-size: 25px;
     font-weight: bold;
     color: #333333;
+    text-transform: capitalize;
 }
 .escape-wrapped{
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 1em;
+    left: 2em;
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -667,4 +666,10 @@ body.top-genres-page {
     align-items: center;
     justify-content: center;
     text-decoration: none;
+    font-size: 1.2em;
+    color: #000000;
+    font-weight: bold;
+}
+.escape-wrapped:hover {
+    color: #555; /* Slightly lighter on hover */
 }
