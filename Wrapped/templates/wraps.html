@@ -13,19 +13,40 @@
 <a href="{% url 'profile' %}" class="profile-icon" aria-label="View Profile">
     <i class="bi bi-person"></i>
 </a>
+{#{% if step == 1 %}#}
+{#        <body class="transition-page", id="transition-1">#}
+{#        <h2>TRANSITION ONE - WELCOME</h2>#}
+{#           <a href="{% url 'view_wraps' %}?step=2&time_range={{ time_range }}">#}
+{#           <button class="next-button">Next: Top Songs</button>#}
+{#       </a>#}
+{#    </body>#}
 {% if step == 1 %}
-        <body class="transition-page", id="transition-1">
-        <h2>TRANSITION ONE - WELCOME</h2>
-           <a href="{% url 'view_wraps' %}?step=2&time_range={{ time_range }}">
-           <button class="next-button">Next: Top Songs</button>
-       </a>
-    </body>
+<body class="transition-page" id="transition-1">
+  <div class="transition-content">
+      <h2 style = "color: black; font-size: 80px;">{{user.username}}'s <br> Spotify Wrapped </h2>
+    <a href="{% url 'view_wraps' %}?step=2&time_range={{ time_range }}">
+      <button class="next-button btn btn-success btn-lg">Next: Top Songs</button>
+    </a>
+  </div>
 
-<body class="top-songs-page">
+  <!-- Floating Notes -->
+  <div class="floating-notes">
+      <div class="note">♪</div>
+      <div class="note">♫</div>
+      <div class="note">♪</div>
+      <div class="note">♬</div>
+      <div class="note">♩</div>
+      <div class="note">♪</div>
+      <div class="note">♬</div>
+  </div>
+</body>
+
+
 
 
 <!-- Link to the user's profile -->
 {% elif step == 2 %}
+    <body class="top-songs-page">
 <a href="{% url 'profile' %}" class="profile-icon" aria-label="View Profile">
     <i class="bi bi-person"></i>
 </a>
