@@ -241,6 +241,86 @@ body.dark-mode #dark-mode-toggle {
 #length_title{
     text-align: center;
 }
+/* select time range page*/
+h2.timeRange {
+    color: #ffffff;
+    font-size:60px;
+    position: absolute;
+    top: 75px; /* Adjust this value to control the vertical position */
+    left: 50%; /* Center the title horizontally */
+    transform: translateX(-50%); /* Center the title horizontally */
+    text-align: center;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+}
+.timeRange {
+    color: #17a34a;
+    font-size: 60px;
+    position: absolute;
+    top: 75px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.time-range-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 150px; /* Adjust this for spacing below the title */
+    padding: 20px;
+    background-color: #1DB954;
+    border-radius: 8px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+}
+
+.time-box {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin: 10px 0;
+    width: 100%;
+    background-color: black;
+    border-radius: 8px;
+    color: #1DB954;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    font-weight: bold;
+}
+
+.time-box input[type="radio"] {
+    margin-right: 10px;
+}
+.timeRange-button {
+    position: fixed;
+    bottom: 20px;
+    background: linear-gradient(135deg, #1DB954, black); /*gradient */
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Add shadow for depth */
+    width: 150px; /* Consistent width for all buttons */
+    height: 50px; /* Consistent height for all buttons */
+    text-align: center;
+
+}
+.timeRange-button:hover {
+    background: linear-gradient(135deg, black, #1DB954); /* Reverse the gradient */
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.timeRange-button:active {
+    background: linear-gradient(135deg, #17a34a, black); /* Slightly darker */
+    transform: scale(0.98); /* Pressed effect */
+}
+
 .profile-icon {
     position: absolute;
     top: 1em; /* Position at the top left corner */
@@ -253,7 +333,7 @@ body.dark-mode #dark-mode-toggle {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4)
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
 
 }
 .profile-icon .bi-person {
@@ -322,7 +402,7 @@ body.dark-mode #dark-mode-toggle {
 
 /* for wrapped top songs */
 body.top-songs-page {
-    background: linear-gradient(rgba(251, 136,136, 0.8),rgba(211, 96, 96, 0.8)); /* To avoid any other body backgrounds interfering */
+    background: radial-gradient(#DDA0DD,rgba(211, 96, 96, 0.8)); /* To avoid any other body backgrounds interfering */
 }
 /* General Page Styling */
 body.topSongs {
@@ -389,6 +469,7 @@ h3.topSongs {
     border-radius: 8px;
     width: 100px;
     height: 80px;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Song Title and Artist Styling */
@@ -466,7 +547,7 @@ h2.topArtists {
     height: 120px;
     border-radius: 50%;
     overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);;
 }
 
 .artist-box_topArtists img {
@@ -503,7 +584,7 @@ h2.topArtists {
 }
 /* Page background for top albums */
 body.top-albums-page {
-    background: linear-gradient(135deg, #ffd700, #ffa500);
+    background: radial-gradient(#FFDB58, #ffa500);
     color: #ffffff;
     display: flex;
     align-items: center;
