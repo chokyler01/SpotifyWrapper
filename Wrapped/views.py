@@ -352,10 +352,12 @@ def view_wraps(request):
   # Handle "Save to Profile" submission
   if request.method == 'POST' and 'save' in request.POST:
       save_wrap_to_profile(request.user, wrap, time_range_param)
-      print(f"Time Range in view_wraps (after form submission): {time_range}")  # Debugging
+      print(f"Time Range in view_wraps (after form submission): {time_range}") # Debugging
+      return render(request, "profile.html")
 
 
   # Render the wraps page with the collected data
+
   return render(request, 'wraps.html', {
       'step': step,
       'time_range': time_range_param,
