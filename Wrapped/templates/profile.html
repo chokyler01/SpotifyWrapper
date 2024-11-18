@@ -32,3 +32,18 @@
 {% else %}
  <p>No wraps have been saved to your profile yet.</p>
 {% endif %}
+
+<div class="share-buttons">
+    <a href="{% url 'generate_wrap_image' %}" target="_blank" class="btn btn-primary">
+        Download Spotify Wrapped Summary Image
+    </a>
+    <a href="https://www.instagram.com/" target="_blank" class="btn btn-danger">
+        Share on Instagram
+    </a>
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" target="_blank" class="btn btn-info">
+        Share on LinkedIn
+    </a>
+    <a href="https://twitter.com/intent/tweet?text=Check out my Spotify Wrapped Summary!&url={{ request.build_absolute_uri }}" target="_blank" class="btn btn-success">
+        Share on Twitter
+    </a>
+</div>
