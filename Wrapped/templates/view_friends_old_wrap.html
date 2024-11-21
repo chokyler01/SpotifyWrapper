@@ -1,0 +1,34 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% trans "Friend's Spotify Wrapped" %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>{{ friend.username }}'s Spotify Wrapped</h1>
+    </header>
+    <main>
+        <section>
+            <h2>{% trans "Old Wraps" %}</h2>
+            {% if wraps %}
+                <ul>
+                    {% for wrap in wraps %}
+                        <li>
+                            <a href="{% url 'view_old_wrap' wrap.id %}">
+                                {{ wrap.time_range|capfirst }} - {{ wrap.created_at|date:"M d, Y" }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>{% trans "No wraps available." %}</p>
+            {% endif %}
+        </section>
+        <a href="{% url 'friends_page' %}">{% trans "Back to Friends" %}</a>
+    </main>
+</body>
+</html>

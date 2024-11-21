@@ -18,4 +18,5 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('delete_account/', views.delete_account, name='delete_account'),
     path('friends/', views.friends_page, name='friends_page'),
+    path('friends/<int:friend_id>/wraps/', views.view_friends_old_wrap, name='view_friends_old_wrap'),
 ]

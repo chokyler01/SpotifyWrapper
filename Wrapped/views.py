@@ -16,6 +16,23 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Profile
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
+
+@login_required
+def view_friends_old_wrap(request, friend_id):
+    """View to display a friend's old wraps."""
+    friend_user = get_object_or_404(User, id=friend_id)
+    if not friend_user.profile in request.user.profile.friends.all():
+        return HttpResponse("You are not friends with this user.", status=403)
+
+    wraps = SpotifyWrap.objects.filter(user=friend_user).order_by('-created_at')
+
+    return render(request, 'view_friends_old_wrap.html', {
+        'friend': friend_user,
+        'wraps': wraps,
+    })
+
 
 @login_required
 def friends_page(request):

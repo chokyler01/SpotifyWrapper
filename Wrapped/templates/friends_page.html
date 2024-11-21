@@ -27,13 +27,18 @@
             {% if friends %}
                 <ul>
                     {% for friend in friends %}
-                        <li>{{ friend.user.username }}</li>
+                        <li>
+                            <a href="{% url 'view_friends_old_wrap' friend.user.id %}">
+                                {{ friend.user.username }}
+                            </a>
+                        </li>
                     {% endfor %}
                 </ul>
             {% else %}
                 <p>You have no friends added.</p>
             {% endif %}
         </section>
+        
     </main>
 </body>
 </html>
