@@ -257,15 +257,23 @@ body.dark-mode #dark-mode-toggle {
 }
 /* select time range page*/
 h2.timeRange {
-    color: #ffffff;
-    font-size:60px;
+    color: var(--text-color); /* Dynamic color for light/dark mode */
+    font-size: 60px;
     position: absolute;
-    top: 75px; /* Adjust this value to control the vertical position */
-    left: 50%; /* Center the title horizontally */
-    transform: translateX(-50%); /* Center the title horizontally */
+    top: 75px; /* Adjust for vertical position */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Ensure perfect horizontal centering */
     text-align: center;
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8); /* Add shadow for better visibility */
+    transition: color 0.3s ease, text-shadow 0.3s ease; /* Smooth transitions */
 }
+
+/* Dark Mode */
+body.dark-mode h2.timeRange {
+    color: #ffffff; /* White text in dark mode */
+    text-shadow: 0 4px 8px rgba(255, 255, 255, 0.5); /* Softer shadow in dark mode */
+}
+
 .timeRange {
     color: #17a34a;
     font-size: 60px;

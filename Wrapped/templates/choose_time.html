@@ -33,7 +33,13 @@
            </div>
            <button class="timeRange-button" type="submit">{% trans "Submit" %}</button>
        </div>
+
+       <button id="dark-mode-toggle" class="button">{% trans "Toggle Dark Mode" %}</button>
+
    </form>
    {% endblock %}
+
+   <script src="{% static 'dark-mode-toggle.js' %}"></script>
+
 </body>
 </html>
