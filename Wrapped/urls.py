@@ -17,4 +17,5 @@ urlpatterns = [
     path('view_old_wrap/<int:wrap_id>/', views.view_old_wrap, name='view_old_wrap'),
     path('logout/', views.logout_view, name='logout'),
     path('delete_account/', views.delete_account, name='delete_account'),
+    path('friends/', views.friends_page, name='friends_page'),
 ]

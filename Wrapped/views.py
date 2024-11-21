@@ -11,8 +11,43 @@ from django.http import HttpResponse
 from collections import Counter
 from django.utils.translation import get_language
 from django.utils.translation import activate  # Import activate for language switching
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib import messages
+from .models import Profile
 
-from django.contrib.auth import logout
+@login_required
+def friends_page(request):
+    profile = request.user.profile
+    friends = profile.friends.all()
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        action = request.POST.get('action')
+
+        if username:
+            try:
+                friend_user = User.objects.get(username=username)
+                friend_profile = friend_user.profile
+
+                if action == 'add':
+                    if friend_profile not in profile.friends.all():
+                        profile.friends.add(friend_profile)
+                        messages.success(request, f"You are now friends with {username}!")
+                    else:
+                        messages.info(request, f"{username} is already your friend.")
+                elif action == 'remove':
+                    if friend_profile in profile.friends.all():
+                        profile.friends.remove(friend_profile)
+                        messages.success(request, f"You have removed {username} as a friend.")
+                    else:
+                        messages.info(request, f"{username} is not your friend.")
+            except User.DoesNotExist:
+                messages.error(request, f"User with username {username} does not exist.")
+
+    return render(request, 'friends_page.html', {'friends': friends})
+
 
 @login_required
 def logout_view(request):

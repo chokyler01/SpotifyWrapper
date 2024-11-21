@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>{{ user.username }}'s Friends</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Add or Remove Friends</h2>
+            <form method="post">
+                {% csrf_token %}
+                <input type="text" name="username" placeholder="Enter username" required>
+                <button type="submit" name="action" value="add">Add Friend</button>
+                <button type="submit" name="action" value="remove">Remove Friend</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Your Friends</h2>
+            {% if friends %}
+                <ul>
+                    {% for friend in friends %}
+                        <li>{{ friend.user.username }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>You have no friends added.</p>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>
