@@ -1,6 +1,12 @@
 {% load i18n %}
 <h2>{{ user.username }}'s {% trans "Spotify Wraps" %}</h2>
 
+<!-- Add Logout Button -->
+<form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit" class="logout-button">Logout</button>
+</form>
+
 <!-- Link to go back to the wrapped page -->
 <a href="{% url 'choose_wrap_time' %}"><button>{% trans "Go Back to Wrapped Page" %}</button></a>
 

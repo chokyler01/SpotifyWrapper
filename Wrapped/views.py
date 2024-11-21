@@ -12,7 +12,14 @@ from collections import Counter
 from django.utils.translation import get_language
 from django.utils.translation import activate  # Import activate for language switching
 
+from django.contrib.auth import logout
 
+@login_required
+def logout_view(request):
+    """Handle user logout and redirect to login page."""
+    if request.method == 'POST':
+        logout(request)
+        return redirect('login')
 
 
 def choose_wrap_time(request):
