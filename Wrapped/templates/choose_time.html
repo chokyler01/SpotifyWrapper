@@ -1,38 +1,39 @@
-{% load static %}
+{% load static i18n %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{%get_current_language as LANGUAGE_CODE %}">
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Select Time Range</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+   <title>{% block title %}{% trans "Select Time Range" %}{% endblock %}</title>
+   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+   {% block extra_head %}{% endblock %}
 </head>
-<link rel="stylesheet" href="{% static 'css/styles.css' %}">
-<body class = "dark-mode">
-   <h2 class="timeRange">Select Your Spotify Wrapped Time Range</h2>
-<a href="{% url 'profile' %}" class="profile-icon" aria-label="View Profile">
-    <i class="bi bi-person"></i>
-</a>
+<body class="dark-mode">
+   {% block content %}
+   <h2 class="timeRange">{% trans "Select Your Spotify Wrapped Time Range" %}</h2>
+   <a href="{% url 'profile' %}" class="profile-icon" aria-label="{% trans 'View Profile' %}">
+       <i class="bi bi-person"></i>
+   </a>
 
    <form method="POST" action="{% url 'choose_wrap_time' %}">
        {% csrf_token %}
-        <div class="time-range-container">
+       <div class="time-range-container">
            <div class="time-box">
                <input type="radio" id="short" name="time_range" value="short_term" required>
-               <label for="short">Short Term (Last 4 Weeks)</label>
+               <label for="short">{% trans "Short Term (Last 4 Weeks)" %}</label>
            </div>
            <div class="time-box">
                <input type="radio" id="medium" name="time_range" value="medium_term">
-               <label for="medium">Medium Term (Last 6 Months)</label>
+               <label for="medium">{% trans "Medium Term (Last 6 Months)" %}</label>
            </div>
            <div class="time-box">
                <input type="radio" id="long" name="time_range" value="long_term">
-               <label for="long">Long Term (All Time)</label>
+               <label for="long">{% trans "Long Term (All Time)" %}</label>
            </div>
-           <button class="timeRange-button" type="submit">Submit</button>
-        </div>
+           <button class="timeRange-button" type="submit">{% trans "Submit" %}</button>
+       </div>
    </form>
+   {% endblock %}
 </body>
 </html>

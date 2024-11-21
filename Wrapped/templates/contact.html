@@ -1,11 +1,11 @@
+{% load static i18n %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{% get_current_language as LANGUAGE_CODE %}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Developers</title>
-    {% load static %}
+    <title>{% trans "Contact Developers" %}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 
@@ -13,16 +13,16 @@
     <!-- Unique wrapper for contact page -->
     <div class="contact-page">
         <div class="container">
-            <h1>Contact the Developers</h1>
-            <p>If you have any questions, issues, or suggestions, feel free to reach out!</p>
+            <h1>{% trans "Contact the Developers" %}</h1>
+            <p>{% trans "If you have any questions, issues, or suggestions, feel free to reach out!" %}</p>
 
             <!-- Mailto Link to Open Default Email Client -->
             <a href="mailto:chokyler01@gmail.com?subject=Contacting%20Developers&body=Hi%20Developers,%0D%0A%0D%0AI%20would%20like%20to%20reach%20out%20regarding..." class="button">
-                Email the Developers
+                {% trans "Email the Developers" %}
             </a>
         </div>
 
-        <button id="dark-mode-toggle" class="button">Toggle Dark Mode</button>
+        <button id="dark-mode-toggle" class="button">{% trans "Toggle Dark Mode" %}</button>
     </div>
 
     {% block content %}{% endblock %}

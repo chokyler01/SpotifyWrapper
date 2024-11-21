@@ -1,26 +1,35 @@
-
+{% load static i18n %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{% get_current_language as LANGUAGE_CODE %}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Welcome to Spotify Wrapped</title>
-    {% load static %}
+    <title>{% trans "Welcome to Spotify Wrapped" %}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 
 <body>
     <div class="container">
-        <h1>Welcome to Spotify Wrapped!</h1>
-        <img src="{% static 'images/spotify_logo.png' %}" alt="Spotify Logo" class="spotify-logo">
+        <h1>{% trans "Welcome to Spotify Wrapped!" %}</h1>
+        <img src="{% static 'images/spotify_logo.png' %}" alt="{% trans 'Spotify Logo' %}" class="spotify-logo">
         <div class="button-container">
-            <a href="{% url 'login' %}" class="button">Login</a>
-            <a href="{% url 'register' %}" class="button">Register</a>
+            <a href="{% url 'login' %}" class="button">{% trans "Login" %}</a>
+            <a href="{% url 'register' %}" class="button">{% trans "Register" %}</a>
         </div>
-        <a href="{% url 'contact' %}" class="contact-button">Contact Developers</a>
+        <a href="{% url 'contact' %}" class="contact-button">{% trans "Contact Developers" %}</a>
     </div>
-    <button id="dark-mode-toggle" class="button">Toggle Dark Mode</button>
+
+    <div class="language-selector">
+        <form action="{% url 'set_language' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" name="language" value="en" class="button">{% trans "English" %}</button>
+            <button type="submit" name="language" value="es" class="button">{% trans "Spanish" %}</button>
+            <button type="submit" name="language" value="fr" class="button">{% trans "French" %}</button>
+        </form>
+    </div>
+
+    <button id="dark-mode-toggle" class="button">{% trans "Toggle Dark Mode" %}</button>
 
     {% block content %}{% endblock %}
 

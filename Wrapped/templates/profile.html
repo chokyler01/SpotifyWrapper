@@ -1,34 +1,31 @@
-<h2>{{ user.username }}'s Spotify Wraps</h2>
-
+{% load i18n %}
+<h2>{{ user.username }}'s {% trans "Spotify Wraps" %}</h2>
 
 <!-- Link to go back to the wrapped page -->
-<a href="{% url 'choose_wrap_time' %}"><button>Go Back to Wrapped Page</button></a>
+<a href="{% url 'choose_wrap_time' %}"><button>{% trans "Go Back to Wrapped Page" %}</button></a>
 
-
-<h3>Your Saved Wraps</h3>
-
+<h3>{% trans "Your Saved Wraps" %}</h3>
 
 {% if user.profile.spotify_wraps.exists %}
- <ul>
-     {% regroup user.profile.spotify_wraps.all|dictsort:"created_at" by created_at.date as grouped_wraps %}
+    <ul>
+        {% regroup user.profile.spotify_wraps.all|dictsort:"created_at" by created_at.date as grouped_wraps %}
 
-
-     {% for group in grouped_wraps %}
-         <li>
-             <strong>Wrap Date: {{ group.grouper|date:"b d, Y" }}</strong>
-             <ul>
-                 {% for wrap in group.list %}
-                     <li>
-                         <p>Time Range: {{ wrap.time_range|title }}</p>
-                         <a href="{% url 'view_old_wrap' wrap.id %}">
-                             <button>View Wrap Details</button>
-                         </a>
-                     </li>
-                 {% endfor %}
-             </ul>
-         </li>
-     {% endfor %}
- </ul>
+        {% for group in grouped_wraps %}
+            <li>
+                <strong>{% trans "Wrap Date" %}: {{ group.grouper|date:"b d, Y" }}</strong>
+                <ul>
+                    {% for wrap in group.list %}
+                        <li>
+                            <p>{% trans "Time Range" %}: {{ wrap.time_range|title }}</p>
+                            <a href="{% url 'view_old_wrap' wrap.id %}">
+                                <button>{% trans "View Wrap Details" %}</button>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
 {% else %}
- <p>No wraps have been saved to your profile yet.</p>
+    <p>{% trans "No wraps have been saved to your profile yet." %}</p>
 {% endif %}

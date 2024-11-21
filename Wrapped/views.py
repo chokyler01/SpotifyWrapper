@@ -9,6 +9,8 @@ from django.conf import settings
 from .API_requests import fetch_spotify_data
 from django.http import HttpResponse
 from collections import Counter
+from django.utils.translation import get_language
+from django.utils.translation import activate  # Import activate for language switching
 
 
 
@@ -68,7 +70,13 @@ def contact_view(request):
 
 
 def home_view(request):
-  return render(request, 'home.html')
+
+    language_code = request.session.get('language')
+    activate(language_code)  # Activate the selected language
+
+
+
+    return render(request, 'home.html')
 
 
 
