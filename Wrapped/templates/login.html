@@ -33,7 +33,11 @@
         <a href="{% url 'register' %}" style="color: #1DB954;">{% trans "Don't have an account? Register here" %}</a>
     </div>
 
-    <button id="dark-mode-toggle" class="button">{% trans "Toggle Dark Mode" %}</button>
+    <br>
+    <!-- Go Back to Home Page Button -->
+    <a href="{% url 'home' %}" class="btn btn-secondary mt-3">{% trans "Go Back to Home Page" %}</a>
+    
+    <button id="dark-mode-toggle" class="button mt-4">{% trans "Toggle Dark Mode" %}</button>
 </body>
 
 {% block content %}{% endblock %}
