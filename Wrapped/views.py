@@ -424,11 +424,6 @@ import json
 
 
 
-
-
-
-
-
 def callback(request):
   """Handle Spotify callback and store tokens."""
   code = request.GET.get('code')
@@ -554,33 +549,30 @@ def save_wrap_to_profile(user, wrap, time_range):
 
 
 def view_old_wrap(request, wrap_id):
-   """View for displaying details of a specific wrap based on wrap_id."""
+    """View for displaying details of a specific wrap based on wrap_id."""
+    # Retrieve the wrap object by wrap_id (ensure it's the current user)
+    wrap = get_object_or_404(SpotifyWrap, id=wrap_id, user=request.user)
 
+    # Load the wrap data from the database (assuming it's stored as JSON)
+    wrap_data = json.loads(wrap.wrap_data)
 
-   # Retrieve the wrap object by wrap_id (ensure it's the current user)
-   wrap = get_object_or_404(SpotifyWrap, id=wrap_id, user=request.user)
+    # Ensure 'step' starts from 1 if not present
+    step = wrap_data.get('step', 1)
 
+    # Extract the necessary data from wrap_data
+    time_range = wrap_data.get('time_range')
+    top_tracks = wrap_data.get('top_tracks', [])
+    top_artists = wrap_data.get('top_artists', [])
+    top_genres = wrap_data.get('top_genres', [])
+    top_albums = wrap_data.get('top_albums', [])
 
-   # Load the wrap data from the database (assuming it's stored as JSON)
-   wrap_data = json.loads(wrap.wrap_data)
-
-
-   # Extract the necessary data from wrap_data
-   step = wrap_data.get('step')
-   time_range = wrap_data.get('time_range')
-   top_tracks = wrap_data.get('top_tracks', [])
-   top_artists = wrap_data.get('top_artists', [])
-   top_genres = wrap_data.get('top_genres', [])
-   top_albums = wrap_data.get('top_albums', [])
-
-
-   # Render the wrap details in a template
-   return render(request, 'view_old_wrap.html', {
-       'wrap_id': wrap.id,
-       'step': step,
-       'time_range': time_range,
-       'top_tracks': top_tracks,
-       'top_artists': top_artists,
-       'top_genres': top_genres,
-       'top_albums': top_albums,
-   })
+    # Render the wrap details in a template
+    return render(request, 'view_old_wrap.html', {
+        'wrap_id': wrap.id,
+        'step': step,
+        'time_range': time_range,
+        'top_tracks': top_tracks,
+        'top_artists': top_artists,
+        'top_genres': top_genres,
+        'top_albums': top_albums,
+    })
