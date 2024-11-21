@@ -16,4 +16,5 @@ urlpatterns = [
     path('choose_time/', views.choose_wrap_time, name='choose_wrap_time'),
     path('view_old_wrap/<int:wrap_id>/', views.view_old_wrap, name='view_old_wrap'),
     path('logout/', views.logout_view, name='logout'),
+    path('delete_account/', views.delete_account, name='delete_account'),
 ]

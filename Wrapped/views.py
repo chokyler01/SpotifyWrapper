@@ -525,6 +525,17 @@ def callback(request):
 
 
 
+from django.contrib.auth import logout
+
+@login_required
+def delete_account(request):
+    """Allow user to delete their account."""
+    if request.method == 'POST':
+        user = request.user
+        logout(request)  # Log out the user before deleting
+        user.delete()  # Delete the user
+        return redirect('register')  # Redirect to the registration page
+    return render(request, 'delete_account.html')  # Optional: confirmation page
 
 
 
