@@ -611,12 +611,25 @@ def save_wrap_to_profile(user, wrap, time_range):
        profile.spotify_wraps.add(wrap)
 
 
+
+from django.shortcuts import render, get_object_or_404
+from django.http import Http404
+import json
+from .models import SpotifyWrap, Profile
+
 def view_old_wrap(request, wrap_id):
     """View for displaying details of a specific wrap based on wrap_id."""
-    # Retrieve the wrap object by wrap_id (ensure it's the current user)
-    wrap = get_object_or_404(SpotifyWrap, id=wrap_id, user=request.user)
+    # Retrieve the wrap object by wrap_id
+    wrap = get_object_or_404(SpotifyWrap, id=wrap_id)
 
-    # Load the wrap data from the database (assuming it's stored as JSON)
+    # Check if the wrap belongs to the current user or a friend
+    is_mine = wrap.user == request.user
+    # if not is_mine:
+    #     user_profile = Profile.objects.get(user=request.user)
+    #     if not user_profile.friends.filter(id=wrap.user.id).exists():
+    #         raise Http404("You do not have permission to view this wrap.")
+
+    # Load the wrap data from the database
     wrap_data = json.loads(wrap.wrap_data)
 
     # Ensure 'step' starts from 1 if not present
@@ -629,7 +642,7 @@ def view_old_wrap(request, wrap_id):
     top_genres = wrap_data.get('top_genres', [])
     top_albums = wrap_data.get('top_albums', [])
 
-    # Render the wrap details in a template
+    # Render the wrap details in a template, including the 'is_mine' flag
     return render(request, 'view_old_wrap.html', {
         'wrap_id': wrap.id,
         'step': step,
@@ -638,4 +651,7 @@ def view_old_wrap(request, wrap_id):
         'top_artists': top_artists,
         'top_genres': top_genres,
         'top_albums': top_albums,
+        'is_mine': is_mine,
     })
+
+ 
