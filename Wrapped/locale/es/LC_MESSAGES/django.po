@@ -1,0 +1,215 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-22 15:59-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
+"1 : 2;\n"
+#: templates/choose_time.html:7
+msgid "Select Time Range"
+msgstr "Seleccionar rango de tiempo"
+
+msgid "Select Your Spotify Wrapped Time Range"
+msgstr "Selecciona el rango de tiempo de tu Spotify Wrapped"
+
+msgid "View Profile"
+msgstr "Ver perfil"
+
+msgid "Short Term (Last 4 Weeks)"
+msgstr "Corto plazo (Últimas 4 semanas)"
+
+msgid "Medium Term (Last 6 Months)"
+msgstr "Mediano plazo (Últimos 6 meses)"
+
+msgid "Long Term (All Time)"
+msgstr "Largo plazo (Todo el tiempo)"
+
+msgid "Submit"
+msgstr "Enviar"
+
+msgid "Toggle Dark Mode"
+msgstr "Cambiar a modo oscuro"
+
+msgid "Contact Developers"
+msgstr "Contactar a los desarrolladores"
+
+msgid "Contact the Developers"
+msgstr "Contactar a los desarrolladores"
+
+msgid "If you have any questions, issues, or suggestions, feel free to reach out!"
+msgstr "Si tienes preguntas, problemas o sugerencias, ¡no dudes en contactarnos!"
+
+msgid "Email the Developers"
+msgstr "Enviar un correo a los desarrolladores"
+
+msgid "Welcome to Spotify Wrapped"
+msgstr "Bienvenido a Spotify Wrapped"
+
+msgid "Welcome to Spotify Wrapped!"
+msgstr "¡Bienvenido a Spotify Wrapped!"
+
+msgid "Spotify Logo"
+msgstr "Logo de Spotify"
+
+msgid "Login"
+msgstr "Iniciar sesión"
+
+msgid "Register"
+msgstr "Registrarse"
+
+msgid "English"
+msgstr "Inglés"
+
+msgid "Spanish"
+msgstr "Español"
+
+msgid "French"
+msgstr "Francés"
+
+msgid "Log in to Your"
+msgstr "Inicia sesión en tu"
+
+msgid "Spotify Wrapped Account"
+msgstr "Cuenta de Spotify Wrapped"
+
+msgid "Username"
+msgstr "Nombre de usuario"
+
+msgid "Password"
+msgstr "Contraseña"
+
+msgid "Don't have an account? Register here"
+msgstr "¿No tienes una cuenta? Regístrate aquí"
+
+msgid "Go Back to Home Page"
+msgstr "Volver a la página principal"
+
+msgid "Profile"
+msgstr "Perfil"
+
+msgid "Spotify Wraps"
+msgstr "Spotify Wraps"
+
+msgid "Logout"
+msgstr "Cerrar sesión"
+
+msgid "Go Back to Wrapped Page"
+msgstr "Volver a la página de Wrapped"
+
+msgid "Your Saved Wraps"
+msgstr "Tus Wraps guardados"
+
+msgid "Wrap Date"
+msgstr "Fecha del Wrap"
+
+msgid "Time Range"
+msgstr "Rango de tiempo"
+
+msgid "View Wrap Details"
+msgstr "Ver detalles del Wrap"
+
+msgid "No wraps have been saved to your profile yet."
+msgstr "Aún no has guardado ningún Wrap en tu perfil."
+
+msgid "Account Actions"
+msgstr "Acciones de la cuenta"
+
+msgid "Delete Account"
+msgstr "Eliminar cuenta"
+
+msgid "Create an Account"
+msgstr "Crear una cuenta"
+
+msgid "Confirm Password"
+msgstr "Confirmar contraseña"
+
+msgid ""
+"Your password can’t be too similar to your other personal information. Your "
+"password must contain at least 8 characters and cannot be entirely numeric. "
+"Your password can’t be a commonly used password."
+msgstr ""
+"Tu contraseña no puede ser demasiado similar a tu información personal. "
+"Debe contener al menos 8 caracteres y no puede ser completamente numérica. "
+"Tampoco puede ser una contraseña comúnmente utilizada."
+
+msgid "Register and Link Spotify"
+msgstr "Registrarse y vincular Spotify"
+
+msgid "Already have an account? Log in"
+msgstr "¿Ya tienes una cuenta? Inicia sesión"
+
+msgid "Friend's Spotify Wrapped"
+msgstr "Spotify Wrapped del amigo"
+
+msgid "Old Wraps"
+msgstr "Wraps antiguos"
+
+msgid "No wraps available."
+msgstr "No hay Wraps disponibles."
+
+msgid "Back to Friends"
+msgstr "Volver a Amigos"
+
+msgid "Your Spotify Wrapped"
+msgstr "Tu Spotify Wrapped"
+
+msgid "TRANSITION ONE - WELCOME"
+msgstr "TRANSICIÓN UNO - BIENVENIDO"
+
+msgid "Next: Top Songs"
+msgstr "Siguiente: Mejores canciones"
+
+msgid "Top Songs"
+msgstr "Mejores canciones"
+
+msgid "Next: Top Artists"
+msgstr "Siguiente: Mejores artistas"
+
+msgid "TRANSITION TWO"
+msgstr "TRANSICIÓN DOS"
+
+msgid "Back: Top Songs"
+msgstr "Atrás: Mejores canciones"
+
+msgid "Top Artists"
+msgstr "Mejores artistas"
+
+msgid "Next: Top Albums"
+msgstr "Siguiente: Mejores álbumes"
+
+msgid "Top Genres"
+msgstr "Mejores géneros"
+
+msgid "Save to Profile"
+msgstr "Guardar en el perfil"
+
+msgid "Back to Friends' Wraps"
+msgstr "Volver a los Wraps de amigos"
+
+msgid "TRANSITION THREE"
+msgstr "TRANSICIÓN TRES"
+
+msgid "Back: Top Artists"
+msgstr "Atrás: Mejores artistas"
+
+msgid "Your Top Albums"
+msgstr "Tus mejores álbumes"
+
+msgid "Next: Top Genres"
+msgstr "Siguiente: Mejores géneros"
+
+msgid "TRANSITION FOUR"
+msgstr "TRANSICIÓN CUATRO"
