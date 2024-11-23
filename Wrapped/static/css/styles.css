@@ -776,3 +776,99 @@ body.top-genres-page {
 .escape-wrapped:hover {
     color: #555; /* Slightly lighter on hover */
 }
+.transition-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100vh;
+  background: linear-gradient(135deg, rgba(177, 234, 193, 0.68), rgba(59, 193, 106, 0.68), rgb(19, 112, 43), #063716);
+  background-size: 200% 200%;
+  animation: gradientShift 10s ease infinite;
+}
+
+/* Background Animation */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Content Styling */
+.transition-content h2 {
+  font-size: 3rem;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+/* Floating Music Notes */
+.floating-notes {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.note {
+  position: absolute;
+  font-size: 2.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  animation: floatDown linear infinite;
+  /*opacity: 0.8;*/
+}
+
+/* Animation for Floating Notes */
+@keyframes floatDown {
+  0% {
+    transform: translateY(-100px) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Randomize Floating Note Animations */
+.note:nth-child(1) {
+  left: 10%;
+  animation-duration: 7s;
+  animation-delay: 0s;
+}
+.note:nth-child(2) {
+  left: 30%;
+  animation-duration: 9s;
+  animation-delay: 0s;
+}
+.note:nth-child(3) {
+  left: 50%;
+  animation-duration: 6s;
+  animation-delay: 0s;
+}
+.note:nth-child(4) {
+  left: 70%;
+  animation-duration: 8s;
+  animation-delay: 0s;
+}
+.note:nth-child(5) {
+  left: 90%;
+  animation-duration: 7s;
+  animation-delay: 0s;
+}
+.note:nth-child(6) {
+  left: 60%;
+  animation-duration: 7s;
+  animation-delay: 0s;
+}
+.note:nth-child(7) {
+  left: 40%;
+  animation-duration: 8s;
+  animation-delay: 0s;
+}
+.transition-1-words{
+
+}
