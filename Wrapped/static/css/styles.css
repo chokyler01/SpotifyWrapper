@@ -113,7 +113,7 @@ body {
 
 /* Dark Mode Background Gradient */
 body.dark-mode {
-    background: #191414;
+    background: #121212;
     color: #ffffff;  /* Text color changes to white in dark mode */
 }
 
@@ -264,14 +264,14 @@ h2.timeRange {
     left: 50%; /* Center horizontally */
     transform: translateX(-50%); /* Ensure perfect horizontal centering */
     text-align: center;
-    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.8); /* Add shadow for better visibility */
+    text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.8); /* Add shadow for better visibility */
     transition: color 0.3s ease, text-shadow 0.3s ease; /* Smooth transitions */
 }
 
 /* Dark Mode */
 body.dark-mode h2.timeRange {
-    color: #ffffff; /* White text in dark mode */
-    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5); /* Softer shadow in dark mode */
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
 }
 
 .timeRange {
@@ -305,7 +305,7 @@ body.dark-mode h2.timeRange {
     padding: 15px;
     margin: 10px 0;
     width: 100%;
-    background-color: black;
+    background-color: #121212;
     border-radius: 8px;
     color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
