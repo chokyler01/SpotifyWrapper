@@ -101,7 +101,7 @@
 
 /* Light Mode Background Gradient */
 body {
-    background: linear-gradient(135deg, #ffffff, #f0f0f0); /* Light mode background */
+    background: white;
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
@@ -113,7 +113,7 @@ body {
 
 /* Dark Mode Background Gradient */
 body.dark-mode {
-    background: linear-gradient(135deg, #121212, #282828); /* Dark mode background */
+    background: #191414;
     color: #ffffff;  /* Text color changes to white in dark mode */
 }
 
@@ -172,17 +172,17 @@ body.dark-mode .form-control{
 }
 
 .button:hover {
-    background-color: #17a34a;
+    background-color: #1DB954;
 }
 
 /* Dark Mode Button Styling */
 body.dark-mode .button {
-    background-color: #1db954;
+    background-color: #1DB954;
     color: #000000;
 }
 
 body.dark-mode .button:hover {
-    background-color: #17a34a;
+    background-color: #1DB954;
 }
 
 /* Contact Developers Button Styling */
@@ -201,17 +201,17 @@ body.dark-mode .button:hover {
 }
 
 .contact-button:hover {
-    background-color: #17a34a;
+    background-color: #1DB954;
 }
 
 /* Dark Mode Contact Button Styling */
 body.dark-mode .contact-button {
-    background-color: #1db954;
+    background-color: #1DB954;
     color: #000000;
 }
 
 body.dark-mode .contact-button:hover {
-    background-color: #17a34a;
+    background-color: #1DB954;
 }
 
 /* Dark Mode Toggle Button Styling */
@@ -264,18 +264,18 @@ h2.timeRange {
     left: 50%; /* Center horizontally */
     transform: translateX(-50%); /* Ensure perfect horizontal centering */
     text-align: center;
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8); /* Add shadow for better visibility */
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.8); /* Add shadow for better visibility */
     transition: color 0.3s ease, text-shadow 0.3s ease; /* Smooth transitions */
 }
 
 /* Dark Mode */
 body.dark-mode h2.timeRange {
     color: #ffffff; /* White text in dark mode */
-    text-shadow: 0 4px 8px rgba(255, 255, 255, 0.5); /* Softer shadow in dark mode */
+    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5); /* Softer shadow in dark mode */
 }
 
 .timeRange {
-    color: #17a34a;
+    color: white;
     font-size: 60px;
     position: absolute;
     top: 75px;
@@ -292,10 +292,11 @@ body.dark-mode h2.timeRange {
     padding: 20px;
     background-color: #1DB954;
     border-radius: 8px;
-    max-width: 600px;
+    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+    opacity: .8;
 }
 
 .time-box {
@@ -306,7 +307,7 @@ body.dark-mode h2.timeRange {
     width: 100%;
     background-color: black;
     border-radius: 8px;
-    color: #1DB954;
+    color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
     font-weight: bold;
 }
@@ -339,7 +340,7 @@ body.dark-mode h2.timeRange {
 }
 
 .timeRange-button:active {
-    background: linear-gradient(135deg, #17a34a, black); /* Slightly darker */
+    background: linear-gradient(135deg, #1DB954., black); /* Slightly darker */
     transform: scale(0.98); /* Pressed effect */
 }
 
@@ -350,7 +351,7 @@ body.dark-mode h2.timeRange {
     width: 42px;
     height: 42px;
     border-radius: 50%;
-    background-color: #17a34a; /* Dark background color */
+    background-color: #1DB954; /* Dark background color */
     color: white;
     display: flex;
     align-items: center;
