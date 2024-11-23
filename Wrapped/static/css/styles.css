@@ -783,9 +783,9 @@ body.top-genres-page {
   justify-content: center;
   text-align: center;
   height: 100vh;
-  background: linear-gradient(135deg, rgba(177, 234, 193, 0.68), rgba(59, 193, 106, 0.68), rgb(19, 112, 43), #063716);
+  background: linear-gradient(135deg, rgba(125, 244, 168, 0.68), rgb(29, 185, 84), #074920, rgb(25, 20, 20));
   background-size: 200% 200%;
-  animation: gradientShift 10s ease infinite;
+  animation: gradientShift 8s ease infinite;
 }
 
 /* Background Animation */
@@ -803,7 +803,7 @@ body.top-genres-page {
 }
 
 /* Floating Music Notes */
-.floating-notes {
+.floating {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -816,7 +816,6 @@ body.top-genres-page {
   font-size: 2.5rem;
   color: rgba(255, 255, 255, 0.8);
   animation: floatDown linear infinite;
-  /*opacity: 0.8;*/
 }
 
 /* Animation for Floating Notes */
@@ -870,6 +869,25 @@ body.top-genres-page {
   animation-duration: 8s;
   animation-delay: 0s;
 }
-.transition-1-words{
-
+.trans-header {
+    color: black;
+    font-size: 4.8em;
+    font-weight: bold;
+}
+#swipe_header{
+    white-space: nowrap;
+    position: relative;
+    width: 100%; /* Full width */
+    box-sizing: border-box;
+    display: inline-block;
+    animation: swipe 10s linear;
+    animation-iteration-count: 1;
+}
+@keyframes swipe {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
 }

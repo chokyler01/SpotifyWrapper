@@ -16,12 +16,10 @@
 
 {% if step == 1 %}
     <body class="transition-page" id="transition-1">
-        <div class="transition-content">
-            <h2 style = "color: black; font-size: 80px;">{{user.username}}'s <br> Spotify Wrapped </h2>
-  </div>
+        <div class = "trans-header">{{user.username}}'s <br> {% trans 'Spotify Wrapped' %} </div>
 
   <!-- Floating Notes -->
-  <div class="floating-notes">
+  <div class="floating">
       <div class="note">♪</div>
       <div class="note">♫</div>
       <div class="note">♪</div>
@@ -70,8 +68,8 @@
         </a>
     </body>
 {% elif step == 3 %}
-    <body class="transition-page", id="transition-2">
-        <h2>{% trans "TRANSITION TWO" %}</h2>
+    <body class="transition-page", id=transition-2">
+        <div class = "trans-header" id = "swipe_header">{% trans "The Artists That Defined Your Wrapped" %}</div>
         <a href="{% url 'view_wraps' %}?step=4&time_range={{ time_range }}">
             <button class="next-button">{% trans "Next: Top Artists" %}</button>
         </a>
@@ -109,7 +107,7 @@
     </body>
 {% elif step == 5 %}
     <body class="transition-page", id="transition-3">
-        <h2>{% trans "TRANSITION THREE" %}</h2>
+        <div class = "trans-header" id = "swipe_header">{% trans "The Albums You Had On Repeat" %}</div>
         <a href="{% url 'view_wraps' %}?step=6&time_range={{ time_range }}">
             <button class="next-button">{% trans "Next: Top Albums" %}</button>
         </a>
@@ -148,11 +146,11 @@
     </body>
 {% elif step == 7 %}
     <body class="transition-page", id="transition-4">
-        <h2>{% trans "TRANSITION FOUR" %}</h2>
+        <div class = "trans-header" id = "swipe_header">{% trans "Turn It Up For Your Top Genres!" %}</div>
         <a href="{% url 'view_wraps' %}?step=8&time_range={{ time_range }}">
             <button class="next-button">{% trans "Next: Top Genres" %}</button>
         </a>
-        <a href="{% url 'view_wraps' %}?step=4&time_range={{ time_range }}">
+        <a href="{% url 'view_wraps' %}?step=6&time_range={{ time_range }}">
             <button class="back-button">{% trans "Back: Top Artists" %}</button>
         </a>
     </body>
@@ -173,8 +171,8 @@
             {% endfor %}
         </div>
         <p>{% trans "Time Range" %}: {{ time_range }}</p>
-        <a href="{% url 'view_wraps' %}?step=4&time_range={{ time_range }}">
-            <button class="back-button">{% trans "Back: Top Artists" %}</button>
+        <a href="{% url 'view_wraps' %}?step=6&time_range={{ time_range }}">
+            <button class="back-button">{% trans "Back: Top Albums" %}</button>
         </a>
         <form method="post" action="{% url 'view_wraps' %}?time_range={{ time_range }}">
             {% csrf_token %}
