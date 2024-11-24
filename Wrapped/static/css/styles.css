@@ -101,7 +101,7 @@
 
 /* Light Mode Background Gradient */
 body {
-    background: linear-gradient(135deg, #ffffff, #f0f0f0); /* Light mode background */
+    background: white;
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
@@ -113,7 +113,7 @@ body {
 
 /* Dark Mode Background Gradient */
 body.dark-mode {
-    background: linear-gradient(135deg, #121212, #282828); /* Dark mode background */
+    background: #121212;
     color: #ffffff;  /* Text color changes to white in dark mode */
 }
 
@@ -172,17 +172,17 @@ body.dark-mode .form-control{
 }
 
 .button:hover {
-    background-color: #17a34a;
+    background-color: #1DB954;
 }
 
 /* Dark Mode Button Styling */
 body.dark-mode .button {
-    background-color: #1db954;
+    background-color: #1DB954;
     color: #000000;
 }
 
 body.dark-mode .button:hover {
-    background-color: #17a34a;
+    background-color: #1DB954;
 }
 
 /* Contact Developers Button Styling */
@@ -201,17 +201,17 @@ body.dark-mode .button:hover {
 }
 
 .contact-button:hover {
-    background-color: #17a34a;
+    background-color: #1DB954;
 }
 
 /* Dark Mode Contact Button Styling */
 body.dark-mode .contact-button {
-    background-color: #1db954;
+    background-color: #1DB954;
     color: #000000;
 }
 
 body.dark-mode .contact-button:hover {
-    background-color: #17a34a;
+    background-color: #1DB954;
 }
 
 /* Dark Mode Toggle Button Styling */
@@ -269,7 +269,7 @@ h2.timeRange {
     left: 50%; /* Center horizontally */
     transform: translateX(-50%); /* Ensure perfect horizontal centering */
     text-align: center;
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8); /* Add shadow for better visibility */
+    text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.8); /* Add shadow for better visibility */
     transition: color 0.3s ease, text-shadow 0.3s ease; /* Smooth transitions */
 }
 
@@ -280,7 +280,7 @@ body.dark-mode h2.timeRange {
 }
 
 .timeRange {
-    color: #17a34a;
+    color: white;
     font-size: 60px;
     position: absolute;
     top: 75px;
@@ -297,10 +297,11 @@ body.dark-mode h2.timeRange {
     padding: 20px;
     background-color: #1DB954;
     border-radius: 8px;
-    max-width: 600px;
+    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+    opacity: .8;
 }
 
 .time-box {
@@ -309,9 +310,9 @@ body.dark-mode h2.timeRange {
     padding: 15px;
     margin: 10px 0;
     width: 100%;
-    background-color: black;
+    background-color: #121212;
     border-radius: 8px;
-    color: #1DB954;
+    color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
     font-weight: bold;
 }
@@ -344,7 +345,7 @@ body.dark-mode h2.timeRange {
 }
 
 .timeRange-button:active {
-    background: linear-gradient(135deg, #17a34a, black); /* Slightly darker */
+    background: linear-gradient(135deg, #1DB954, black); /* Slightly darker */
     transform: scale(0.98); /* Pressed effect */
 }
 
@@ -355,7 +356,7 @@ body.dark-mode h2.timeRange {
     width: 42px;
     height: 42px;
     border-radius: 50%;
-    background-color: #17a34a; /* Dark background color */
+    background-color: #1DB954; /* Dark background color */
     color: white;
     display: flex;
     align-items: center;
@@ -561,7 +562,7 @@ h2.topArtists {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 20px;
+    gap: 40px;
     margin-top: 200px;
 }
 
@@ -785,6 +786,129 @@ body.top-genres-page {
 .escape-wrapped:hover {
     color: #555; /* Slightly lighter on hover */
 }
+.transition-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100vh;
+  background: linear-gradient(135deg, rgba(125, 244, 168, 0.68), rgb(29, 185, 84), #074920, rgb(25, 20, 20));
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease infinite;
+}
+
+/* Background Animation */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Content Styling */
+.transition-content h2 {
+  font-size: 3rem;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+/* Floating Music Notes */
+.floating {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.note {
+  position: absolute;
+  font-size: 2.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  animation: floatDown linear infinite;
+}
+
+/* Animation for Floating Notes */
+@keyframes floatDown {
+  0% {
+    transform: translateY(-100px) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Randomize Floating Note Animations */
+.note:nth-child(1) {
+  left: 10%;
+  animation-duration: 7s;
+  animation-delay: 0s;
+}
+.note:nth-child(2) {
+  left: 30%;
+  animation-duration: 9s;
+  animation-delay: 0s;
+}
+.note:nth-child(3) {
+  left: 50%;
+  animation-duration: 6s;
+  animation-delay: 0s;
+}
+.note:nth-child(4) {
+  left: 70%;
+  animation-duration: 8s;
+  animation-delay: 0s;
+}
+.note:nth-child(5) {
+  left: 90%;
+  animation-duration: 7s;
+  animation-delay: 0s;
+}
+.note:nth-child(6) {
+  left: 60%;
+  animation-duration: 7s;
+  animation-delay: 0s;
+}
+.note:nth-child(7) {
+  left: 40%;
+  animation-duration: 8s;
+  animation-delay: 0s;
+}
+.trans-header {
+    color: black;
+    font-size: 4.8em;
+    font-weight: bold;
+}
+#swipe_header{
+    white-space: nowrap;
+    position: relative;
+    width: 100%; /* Full width */
+    box-sizing: border-box;
+    display: inline-block;
+    animation: swipe 7s linear;
+}
+@keyframes swipe {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+#transition-christmas{
+    background: linear-gradient(135deg, rgba(159, 2, 2, 0.68), rgba(223, 41, 41, 0.43), rgba(0, 128, 0, 0.42), #0a491d);
+}
+#transition-halloween{
+    background: linear-gradient(135deg, orange, rgba(255, 165, 0, 0.49), rgba(0, 0, 0, 0.44), black);
+}
+#transition-valentine{
+    background: linear-gradient(135deg, darkred,deeppink,lightpink);
+}
+
 /* Base styles for profile page */
 body.profile {
     font-family: Arial, sans-serif;
