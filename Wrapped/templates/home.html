@@ -18,9 +18,9 @@
             <a href="{% url 'register' %}" class="button">{% trans "Register" %}</a>
         </div>
         <a href="{% url 'contact' %}" class="contact-button">{% trans "Contact Developers" %}</a>
-    </div>
 
-    <div class="language-selector">
+
+    <div class="container-language-selector">
         <form action="{% url 'set_language' %}" method="post">
             {% csrf_token %}
             <button type="submit" name="language" value="en" class="button">{% trans "English" %}</button>
@@ -28,7 +28,7 @@
             <button type="submit" name="language" value="fr" class="button">{% trans "French" %}</button>
         </form>
     </div>
-
+    </div>
     <button id="dark-mode-toggle" class="button">{% trans "Toggle Dark Mode" %}</button>
 
     {% block content %}{% endblock %}
