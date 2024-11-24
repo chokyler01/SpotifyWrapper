@@ -880,8 +880,7 @@ body.top-genres-page {
     width: 100%; /* Full width */
     box-sizing: border-box;
     display: inline-block;
-    animation: swipe 10s linear;
-    animation-iteration-count: 1;
+    animation: swipe 7s linear;
 }
 @keyframes swipe {
     from {
