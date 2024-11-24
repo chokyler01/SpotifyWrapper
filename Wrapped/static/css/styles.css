@@ -890,3 +890,12 @@ body.top-genres-page {
         transform: translateX(-100%);
     }
 }
+#transition-christmas{
+    background: linear-gradient(135deg, rgba(159, 2, 2, 0.68), rgba(223, 41, 41, 0.43), rgba(0, 128, 0, 0.42), #0a491d);
+}
+#transition-halloween{
+    background: linear-gradient(135deg, orange, rgba(255, 165, 0, 0.49), rgba(0, 0, 0, 0.44), black);
+}
+#transition-valentine{
+    background: linear-gradient(135deg, darkred,deeppink,lightpink);
+}
