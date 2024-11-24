@@ -626,7 +626,7 @@ def view_old_wrap(request, wrap_id):
     wrap = get_object_or_404(SpotifyWrap, id=wrap_id)
 
     # Check if the wrap belongs to the current user or a friend
-    is_mine = wrap.user == request.user
+    #is_mine = wrap.user == request.user
     # if not is_mine:
     #     user_profile = Profile.objects.get(user=request.user)
     #     if not user_profile.friends.filter(id=wrap.user.id).exists():
@@ -654,7 +654,44 @@ def view_old_wrap(request, wrap_id):
         'top_artists': top_artists,
         'top_genres': top_genres,
         'top_albums': top_albums,
-        'is_mine': is_mine,
     })
 
- 
+
+def top_songs(request):
+    # Assuming you have stored the user's Spotify access token in their session
+    access_token = request.session.get('access_token')
+    print(f"Access Token: {access_token}")
+
+    if not access_token:
+        # Redirect to login or ask user to connect their Spotify
+        return redirect('spotify_login')
+
+    # Retrieve time_range from session, default to 'short_term'
+    time_range = request.session.get('time_range', 'short_term')
+    print(f"Time Range from Session: {time_range}")
+
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+    }
+
+    # API endpoint with the time_range parameter
+    url = f'https://api.spotify.com/v1/me/top/tracks?time_range={time_range}'
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+        top_tracks = response.json().get('items', [])
+
+        # Process the top tracks to add album images
+        for track in top_tracks:
+            if track.get('album') and track['album'].get('images'):
+                track['album_image'] = track['album']['images'][0]['url']
+            else:
+                track['album_image'] = None  # No image available
+    else:
+        top_tracks = []
+
+    context = {
+        'top_tracks': top_tracks,
+        'time_range': time_range  # Pass the time_range to the context
+    }
+    return render(request, 'top_songs.html', context)

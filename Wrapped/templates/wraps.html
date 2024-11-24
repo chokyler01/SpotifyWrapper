@@ -101,6 +101,10 @@
                 </div>
             {% endfor %}
         </div>
+        <a href="{% url 'top_songs' %}" class="btn btn-primary">
+            {% trans "Play Top Songs" %}
+        </a>
+
         <a href="{% url 'view_wraps' %}?step=3">
             <button class="next-button">{% trans "Next: Top Artists" %}</button>
         </a>

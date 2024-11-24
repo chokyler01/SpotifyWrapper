@@ -10,11 +10,6 @@
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 </head>
 
-<!-- If 'is_mine' is true, show the choose_time link -->
-{% if is_mine %}
-    <a href="{% url 'choose_wrap_time' %}" class="escape-wrapped"> X </a>
-{% endif %}
-
 <a href="{% url 'profile' %}" class="profile-icon" aria-label="{% trans 'View Profile' %}">
     <i class="bi bi-person"></i>
 </a>
@@ -112,19 +107,12 @@
         </div>
         <p>{% trans "Time Range" %}: {{ time_range }}</p>
 
-        <!-- Show 'Save to Profile' button only if 'is_mine' is true -->
-        {% if is_mine %}
-            <form method="post" action="{% url 'view_wraps' %}?time_range={{ time_range }}">
-                {% csrf_token %}
-                <input type="hidden" name="time_range" value="{{ time_range }}">
-                <button class="next-button" type="submit" name="save">{% trans "Save to Profile" %}</button>
-            </form>
-        {% else %}
-            <!-- Button to go back to friends' old wraps page -->
-            <a href="{% url 'friends_page' %}">
-                <button class="back-button">{% trans "Back to Friends' Wraps" %}</button>
-            </a>
-        {% endif %}
+        <!-- 'Save to Profile' button without 'is_mine' -->
+        <form method="post" action="{% url 'view_wraps' %}?time_range={{ time_range }}">
+            {% csrf_token %}
+            <input type="hidden" name="time_range" value="{{ time_range }}">
+            <button class="next-button" type="submit" name="save">{% trans "Save to Profile" %}</button>
+        </form>
     </body>
 {% endif %}
 </html>

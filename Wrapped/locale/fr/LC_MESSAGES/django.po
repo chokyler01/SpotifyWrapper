@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-22 15:59-0500\n"
+"POT-Creation-Date: 2024-11-24 21:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: Wrapped/templates/choose_time.html:7
 msgid "Select Time Range"
 msgstr "Sélectionnez la plage horaire"
 
@@ -134,20 +136,35 @@ msgstr "Créer un compte"
 msgid "Confirm Password"
 msgstr "Confirmer le mot de passe"
 
-msgid ""
-"Your password can’t be too similar to your other personal information. Your "
-"password must contain at least 8 characters and cannot be entirely numeric. "
-"Your password can’t be a commonly used password."
-msgstr ""
-"Votre mot de passe ne peut pas être trop similaire à vos autres informations personnelles. "
-"Il doit contenir au moins 8 caractères et ne peut pas être entièrement numérique. "
-"Il ne doit pas non plus être un mot de passe couramment utilisé."
+msgid "Your password can’t be too similar to your other personal information. Your password must contain at least 8 characters and cannot be entirely numeric. Your password can’t be a commonly used password."
+msgstr "Votre mot de passe ne peut pas être trop similaire à vos autres informations personnelles. Il doit contenir au moins 8 caractères et ne peut pas être entièrement numérique. Il ne doit pas non plus être un mot de passe couramment utilisé."
 
 msgid "Register and Link Spotify"
 msgstr "S'inscrire et lier Spotify"
 
 msgid "Already have an account? Log in"
 msgstr "Vous avez déjà un compte ? Connectez-vous"
+
+msgid "Your Top Songs"
+msgstr "Vos meilleures chansons"
+
+msgid "Go Back"
+msgstr "Retour"
+
+msgid "Album Image"
+msgstr "Image de l'album"
+
+msgid "No album image available"
+msgstr "Aucune image d'album disponible"
+
+msgid "by"
+msgstr "par"
+
+msgid "Your browser does not support the audio element."
+msgstr "Votre navigateur ne prend pas en charge l'élément audio."
+
+msgid "No preview available"
+msgstr "Aucun aperçu disponible"
 
 msgid "Friend's Spotify Wrapped"
 msgstr "Spotify Wrapped d'un ami"
@@ -194,11 +211,26 @@ msgstr "Meilleurs genres"
 msgid "Save to Profile"
 msgstr "Enregistrer dans le profil"
 
-msgid "Back to Friends' Wraps"
-msgstr "Retour aux Wraps des amis"
+msgid "Christmas"
+msgstr "Noël"
 
-msgid "TRANSITION THREE"
-msgstr "TRANSITION TROIS"
+msgid "Spotify Wrapped"
+msgstr "Spotify Wrapped"
+
+msgid "Halloween"
+msgstr "Halloween"
+
+msgid "Valentine's Day"
+msgstr "Saint-Valentin"
+
+msgid "Play Top Songs"
+msgstr "Jouer les meilleures chansons"
+
+msgid "The Artists That Defined Your Wrapped"
+msgstr "Les artistes qui ont défini votre Wrapped"
+
+msgid "The Albums You Had On Repeat"
+msgstr "Les albums que vous avez mis en boucle"
 
 msgid "Back: Top Artists"
 msgstr "Retour : Meilleurs artistes"
@@ -209,5 +241,17 @@ msgstr "Vos meilleurs albums"
 msgid "Next: Top Genres"
 msgstr "Suivant : Meilleurs genres"
 
-msgid "TRANSITION FOUR"
-msgstr "TRANSITION QUATRE"
+msgid "Turn It Up For Your Top Genres!"
+msgstr "Montez le volume pour vos meilleurs genres !"
+
+msgid "Back: Top Albums"
+msgstr "Retour : Meilleurs albums"
+
+#~ msgid "Back to Friends' Wraps"
+#~ msgstr "Retour aux Wraps des amis"
+
+#~ msgid "TRANSITION THREE"
+#~ msgstr "TRANSITION TROIS"
+
+#~ msgid "TRANSITION FOUR"
+#~ msgstr "TRANSITION QUATRE"

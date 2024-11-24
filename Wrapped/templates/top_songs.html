@@ -1,0 +1,45 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% trans "Your Top Songs" %}</title>
+</head>
+<body>
+    <h1>{% trans "Your Top Songs" %}</h1>
+
+    <!-- Back Button -->
+    <button onclick="window.history.back()">{% trans "Go Back" %}</button>
+
+    <ul>
+        {% for track in top_tracks %}
+            <li>
+                <!-- Display album image if available -->
+                {% if track.album_image %}
+                    <img src="{{ track.album_image }}" alt="{% trans 'Album Image' %}" style="width: 100px; height: 100px;">
+                {% else %}
+                    <p>{% trans 'No album image available' %}</p>
+                {% endif %}
+
+                <!-- Display track name and artist(s) -->
+                <strong>{{ track.name }}</strong> {% trans "by" %}
+                {% for artist in track.artists %}
+                    {{ artist.name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+
+                <!-- Display audio preview if available -->
+                {% if track.preview_url %}
+                    <audio controls>
+                        <source src="{{ track.preview_url }}" type="audio/mpeg">
+                        {% trans "Your browser does not support the audio element." %}
+                    </audio>
+                {% else %}
+                    <p>{% trans "No preview available" %}</p>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
