@@ -918,10 +918,10 @@ body.profile {
     padding: 0;
 }
 .profile_header {
-    font-size: 3em;
+    font-size: 3.2em;
     font-weight: bold;
-    margin-bottom: 10px;
     color: inherit; /* Adapts to light or dark mode */
+    margin: .4em;
 }
 
 .container_profile {
@@ -932,7 +932,8 @@ body.profile {
     display: flex;
     justify-content: center;
     gap: 20px;
-    margin: 40px;
+    margin-top: 10px;
+    margin-bottom: 20px;
     width: 100%;
 }
 /* Logout button */
@@ -1002,9 +1003,9 @@ body.profile {
     flex-direction: column;
     align-items: center; /* Center align the items */
     gap: 20px; /* Add space between elements */
-    margin-bottom: 20px; /* Add spacing between sections */
+    margin: 1em; /* Add spacing between sections */
     width: 80vw;
-    padding: 20px;
+    padding: 10px;
     background-color: #17a34a;
     border-radius: 8px;
     box-sizing: border-box;
@@ -1013,23 +1014,32 @@ body.profile {
 
 .saved-wraps-section h3 {
     text-align: center;
-    font-size: 24px;
-    margin-bottom: 20px;
+    font-size: 2rem;
     color: #17a34a;
 }
 
 .wrap-list {
     list-style: none;
-    padding: 0;
+    display: flex;
+    flex-direction: row; /* Align wraps horizontally */
+    flex-wrap: wrap; /* Allow wraps to go to the next line if needed */
+    gap: 20px; /* Space between wraps */
+    justify-content: center; /* Center the wraps horizontally */
+    width: 100%; /* Take up the full container width */
+    background-color: #17a34a;
+    padding: 1em;
+    border-radius: 8px;
 }
 
 .wrap-date {
     margin-bottom: 20px;
+    text-transform: capitalize;
 }
 
 .wrap-date strong {
     font-size: 18px;
     color: white;
+    text-transform: capitalize;
 }
 
 .wrap-items {
@@ -1077,7 +1087,7 @@ body.profile {
 /* Delete account button */
 .delete-account-form {
     text-align: center;
-    margin: 30px;
+    margin: 15px;
 }
 
 .delete-account-button {
