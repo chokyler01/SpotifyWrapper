@@ -70,6 +70,11 @@
 {% elif step == 3 %}
     <body class="transition-page", id=transition-2">
         <div class = "trans-header" id = "swipe_header">{% trans "The Artists That Defined Your Wrapped" %}</div>
+        <script>
+            setTimeout(() => {
+                window.location.href = "{% url 'view_wraps' %}?step=4&time_range={{ time_range }}";
+            }, 7500); //8000ms = 8 seconds
+        </script>
         <a href="{% url 'view_wraps' %}?step=4&time_range={{ time_range }}">
             <button class="next-button">{% trans "Next: Top Artists" %}</button>
         </a>
@@ -108,6 +113,11 @@
 {% elif step == 5 %}
     <body class="transition-page", id="transition-3">
         <div class = "trans-header" id = "swipe_header">{% trans "The Albums You Had On Repeat" %}</div>
+        <script>
+            setTimeout(() => {
+                window.location.href = "{% url 'view_wraps' %}?step=6&time_range={{ time_range }}";
+            }, 7500); //8000ms = 8 seconds
+        </script>
         <a href="{% url 'view_wraps' %}?step=6&time_range={{ time_range }}">
             <button class="next-button">{% trans "Next: Top Albums" %}</button>
         </a>
@@ -147,6 +157,11 @@
 {% elif step == 7 %}
     <body class="transition-page", id="transition-4">
         <div class = "trans-header" id = "swipe_header">{% trans "Turn It Up For Your Top Genres!" %}</div>
+        <script>
+            setTimeout(() => {
+                window.location.href = "{% url 'view_wraps' %}?step=8&time_range={{ time_range }}";
+            }, 7500); //8000ms = 8 seconds
+        </script>
         <a href="{% url 'view_wraps' %}?step=8&time_range={{ time_range }}">
             <button class="next-button">{% trans "Next: Top Genres" %}</button>
         </a>
