@@ -276,6 +276,9 @@ def view_wraps(request):
           time_range=time_range_param,
           wrap_data=json.dumps({})
       )
+  creation_month_day = str(wrap.created_at)[5:10]
+
+
 
 
   # Retrieve and save data based on the current step
@@ -424,7 +427,6 @@ def view_wraps(request):
 
 
   # Render the wraps page with the collected data
-
   return render(request, 'wraps.html', {
       'step': step,
       'time_range': time_range_param,
@@ -432,6 +434,7 @@ def view_wraps(request):
       'top_artists': top_artists,
       'top_genres': top_genres,
       'top_albums': top_albums,
+      'creation_month_day': creation_month_day
   })
 
 
