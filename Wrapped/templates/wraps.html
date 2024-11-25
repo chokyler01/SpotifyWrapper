@@ -153,6 +153,10 @@
                 <div class="rank_topSongs">{{ forloop.counter }}</div>
             </div>
         {% endfor %}
+            <a href="{% url 'view_wraps' %}?step=3">
+            <button class="next-button">{% trans "Next: Top Artists" %}</button>
+        </a>
+    </body>
     <script>
         //play song on album click
         document.addEventListener("DOMContentLoaded", function() {
@@ -181,12 +185,6 @@
             });
         });
     </script>
-
-
-        <a href="{% url 'view_wraps' %}?step=3">
-            <button class="next-button">{% trans "Next: Top Artists" %}</button>
-        </a>
-    </body>
 {% elif step == 3 %}
     <body class="transition-page", id=transition-2">
         <div class = "trans-header" id = "swipe_header">{% trans "The Artists That Defined Your Wrapped" %}</div>
