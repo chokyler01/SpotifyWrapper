@@ -18,7 +18,93 @@ from django.contrib import messages
 from .models import Profile
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
+from PIL import Image, ImageDraw, ImageFont
+from io import BytesIO
+from django.http import FileResponse
 
+def generate_wrap_image(request):
+    user = request.user
+    time_range = request.session.get('time_range')
+
+    if not time_range:
+        return HttpResponse("No time range found. Please complete your Spotify Wrapped first.", status=400)
+
+    try:
+        # Fetch the latest wrap for the current time range
+        wrap = SpotifyWrap.objects.filter(user=user, time_range=time_range).order_by('-created_at').first()
+
+        if not wrap:
+            return HttpResponse("No wrapped data available for the current session. Please save or complete your Spotify Wrapped.", status=404)
+
+        # Load wrap data
+        wrap_data = json.loads(wrap.wrap_data)
+        print("Wrap Data Retrieved:", wrap_data)  # Debugging
+
+        # Retrieve data
+        top_tracks = wrap_data.get('top_tracks', [])
+        top_genres = wrap_data.get('top_genres', [])
+        top_albums = wrap_data.get('top_albums', [])
+        top_artists = wrap_data.get('top_artists', [])
+
+        if not (top_tracks or top_genres or top_albums or top_artists):
+            return HttpResponse("No data available in the wrap. Ensure you've completed your Spotify Wrapped.", status=404)
+
+        # Create a blank image
+        img = Image.new('RGB', (1200, 800), color='white')  # Increased size for more content
+        draw = ImageDraw.Draw(img)
+        font_path = "/Library/Fonts/Arial.ttf"  # Update path as per your system
+        font = ImageFont.truetype(font_path, 20)
+
+        # Header
+        draw.text((20, 20), f"Spotify Wrapped for {user.username}", fill="black", font=font)
+        y_offset = 60
+
+        # Add Top Tracks
+        draw.text((20, y_offset), "Top Tracks:", fill="black", font=font)
+        y_offset += 30
+        for i, track in enumerate(top_tracks[:5]):  # Limit to top 5 tracks
+            track_name = track.get('name', 'Unknown Track')
+            artists = ", ".join(track.get('artists', ['Unknown Artist']))
+            draw.text((40, y_offset), f"{i + 1}. {track_name} by {artists}", fill="black", font=font)
+            y_offset += 30
+
+        # Add Top Genres
+        y_offset += 20  # Add space
+        draw.text((20, y_offset), "Top Genres:", fill="black", font=font)
+        y_offset += 30
+        for i, (genre, count) in enumerate(top_genres[:5]):  # Limit to top 5 genres
+            draw.text((40, y_offset), f"{i + 1}. {genre} ({count} occurrences)", fill="black", font=font)
+            y_offset += 30
+
+        # Add Top Albums
+        y_offset += 20  # Add space
+        draw.text((20, y_offset), "Top Albums:", fill="black", font=font)
+        y_offset += 30
+        for i, album in enumerate(top_albums[:5]):  # Limit to top 5 albums
+            album_name = album.get('name', 'Unknown Album')
+            artists = ", ".join(album.get('artists', ['Unknown Artist']))
+            draw.text((40, y_offset), f"{i + 1}. {album_name} by {artists}", fill="black", font=font)
+            y_offset += 30
+
+        # Add Top Artists
+        y_offset += 20  # Add space
+        draw.text((20, y_offset), "Top Artists:", fill="black", font=font)
+        y_offset += 30
+        for i, artist in enumerate(top_artists[:5]):  # Limit to top 5 artists
+            artist_name = artist.get('name', 'Unknown Artist')
+            draw.text((40, y_offset), f"{i + 1}. {artist_name}", fill="black", font=font)
+            y_offset += 30
+
+        # Save image to in-memory file
+        image_io = BytesIO()
+        img.save(image_io, format='PNG')
+        image_io.seek(0)
+
+        return FileResponse(image_io, as_attachment=True, filename='spotify_wrapped.png')
+
+    except Exception as e:
+        print(f"Error in generate_wrap_image: {e}")
+        return HttpResponse("An error occurred while generating the image. Please try again later.", status=500)
 @login_required
 def view_friends_old_wrap(request, friend_id):
     """View to display a friend's old wraps."""
@@ -141,17 +227,18 @@ def home_view(request):
 
 
 def register_view(request):
-  """Handle user registration and redirect to Spotify linking."""
-  if request.method == 'POST':
-      form = UserCreationForm(request.POST)
-      if form.is_valid():
-          user = form.save()
-          Profile.objects.create(user=user)  # Create profile for new user
-          login(request, user)  # Log in the user immediately after registration
-          return redirect('login')  # Redirect to choose_wrap_time after login
-  else:
-      form = UserCreationForm()
-  return render(request, 'register.html', {'form': form})
+    """Handle user registration and redirect to Spotify linking."""
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            # Ensure a Profile is created only if it doesn't already exist
+            Profile.objects.get_or_create(user=user)
+            login(request, user)  # Log in the user immediately after registration
+            return redirect('login')  # Redirect to choose_wrap_time after login
+    else:
+        form = UserCreationForm()
+    return render(request, 'register.html', {'form': form})
 
 
 
@@ -189,259 +276,87 @@ def logout_view(request):
 
 # views.py
 from datetime import datetime
-
-
-
-
 def view_wraps(request):
-  """Sequential view for user's Spotify data (top songs, top albums, top artists) with different time ranges."""
-  spotify_token = request.session.get('access_token')
-  if not spotify_token:
-      return redirect('spotify_link')
-
-
-
-
-  # Get the current step (default to 1, which shows top songs)
-  step = int(request.GET.get('step', 1))
-  time_range = request.GET.get('time_range')
-
-
-  # Define the valid time ranges directly
-  valid_time_ranges = ['short_term', 'medium_term', 'long_term']
-
-
-  # Check if the time_range is valid; if not, redirect to choose_wrap_time
-  if time_range not in valid_time_ranges:
-      print("Invalid time_range detected:", time_range)
-      time_range = request.session.get('time_range')
-
-
-  # Use the selected time range directly
-  time_range_param = time_range
-  print(f"Time Range in view_wraps: {time_range_param}")
-
-
-  # Your existing code to fetch data using time_range_param
-  # For example:
-  params = {'limit': 10, 'time_range': time_range_param}
-
-
-  # Spotify API URLs
-  top_tracks_url = 'https://api.spotify.com/v1/me/top/tracks'
-  top_artists_url = 'https://api.spotify.com/v1/me/top/artists'
-  top_albums_url = 'https://api.spotify.com/v1/me/top/albums'
-
-
-
-
-  # Initialize data variables
-  top_tracks, top_artists, top_genres, top_albums = [], [], [], []
-
-
-
-
-  # Define the parameters to pass to Spotify API based on the time range
-  params = {'limit': 10, 'time_range': time_range_param}
-
-
-
-
-  # Check if a wrap already exists for the user for this time range and today
-  today_date = datetime.today().date()
-  # Check if any wrap already exists for the user for today
-  existing_wrap = SpotifyWrap.objects.filter(
-      user=request.user,
-      created_at__date=today_date,
-      time_range=time_range_param
-  ).first()
-
-
-  if existing_wrap:
-      # If a wrap exists, check if the time range matches the selected one
-      if existing_wrap.time_range != time_range_param:
-          # Create a new wrap for the selected time range
-          wrap = SpotifyWrap.objects.create(
-              user=request.user,
-              time_range=time_range_param,
-              wrap_data=json.dumps({})
-          )
-      else:
-          # Update the existing wrap
-          wrap = existing_wrap
-  else:
-      # No wrap exists, create a new one
-      wrap = SpotifyWrap.objects.create(
-          user=request.user,
-          time_range=time_range_param,
-          wrap_data=json.dumps({})
-      )
-  creation_month_day = str(wrap.created_at)[5:10]
-
-
-
-
-  # Retrieve and save data based on the current step
-  if step == 2:
-      # Fetch top tracks with album images
-      print(f"Requesting top tracks from URL: {top_tracks_url} with params: {params}")
-      #top_tracks_data = fetch_spotify_data(top_tracks_url, spotify_token, params=params)
-
-
-      top_tracks_data = fetch_spotify_data(top_tracks_url, spotify_token, params=params)
-      top_tracks = [
-          {
-              'name': track['name'],
-              'artists': [artist['name'] for artist in track['artists']],
-              'album_name': track['album']['name'],
-              'image_url': track['album']['images'][0]['url'] if track['album']['images'] else None
-          }
-          for track in top_tracks_data.get('items', [])
-      ]
-
-
-
-
-
-
-      # Save or update wrap data with top tracks
-      wrap_data = {
-          'step': step,
-          'time_range': time_range_param,
-          'top_tracks': top_tracks,
-      }
-      if wrap:
-          # Update existing wrap data
-          wrap.wrap_data = json.dumps(wrap_data)
-          wrap.save()
-      else:
-          # Create new wrap for today
-          wrap = SpotifyWrap.objects.create(user=request.user, wrap_data=json.dumps(wrap_data), time_range=time_range_param)
-
-
-
-
-  elif step == 4:
-      # Fetch top artists with images and genres
-      top_artists_data = fetch_spotify_data(top_artists_url, spotify_token, params=params)
-      top_artists = [
-          {
-              'name': artist['name'],
-              'genres': artist.get('genres', []),
-              'image_url': artist['images'][0]['url'] if artist.get('images') else None
-          }
-          for artist in top_artists_data.get('items', [])
-      ]
-
-
-
-
-      # Aggregate genres from top artists
-      genres = [genre for artist in top_artists for genre in artist['genres']]
-      genre_counts = Counter(genres)
-      top_genres = genre_counts.most_common(5)
-
-
-
-
-      # Save or update wrap data with top artists and genres
-      wrap_data = {
-          'step': step,
-          'time_range': time_range_param,
-          'top_artists': top_artists,
-          'top_genres': top_genres,
-      }
-      if wrap:
-          # Update existing wrap data
-          wrap.wrap_data = json.dumps(wrap_data)
-          wrap.save()
-      else:
-          # Create new wrap for today
-          wrap = SpotifyWrap.objects.create(user=request.user, wrap_data=json.dumps(wrap_data), time_range=time_range_param)
-
-
-
-
-  elif step == 6:
-      # Fetch top albums for each top artist
-      top_artists_data = fetch_spotify_data(top_artists_url, spotify_token, params=params)
-      top_artists = top_artists_data.get('items', []) if 'error' not in top_artists_data else []
-      for artist in top_artists:
-          artist_albums_url = f'https://api.spotify.com/v1/artists/{artist["id"]}/albums'
-          albums_data = fetch_spotify_data(artist_albums_url, spotify_token, params={'limit': 3})
-          albums = [
-              {
-                  'name': album['name'],
-                  'artists': [artist['name'] for artist in album['artists']],
-                  'image_url': album['images'][0]['url'] if album['images'] else None
-              }
-              for album in albums_data.get('items', [])
-          ]
-          top_albums.extend(albums)
-
-
-      # Limit top_albums to the first 10 entries
-      top_albums = top_albums[:10]
-
-
-      # Save or update wrap data with top albums
-      wrap_data = {
-          'step': step,
-          'time_range': time_range_param,
-          'top_albums': top_albums,
-      }
-      if wrap:
-          # Update existing wrap data
-          wrap.wrap_data = json.dumps(wrap_data)
-          wrap.save()
-      else:
-          # Create new wrap for today
-          wrap = SpotifyWrap.objects.create(user=request.user, wrap_data=json.dumps(wrap_data), time_range=time_range_param)
-  elif step == 8:
-      # Retrieve top genres if they were saved in step 2
-      if wrap and wrap.wrap_data:
-          wrap_data = json.loads(wrap.wrap_data)
-          top_genres = wrap_data.get('top_genres', [])
-
-
-      # If top_genres wasn't saved, calculate it again (in case user skipped directly to step 4)
-      if not top_genres:
-          top_artists_data = fetch_spotify_data(top_artists_url, spotify_token, params=params)
-          top_artists = [
-              {
-                  'name': artist['name'],
-                  'genres': artist.get('genres', [])
-              }
-              for artist in top_artists_data.get('items', [])
-          ]
-          genres = [genre for artist in top_artists for genre in artist['genres']]
-          genre_counts = Counter(genres)
-          top_genres = genre_counts.most_common(10)
-
-
-  # Handle "Save to Profile" submission
-  if request.method == 'POST' and 'save' in request.POST:
-      save_wrap_to_profile(request.user, wrap, time_range_param)
-      print(f"Time Range in view_wraps (after form submission): {time_range}") # Debugging
-      return render(request, "profile.html")
-
-
-  # Render the wraps page with the collected data
-  return render(request, 'wraps.html', {
-      'step': step,
-      'time_range': time_range_param,
-      'top_tracks': top_tracks,
-      'top_artists': top_artists,
-      'top_genres': top_genres,
-      'top_albums': top_albums,
-      'creation_month_day': creation_month_day
-  })
-
-
-
-
-
-
+    spotify_token = request.session.get('access_token')
+    if not spotify_token:
+        return redirect('spotify_link')
+
+    step = int(request.GET.get('step', 1))
+    time_range = request.GET.get('time_range', request.session.get('time_range'))
+
+    if time_range not in ['short_term', 'medium_term', 'long_term']:
+        return redirect('choose_wrap_time')
+
+    # Get or create a SpotifyWrap for the user and time range
+    wrap = SpotifyWrap.objects.filter(user=request.user, time_range=time_range).order_by('-created_at').first()
+    if not wrap:
+        wrap = SpotifyWrap.objects.create(
+            user=request.user,
+            time_range=time_range,
+            wrap_data=json.dumps({})
+        )
+
+    # Load wrap_data safely
+    try:
+        wrap_data = json.loads(wrap.wrap_data)
+    except json.JSONDecodeError:
+        wrap_data = {}
+
+    # Step-based processing
+    if step == 2:
+        # Fetch and save top tracks
+        top_tracks_url = 'https://api.spotify.com/v1/me/top/tracks'
+        params = {'limit': 10, 'time_range': time_range}
+        top_tracks_data = fetch_spotify_data(top_tracks_url, spotify_token, params=params)
+        top_tracks = [
+            {
+                'name': track['name'],
+                'artists': [artist['name'] for artist in track['artists']],
+                'album_name': track['album']['name'],
+                'image_url': track['album']['images'][0]['url'] if track['album']['images'] else None
+            }
+            for track in top_tracks_data.get('items', [])
+        ]
+        wrap_data['top_tracks'] = top_tracks
+        wrap.wrap_data = json.dumps(wrap_data)
+        wrap.save()
+
+    elif step == 4:
+        # Fetch and save top artists and genres
+        top_artists_url = 'https://api.spotify.com/v1/me/top/artists'
+        params = {'limit': 10, 'time_range': time_range}
+        top_artists_data = fetch_spotify_data(top_artists_url, spotify_token, params=params)
+        top_artists = [
+            {
+                'name': artist['name'],
+                'genres': artist.get('genres', []),
+                'image_url': artist['images'][0]['url'] if artist.get('images') else None
+            }
+            for artist in top_artists_data.get('items', [])
+        ]
+        genres = [genre for artist in top_artists for genre in artist['genres']]
+        genre_counts = Counter(genres)
+        top_genres = genre_counts.most_common(5)
+        wrap_data['top_artists'] = top_artists
+        wrap_data['top_genres'] = top_genres
+        wrap.wrap_data = json.dumps(wrap_data)
+        wrap.save()
+    # Add additional steps as needed...
+
+    elif step == 8:
+        # Ensure top genres are saved
+        wrap_data['top_genres'] = wrap_data.get('top_genres', [])
+        wrap.wrap_data = json.dumps(wrap_data)
+        wrap.save()
+
+    return render(request, 'wraps.html', {
+        'step': step,
+        'time_range': time_range,
+        'top_tracks': wrap_data.get('top_tracks', []),
+        'top_artists': wrap_data.get('top_artists', []),
+        'top_genres': wrap_data.get('top_genres', []),
+        'creation_month_day': wrap.created_at.strftime('%m-%d')
+    })
 
 
 @login_required
