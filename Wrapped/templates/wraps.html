@@ -93,7 +93,7 @@
                                 <img src="{{ track.album_image }}"
                                      alt="{% trans 'Album Image' %}"
                                      style="width: 100px; height: 100px; cursor: pointer;"
-                                     class="album-image"
+                                     class="song-image"
                                      data-audio="{{ track.preview_url }}">
                                 <span class="tooltip">{% trans 'Click to Play Song' %}</span>
                             </div>
@@ -116,7 +116,7 @@
     <script>
         //play song on album click
         document.addEventListener("DOMContentLoaded", function() {
-            const images = document.querySelectorAll('.album-image');
+            const images = document.querySelectorAll('.song-image');
             let currentAudio = null;
 
             images.forEach(image => {
