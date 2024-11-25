@@ -287,12 +287,22 @@ def view_wraps(request):
     if time_range not in ['short_term', 'medium_term', 'long_term']:
         return redirect('choose_wrap_time')
 
-    wrap, created = SpotifyWrap.objects.get_or_create(
-        user=request.user, time_range=time_range,
-        defaults={'wrap_data': json.dumps({})}
-    )
-    wrap_data = json.loads(wrap.wrap_data)
+    # Get or create a SpotifyWrap for the user and time range
+    wrap = SpotifyWrap.objects.filter(user=request.user, time_range=time_range).order_by('-created_at').first()
+    if not wrap:
+        wrap = SpotifyWrap.objects.create(
+            user=request.user,
+            time_range=time_range,
+            wrap_data=json.dumps({})
+        )
 
+    # Load wrap_data safely
+    try:
+        wrap_data = json.loads(wrap.wrap_data)
+    except json.JSONDecodeError:
+        wrap_data = {}
+
+    # Step-based processing
     if step == 2:
         # Fetch and save top tracks
         top_tracks_url = 'https://api.spotify.com/v1/me/top/tracks'
@@ -331,7 +341,6 @@ def view_wraps(request):
         wrap_data['top_genres'] = top_genres
         wrap.wrap_data = json.dumps(wrap_data)
         wrap.save()
-
     # Add additional steps as needed...
 
     elif step == 8:
