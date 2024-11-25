@@ -422,6 +422,7 @@ def view_wraps(request):
   if request.method == 'POST' and 'save' in request.POST:
       save_wrap_to_profile(request.user, wrap, time_range_param)
       print(f"Time Range in view_wraps (after form submission): {time_range}") # Debugging
+      print(wrap)
       return render(request, "profile.html")
 
 
@@ -614,10 +615,6 @@ def save_wrap_to_profile(user, wrap, time_range):
 
 
 
-from django.shortcuts import render, get_object_or_404
-from django.http import Http404
-import json
-from .models import SpotifyWrap, Profile
 
 def view_old_wrap(request, wrap_id):
     """View for displaying details of a specific wrap based on wrap_id."""
@@ -632,10 +629,12 @@ def view_old_wrap(request, wrap_id):
     #         raise Http404("You do not have permission to view this wrap.")
 
     # Load the wrap data from the database
+
     wrap_data = json.loads(wrap.wrap_data)
 
     # Ensure 'step' starts from 1 if not present
-    step = wrap_data.get('step', 1)
+    step = 1
+    print(wrap_data)
 
     # Extract the necessary data from wrap_data
     time_range = wrap_data.get('time_range')
