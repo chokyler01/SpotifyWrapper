@@ -85,75 +85,31 @@
             <h2 class="topSongs">{% trans "Top Songs" %}</h2>
         </div>
         <div class="chart_topSongs">
-{#            {% for track in top_tracks %}#}
-{#                <div class="pillar_topSongs rank-{{ forloop.counter }}">#}
-{#                    <div class="song-box_topSongs">#}
-{#                        {% if track.image_url %}#}
-{#                            <img src="{{ track.image_url }}" alt="{{ track.name }}">#}
-{#                        {% endif %}#}
-{#                        <div class="song-title_topSongs">{{ track.name }}</div>#}
-{#                        <div class="song-artist_topSongs">#}
-{#                            {% for artist in track.artists %}#}
-{#                                {{ artist }}{% if not forloop.last %}, {% endif %}#}
-{#                            {% endfor %}#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    <div class="rank_topSongs">{{ forloop.counter }}</div>#}
-{#                </div>#}
-{#            {% endfor %}#}
-{#        {% for track in top_tracks %}#}
-{#            <div class="pillar_topSongs rank-{{ forloop.counter }}">#}
-{#                <div class="song-box_topSongs">#}
-{#                    {% if track.album_image %}#}
-{#                        <img src="{{ track.album_image }}" alt="{% trans 'Album Image' %}" style="width: 100px; height: 100px;">#}
-{#                    {% else %}#}
-{#                        <p>{% trans 'No album image available' %}</p>#}
-{#                    {% endif %}#}
-{##}
-{#                    <strong>{{ track.name }}</strong> {% trans "by" %}#}
-{#                    {% for artist in track.artists %}#}
-{#                        {{ artist.name }}{% if not forloop.last %}, {% endif %}#}
-{#                    {% endfor %}#}
-{#                    <div class="play_song">#}
-{#                        {% if track.preview_url %}#}
-{#                            <audio controls>#}
-{#                                <source src="{{ track.preview_url }}" type="audio/mpeg">#}
-{#                                {% trans "Your browser does not support the audio element." %}#}
-{#                            </audio>#}
-{#                        {% else %}#}
-{#                            <p>{% trans "No preview available" %}</p>#}
-{#                        {% endif %}#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="rank_topSongs">{{ forloop.counter }}</div>#}
-{#            </div>#}
-{#        {% endfor %}#}
-{#        </div>#}
-        {% for track in top_tracks %}
-            <div class="pillar_topSongs rank-{{ forloop.counter }}">
-                <div class="song-box_topSongs">
-                    {% if track.album_image %}
-                        <div class="album-image">
-                            <img src="{{ track.album_image }}"
-                                 alt="{% trans 'Album Image' %}"
-                                 style="width: 100px; height: 100px; cursor: pointer;"
-                                 class="album-image"
-                                 data-audio="{{ track.preview_url }}">
-                            <span class="tooltip">{% trans 'Click to Play Song' %}</span>
-                        </div>
-                    {% else %}
-                        <p>{% trans 'No album image available' %}</p>
-                    {% endif %}
+            {% for track in top_tracks %}
+                <div class="pillar_topSongs rank-{{ forloop.counter }}">
+                    <div class="song-box_topSongs">
+                        {% if track.album_image %}
+                            <div class="image-and-audio">
+                                <img src="{{ track.album_image }}"
+                                     alt="{% trans 'Album Image' %}"
+                                     style="width: 100px; height: 100px; cursor: pointer;"
+                                     class="album-image"
+                                     data-audio="{{ track.preview_url }}">
+                                <span class="tooltip">{% trans 'Click to Play Song' %}</span>
+                            </div>
+                        {% else %}
+                            <p>{% trans 'No album image available' %}</p>
+                        {% endif %}
 
-                    <strong>{{ track.name }}</strong> {% trans "by" %}
-                    {% for artist in track.artists %}
-                        {{ artist.name }}{% if not forloop.last %}, {% endif %}
-                    {% endfor %}
+                        <strong>{{ track.name }}</strong> {% trans "by" %}
+                        {% for artist in track.artists %}
+                            {{ artist.name }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="rank_topSongs">{{ forloop.counter }}</div>
                 </div>
-                <div class="rank_topSongs">{{ forloop.counter }}</div>
-            </div>
-        {% endfor %}
-            <a href="{% url 'view_wraps' %}?step=3">
+            {% endfor %}
+        <a href="{% url 'view_wraps' %}?step=3">
             <button class="next-button">{% trans "Next: Top Artists" %}</button>
         </a>
     </body>
@@ -164,7 +120,7 @@
             let currentAudio = null;
 
             images.forEach(image => {
-                image.addEventListener('click', function() {
+                image.addEventListener('click', function () {
                     const audioSrc = this.getAttribute('data-audio');
 
                     if (currentAudio) {
@@ -175,7 +131,7 @@
                     if (audioSrc) {
                         currentAudio = new Audio(audioSrc);
                         currentAudio.play();
-                        currentAudio.addEventListener('ended', function() {
+                        currentAudio.addEventListener('ended', function () {
                             currentAudio = null;
                         });
                     } else {

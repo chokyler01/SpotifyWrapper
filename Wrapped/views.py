@@ -287,18 +287,6 @@ def view_wraps(request):
   if step == 2:
       # Fetch top tracks with album images
       print(f"Requesting top tracks from URL: {top_tracks_url} with params: {params}")
-      #
-      #
-      # top_tracks_data = fetch_spotify_data(top_tracks_url, spotify_token, params=params)
-      # top_tracks = [
-      #     {
-      #         'name': track['name'],
-      #         'artists': [artist['name'] for artist in track['artists']],
-      #         'album_name': track['album']['name'],
-      #         'image_url': track['album']['images'][0]['url'] if track['album']['images'] else None
-      #     }
-      #     for track in top_tracks_data.get('items', [])
-      # ]
       songs_url = f'https://api.spotify.com/v1/me/top/tracks?time_range={time_range}'
       top_tracks_data = requests.get(songs_url, headers=headers)
       top_tracks = (top_tracks_data.json().get('items', []))[0:10]

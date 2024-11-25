@@ -1124,7 +1124,7 @@ body.profile {
     text-align: center;
     color: #ffffff;
 }
-.album-image {
+.image-and-audio{
     position: relative;
     display: inline-block;
 }
@@ -1144,7 +1144,7 @@ body.profile {
     font-size: 12px;
 }
 
-.album-image:hover .tooltip {
+.image-and-audio:hover .tooltip {
     visibility: visible;
     opacity: 1;
     transition: opacity 0.3s ease-in-out;
