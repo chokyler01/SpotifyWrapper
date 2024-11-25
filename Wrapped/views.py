@@ -244,7 +244,9 @@ def view_wraps(request):
   # Define the parameters to pass to Spotify API based on the time range
   params = {'limit': 10, 'time_range': time_range_param}
 
-
+  headers = {
+      'Authorization': f'Bearer {spotify_token}',
+  }
 
 
   # Check if a wrap already exists for the user for this time range and today
@@ -285,26 +287,35 @@ def view_wraps(request):
   if step == 2:
       # Fetch top tracks with album images
       print(f"Requesting top tracks from URL: {top_tracks_url} with params: {params}")
-      #top_tracks_data = fetch_spotify_data(top_tracks_url, spotify_token, params=params)
+      #
+      #
+      # top_tracks_data = fetch_spotify_data(top_tracks_url, spotify_token, params=params)
+      # top_tracks = [
+      #     {
+      #         'name': track['name'],
+      #         'artists': [artist['name'] for artist in track['artists']],
+      #         'album_name': track['album']['name'],
+      #         'image_url': track['album']['images'][0]['url'] if track['album']['images'] else None
+      #     }
+      #     for track in top_tracks_data.get('items', [])
+      # ]
+      songs_url = f'https://api.spotify.com/v1/me/top/tracks?time_range={time_range}'
+      top_tracks_data = requests.get(songs_url, headers=headers)
+      top_tracks = (top_tracks_data.json().get('items', []))[0:10]
+
+      for track in top_tracks:
+          if track.get('album') and track['album'].get('images'):
+              track['album_image'] = track['album']['images'][0]['url']
+          else:
+              track['album_image'] = None
 
 
-      top_tracks_data = fetch_spotify_data(top_tracks_url, spotify_token, params=params)
-      top_tracks = [
-          {
-              'name': track['name'],
-              'artists': [artist['name'] for artist in track['artists']],
-              'album_name': track['album']['name'],
-              'image_url': track['album']['images'][0]['url'] if track['album']['images'] else None
-          }
-          for track in top_tracks_data.get('items', [])
-      ]
 
 
 
 
 
-
-      # Save or update wrap data with top tracks
+              # Save or update wrap data with top tracks
       wrap_data = {
           'step': step,
           'time_range': time_range_param,
