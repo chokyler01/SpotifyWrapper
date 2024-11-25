@@ -263,6 +263,10 @@
         <a href="{% url 'view_wraps' %}?step=6&time_range={{ time_range }}">
             <button class="back-button">{% trans "Back: Top Albums" %}</button>
         </a>
+        <form method="post" action="{% url 'view_wraps' %}?time_range={{ time_range }}">
+            {% csrf_token %}
+            <input type="hidden" name="time_range" value="{{ time_range }}">
+        </form>
         <a href="{% url 'profile' %}" class="profile-icon" aria-label="{% trans 'View Profile' %}">
             <i class="bi bi-person"></i>
         </a>
