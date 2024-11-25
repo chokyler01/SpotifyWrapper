@@ -212,33 +212,56 @@
         </a>
     </body>
 {% elif step == 8 %}
-    <body class="top-genres-page">
-        <h4 class="topGenresTitle">{% trans "Top Genres" %}</h4>
-        <a href="{% url 'profile' %}" class="profile-icon" aria-label="{% trans 'View Profile' %}">
-            <i class="bi bi-person"></i>
-        </a>
-        <div class="genre-container">
-            {% for genre, count in top_genres %}
-                <div class="genre-box">
-                    <div class="genre-rank">{{ forloop.counter }}</div>
-                    <div class="genre-info">
-                        <div class="genre-name">{{ genre }}</div>
-                    </div>
+<body class="top-genres-page">
+    <h4 class="topGenresTitle">{% trans "Top Genres" %}</h4>
+    <a href="{% url 'profile' %}" class="profile-icon" aria-label="{% trans 'View Profile' %}">
+        <i class="bi bi-person"></i>
+    </a>
+    <div class="genre-container">
+        {% for genre, count in top_genres %}
+            <div class="genre-box">
+                <div class="genre-rank">{{ forloop.counter }}</div>
+                <div class="genre-info">
+                    <div class="genre-name">{{ genre }}</div>
                 </div>
-            {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+    <p>{% trans "Time Range" %}: {{ time_range }}</p>
+    <a href="{% url 'view_wraps' %}?step=6&time_range={{ time_range }}">
+        <button class="back-button">{% trans "Back: Top Albums" %}</button>
+    </a>
+    <form method="post" action="{% url 'view_wraps' %}?time_range={{ time_range }}">
+        {% csrf_token %}
+        <input type="hidden" name="time_range" value="{{ time_range }}">
+        <button class="next-button" type="submit" name="save">{% trans "Save to Profile" %}</button>
+    </form>
+
+    <!-- Share and Download Buttons -->
+    <div class="actions-section">
+        <h3>{% trans "Share or Download" %}</h3>
+        <div class="buttons">
+            <!-- Download Wrapped Image -->
+            <form method="GET" action="{% url 'generate_wrap_image' %}">
+                <button type="submit" class="btn btn-secondary">{% trans "Download Wrapped Image" %}</button>
+            </form>
+
+            <!-- Share on Instagram -->
+            <a href="https://www.instagram.com/" target="_blank">
+                <button type="button" class="btn btn-secondary">{% trans "Share on Instagram" %}</button>
+            </a>
+
+            <!-- Share on Twitter -->
+            <a href="https://twitter.com/intent/tweet?text=Check%20out%20my%20Spotify%20Wrapped!%20#SpotifyWrapped" target="_blank">
+                <button type="button" class="btn btn-secondary">{% trans "Share on Twitter" %}</button>
+            </a>
+
+            <!-- Share on LinkedIn -->
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fyourwebsite.com%2Fwrapped%2F" target="_blank">
+                <button type="button" class="btn btn-secondary">{% trans "Share on LinkedIn" %}</button>
+            </a>
         </div>
-        <p>{% trans "Time Range" %}: {{ time_range }}</p>
-        <a href="{% url 'view_wraps' %}?step=6&time_range={{ time_range }}">
-            <button class="back-button">{% trans "Back: Top Albums" %}</button>
-        </a>
-        <form method="post" action="{% url 'view_wraps' %}?time_range={{ time_range }}">
-            {% csrf_token %}
-            <input type="hidden" name="time_range" value="{{ time_range }}">
-            <button class="next-button" type="submit" name="save">{% trans "Save to Profile" %}</button>
-        </form>
-        <a href="{% url 'profile' %}" class="profile-icon" aria-label="{% trans 'View Profile' %}">
-            <i class="bi bi-person"></i>
-        </a>
-    </body>
+    </div>
+</body>
 {% endif %}
 </html>
