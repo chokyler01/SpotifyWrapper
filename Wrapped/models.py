@@ -13,6 +13,9 @@ class SpotifyWrap(models.Model):
             ('medium_term', 'Medium Term'),
             ('long_term', 'Long Term')
         ],
+        null=True,
+        blank=True  # Allows empty input in forms
+
     )
 
     def __str__(self):

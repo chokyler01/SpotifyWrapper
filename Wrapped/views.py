@@ -315,6 +315,46 @@ def view_wraps(request):
             wrap_data=json.dumps({})
         )
 
+  # Define the parameters to pass to Spotify API based on the time range
+  params = {'limit': 10, 'time_range': time_range_param}
+
+  headers = {
+      'Authorization': f'Bearer {spotify_token}',
+  }
+
+
+  # Check if a wrap already exists for the user for this time range and today
+  today_date = datetime.today().date()
+  # Check if any wrap already exists for the user for today
+  existing_wrap = SpotifyWrap.objects.filter(
+      user=request.user,
+      created_at__date=today_date,
+      time_range=time_range_param
+  ).first()
+
+
+  if existing_wrap:
+      # If a wrap exists, check if the time range matches the selected one
+      if existing_wrap.time_range != time_range_param:
+          # Create a new wrap for the selected time range
+          wrap = SpotifyWrap.objects.create(
+              user=request.user,
+              time_range=time_range_param,
+              wrap_data=json.dumps({})
+          )
+      else:
+          # Update the existing wrap
+          wrap = existing_wrap
+  else:
+      # No wrap exists, create a new one
+      wrap = SpotifyWrap.objects.create(
+          user=request.user,
+          time_range=time_range_param,
+          wrap_data=json.dumps({})
+      )
+  creation_month_day = str(wrap.created_at)[5:10]
+
+
     # Load wrap_data safely
     try:
         wrap_data = json.loads(wrap.wrap_data)
@@ -339,6 +379,43 @@ def view_wraps(request):
         wrap_data['top_tracks'] = top_tracks
         wrap.wrap_data = json.dumps(wrap_data)
         wrap.save()
+
+  # Retrieve and save data based on the current step
+  if step == 2:
+      # Fetch top tracks with album images
+      print(f"Requesting top tracks from URL: {top_tracks_url} with params: {params}")
+      songs_url = f'https://api.spotify.com/v1/me/top/tracks?time_range={time_range}'
+      top_tracks_data = requests.get(songs_url, headers=headers)
+      top_tracks = (top_tracks_data.json().get('items', []))[0:10]
+
+      for track in top_tracks:
+          if track.get('album') and track['album'].get('images'):
+              track['album_image'] = track['album']['images'][0]['url']
+          else:
+              track['album_image'] = None
+
+
+
+
+
+
+
+              # Save or update wrap data with top tracks
+      wrap_data = {
+          'step': step,
+          'time_range': time_range_param,
+          'top_tracks': top_tracks,
+      }
+      if wrap:
+          # Update existing wrap data
+          wrap.wrap_data = json.dumps(wrap_data)
+          wrap.save()
+      else:
+          # Create new wrap for today
+          wrap = SpotifyWrap.objects.create(user=request.user, wrap_data=json.dumps(wrap_data), time_range=time_range_param)
+
+
+
 
     elif step == 4:
         # Fetch and save top artists and genres
@@ -425,6 +502,31 @@ def view_wraps(request):
             genre_counts = Counter(genres)
 
             top_genres = genre_counts.most_common(10)
+
+
+  # Handle "Save to Profile" submission
+  if request.method == 'POST' and 'save' in request.POST:
+      save_wrap_to_profile(request.user, wrap, time_range_param)
+      print(f"Time Range in view_wraps (after form submission): {time_range}") # Debugging
+      print(wrap)
+      return render(request, "profile.html")
+
+
+  # Render the wraps page with the collected data
+  return render(request, 'wraps.html', {
+      'step': step,
+      'time_range': time_range_param,
+      'top_tracks': top_tracks,
+      'top_artists': top_artists,
+      'top_genres': top_genres,
+      'top_albums': top_albums,
+      'creation_month_day': creation_month_day
+  })
+
+
+
+
+
 
     return render(request, 'wraps.html', {
         'step': step,
@@ -608,10 +710,6 @@ def save_wrap_to_profile(user, wrap, time_range):
 
 
 
-from django.shortcuts import render, get_object_or_404
-from django.http import Http404
-import json
-from .models import SpotifyWrap, Profile
 
 def view_old_wrap(request, wrap_id):
     """View for displaying details of a specific wrap based on wrap_id."""
@@ -626,10 +724,12 @@ def view_old_wrap(request, wrap_id):
     #         raise Http404("You do not have permission to view this wrap.")
 
     # Load the wrap data from the database
+
     wrap_data = json.loads(wrap.wrap_data)
 
     # Ensure 'step' starts from 1 if not present
-    step = wrap_data.get('step', 1)
+    step = 1
+    print(wrap_data)
 
     # Extract the necessary data from wrap_data
     time_range = wrap_data.get('time_range')
@@ -649,42 +749,65 @@ def view_old_wrap(request, wrap_id):
         'top_albums': top_albums,
     })
 
+import random
 
-def top_songs(request):
-    # Assuming you have stored the user's Spotify access token in their session
-    access_token = request.session.get('access_token')
-    print(f"Access Token: {access_token}")
+
+import requests
+import random
+from django.shortcuts import render, redirect
+
+def song_guess_game(request):
+    # Get the Spotify access token
+    access_token = request.session.get('access_token')  # Adjust to how you store the token
 
     if not access_token:
-        # Redirect to login or ask user to connect their Spotify
-        return redirect('spotify_login')
+        return redirect('spotify_login')  # Redirect to Spotify login if no token is available
 
-    # Retrieve time_range from session, default to 'short_term'
-    time_range = request.session.get('time_range', 'short_term')
-    print(f"Time Range from Session: {time_range}")
-
+    # Fetch user's top tracks from Spotify API
+    top_tracks_url = 'https://api.spotify.com/v1/me/top/tracks'
     headers = {
-        'Authorization': f'Bearer {access_token}',
+        'Authorization': f'Bearer {access_token}',  # Use the access token in the Authorization header
     }
 
-    # API endpoint with the time_range parameter
-    url = f'https://api.spotify.com/v1/me/top/tracks?time_range={time_range}'
-    response = requests.get(url, headers=headers)
+    # Make the request to get the top tracks
+    response = requests.get(top_tracks_url, headers=headers)
 
-    if response.status_code == 200:
-        top_tracks = response.json().get('items', [])
+    if response.status_code != 200:
+        print(f"Error fetching top tracks: {response.status_code}")
+        return redirect('profile')  # Redirect to profile if there’s an error fetching data
 
-        # Process the top tracks to add album images
-        for track in top_tracks:
-            if track.get('album') and track['album'].get('images'):
-                track['album_image'] = track['album']['images'][0]['url']
+    top_tracks_data = response.json()
+
+    if not top_tracks_data.get('items'):
+        return redirect('profile')  # Redirect if no top tracks are available
+
+    if request.method == "POST":
+        # Get the selected song from the session
+        game_song = request.session.get('game_song')
+
+        if not game_song:
+            return redirect('profile')  # Redirect if no song was saved in the session
+
+        song_name = game_song.get('name', '')  # Get the song name for comparison
+        guessed_song = request.POST.get('song_name', '').strip()  # Get the user's guess from the form
+
+        if not guessed_song:
+            result = "Please enter a song name."
+        else:
+            if guessed_song.lower() == song_name.lower():
+                result = "Correct!"
             else:
-                track['album_image'] = None  # No image available
-    else:
-        top_tracks = []
+                result = f"Incorrect! The correct song was {song_name}"
 
-    context = {
-        'top_tracks': top_tracks,
-        'time_range': time_range  # Pass the time_range to the context
-    }
-    return render(request, 'top_songs.html', context)
+        # Pass the result and game data to the result template
+        return render(request, 'game_result.html', {'result': result, 'game_song': game_song})
+
+    else:  # GET request
+        # Pick a random song for the game
+        game_song = random.choice(top_tracks_data['items'])
+        song_preview_url = game_song.get('preview_url', '')  # Get preview URL if available
+
+        # Store the selected game song in the session
+        request.session['game_song'] = game_song
+
+        return render(request, 'song_guess_game.html', {'song_preview_url': song_preview_url, 'game_song': game_song})

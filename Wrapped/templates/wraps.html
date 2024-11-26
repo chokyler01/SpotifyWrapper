@@ -87,28 +87,59 @@
             {% for track in top_tracks %}
                 <div class="pillar_topSongs rank-{{ forloop.counter }}">
                     <div class="song-box_topSongs">
-                        {% if track.image_url %}
-                            <img src="{{ track.image_url }}" alt="{{ track.name }}">
+                        {% if track.album_image %}
+                            <div class="image-and-audio">
+                                <img src="{{ track.album_image }}"
+                                     alt="{% trans 'Album Image' %}"
+                                     style="width: 100px; height: 100px; cursor: pointer;"
+                                     class="song-image"
+                                     data-audio="{{ track.preview_url }}">
+                                <span class="tooltip">{% trans 'Click to Play Song' %}</span>
+                            </div>
+                        {% else %}
+                            <p>{% trans 'No album image available' %}</p>
                         {% endif %}
-                        <div class="song-title_topSongs">{{ track.name }}</div>
-                        <div class="song-artist_topSongs">
-                            {% for artist in track.artists %}
-                                {{ artist }}{% if not forloop.last %}, {% endif %}
-                            {% endfor %}
-                        </div>
+
+                        <strong>{{ track.name }}</strong> {% trans "by" %}
+                        {% for artist in track.artists %}
+                            {{ artist.name }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
                     </div>
                     <div class="rank_topSongs">{{ forloop.counter }}</div>
                 </div>
             {% endfor %}
-        </div>
-        <a href="{% url 'top_songs' %}" class="btn btn-primary">
-            {% trans "Play Top Songs" %}
-        </a>
-
         <a href="{% url 'view_wraps' %}?step=3">
             <button class="next-button">{% trans "Next: Top Artists" %}</button>
         </a>
     </body>
+    <script>
+        //play song on album click
+        document.addEventListener("DOMContentLoaded", function() {
+            const images = document.querySelectorAll('.song-image');
+            let currentAudio = null;
+
+            images.forEach(image => {
+                image.addEventListener('click', function () {
+                    const audioSrc = this.getAttribute('data-audio');
+
+                    if (currentAudio) {
+                        currentAudio.pause();
+                        currentAudio.remove();
+                    }
+
+                    if (audioSrc) {
+                        currentAudio = new Audio(audioSrc);
+                        currentAudio.play();
+                        currentAudio.addEventListener('ended', function () {
+                            currentAudio = null;
+                        });
+                    } else {
+                        alert("No audio preview available");
+                    }
+                });
+            });
+        });
+    </script>
 {% elif step == 3 %}
     <body class="transition-page", id=transition-2">
         <div class = "trans-header" id = "swipe_header">{% trans "The Artists That Defined Your Wrapped" %}</div>
@@ -271,5 +302,32 @@
         </div>
     </div>
 </body>
+    <body class="top-genres-page">
+        <h4 class="topGenresTitle">{% trans "Top Genres" %}</h4>
+        <a href="{% url 'profile' %}" class="profile-icon" aria-label="{% trans 'View Profile' %}">
+            <i class="bi bi-person"></i>
+        </a>
+        <div class="genre-container">
+            {% for genre, count in top_genres %}
+                <div class="genre-box">
+                    <div class="genre-rank">{{ forloop.counter }}</div>
+                    <div class="genre-info">
+                        <div class="genre-name">{{ genre }}</div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <a href="{% url 'view_wraps' %}?step=6&time_range={{ time_range }}">
+            <button class="back-button">{% trans "Back: Top Albums" %}</button>
+        </a>
+        <form method="post" action="{% url 'view_wraps' %}?time_range={{ time_range }}">
+            {% csrf_token %}
+            <input type="hidden" name="time_range" value="{{ time_range }}">
+            <button class="next-button" type="submit" name="save">{% trans "Save to Profile" %}</button>
+        </form>
+        <a href="{% url 'profile' %}" class="profile-icon" aria-label="{% trans 'View Profile' %}">
+            <i class="bi bi-person"></i>
+        </a>
+    </body>
 {% endif %}
 </html>
