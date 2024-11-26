@@ -1,46 +1,26 @@
-{% load i18n %}
+{% load static i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% trans "Game Result" %}</title>
-    <style>
-        /* Add your styles here */
-        .game-result-container {
-            text-align: center;
-            margin-top: 50px;
-        }
-        .game-result-container h1 {
-            font-size: 2em;
-        }
-        .game-result-container p {
-            font-size: 1.2em;
-            margin-top: 20px;
-        }
-        .play-again-button, .back-to-profile {
-            display: inline-block;
-            margin-top: 20px;
-            text-decoration: none;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border-radius: 5px;
-        }
-        .play-again-button {
-            background-color: #28a745;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 </head>
-<body>
-    <div class="game-result-container">
-        <h1>{% trans "Game Result" %}</h1>
 
+<body>
+<a href="{% url 'profile' %}" class="profile-icon" aria-label="View Profile">
+    <i class="bi bi-person"></i>
+</a>
+
+    <div class="game-container">
+    <h1>{% trans "Game Result" %}</h1>
         <p><strong>{{ result }}</strong></p>
         <p>{% trans "The correct song was:" %} <strong>{{ game_song.name }}</strong></p>
 
-        <a href="{% url 'song_guess_game' %}" class="play-again-button">{% trans "Play Again" %}</a>
-        <a href="{% url 'profile' %}" class="back-to-profile">{% trans "Back to Profile" %}</a>
+        <a href="{% url 'song_guess_game' %}" class="game-button">{% trans "Play Again" %}</a>
     </div>
+
 </body>
 </html>
