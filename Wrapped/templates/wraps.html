@@ -167,35 +167,43 @@
             <button class="back-button">{% trans "Back: Top Artists" %}</button>
         </a>
     </body>
+
 {% elif step == 6 %}
-    <body class="top-albums-page">
-        <div class="topAlbumsTitle">
-            <h2>{% trans "Your Top Albums" %}</h2>
-        </div>
-        <a href="{% url 'profile' %}" class="profile-icon" aria-label="{% trans 'View Profile' %}">
-            <i class="bi bi-person"></i>
-        </a>
-        <div class="chart_topAlbums">
-            {% for album in top_albums %}
-                <div class="album-box">
-                    <div class="album-rank">
-                        {{ forloop.counter }}
-                    </div>
-                    <div class="album-image">
-                        <img src="{{ album.image_url }}" alt="{{ album.name }}">
-                    </div>
-                    <div class="album-title">{{ album.name }}</div>
-                    <div class="album-artist">{{ album.artists|join:", " }}</div>
+<body class="top-albums-page">
+    <div class="topAlbumsTitle">
+        <h2>{% trans "Your Top Albums" %}</h2>
+    </div>
+    <a href="{% url 'profile' %}" class="profile-icon" aria-label="{% trans 'View Profile' %}">
+        <i class="bi bi-person"></i>
+    </a>
+    <div class="chart_topAlbums">
+        {% for album in top_albums %}
+            <div class="album-box">
+                <div class="album-rank">
+                    {{ forloop.counter }}
                 </div>
-            {% endfor %}
-        </div>
-        <a href="{% url 'view_wraps' %}?step=7">
-            <button class="next-button">{% trans "Next: Top Genres" %}</button>
-        </a>
-        <a href="{% url 'view_wraps' %}?step=4&time_range={{ time_range }}">
-            <button class="back-button">{% trans "Back: Top Artists" %}</button>
-        </a>
-    </body>
+                <div class="album-image">
+                    {% if album.image_url %}
+                        <img src="{{ album.image_url }}" alt="{{ album.name }}">
+                    {% endif %}
+                </div>
+                <div class="album-title">{{ album.name }}</div>
+                <div class="album-artist">
+                    {% for artist in album.artists %}
+                        {{ artist }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <a href="{% url 'view_wraps' %}?step=7">
+        <button class="next-button">{% trans "Next: Top Genres" %}</button>
+    </a>
+    <a href="{% url 'view_wraps' %}?step=4&time_range={{ time_range }}">
+        <button class="back-button">{% trans "Back: Top Artists" %}</button>
+    </a>
+</body>
+
 {% elif step == 7 %}
     <body class="transition-page", id="transition-4">
         <div class = "trans-header" id = "swipe_header">{% trans "Turn It Up For Your Top Genres!" %}</div>

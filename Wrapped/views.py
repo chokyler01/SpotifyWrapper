@@ -22,6 +22,9 @@ from PIL import Image, ImageDraw, ImageFont
 from io import BytesIO
 from django.http import FileResponse
 
+from PIL import Image, ImageDraw, ImageFont
+
+
 def generate_wrap_image(request):
     user = request.user
     time_range = request.session.get('time_range')
@@ -34,7 +37,9 @@ def generate_wrap_image(request):
         wrap = SpotifyWrap.objects.filter(user=user, time_range=time_range).order_by('-created_at').first()
 
         if not wrap:
-            return HttpResponse("No wrapped data available for the current session. Please save or complete your Spotify Wrapped.", status=404)
+            return HttpResponse(
+                "No wrapped data available for the current session. Please save or complete your Spotify Wrapped.",
+                status=404)
 
         # Load wrap data
         wrap_data = json.loads(wrap.wrap_data)
@@ -47,52 +52,65 @@ def generate_wrap_image(request):
         top_artists = wrap_data.get('top_artists', [])
 
         if not (top_tracks or top_genres or top_albums or top_artists):
-            return HttpResponse("No data available in the wrap. Ensure you've completed your Spotify Wrapped.", status=404)
+            return HttpResponse("No data available in the wrap. Ensure you've completed your Spotify Wrapped.",
+                                status=404)
 
-        # Create a blank image
-        img = Image.new('RGB', (1200, 800), color='white')  # Increased size for more content
+        # Create a blank image with lighter green background
+        img = Image.new('RGB', (1200, 1000), color=(144, 238, 144))  # Lighter green background
         draw = ImageDraw.Draw(img)
-        font_path = "/Library/Fonts/Arial.ttf"  # Update path as per your system
-        font = ImageFont.truetype(font_path, 20)
+
+        # Set font paths (update based on your system)
+        font_path = "/Library/Fonts/Georgia.ttf"  # Path to regular font
+        bold_font_path = "/Library/Fonts/Georgia Bold.ttf"  # Path to bold font
+
+        # Fonts
+        large_font = ImageFont.truetype(font_path, 40)  # Larger font for headers
+        bold_large_font = ImageFont.truetype(bold_font_path, 40)  # Bold and large
+        bold_medium_font = ImageFont.truetype(bold_font_path, 30)  # Bold and medium
+        medium_font = ImageFont.truetype(font_path, 25)  # Medium font for details
+
+        # Colors
+        header_color = (0, 100, 0)  # Dark green for headers
+        text_color = (0, 0, 0)  # Black for regular text
 
         # Header
-        draw.text((20, 20), f"Spotify Wrapped for {user.username}", fill="black", font=font)
-        y_offset = 60
+        draw.text((20, 20), f"Spotify Wrapped for {user.username}", fill=header_color, font=bold_large_font)
+        y_offset = 80
 
         # Add Top Tracks
-        draw.text((20, y_offset), "Top Tracks:", fill="black", font=font)
-        y_offset += 30
+        draw.text((20, y_offset), "Top Tracks:", fill=header_color, font=bold_medium_font)
+        y_offset += 40
         for i, track in enumerate(top_tracks[:5]):  # Limit to top 5 tracks
             track_name = track.get('name', 'Unknown Track')
             artists = ", ".join(track.get('artists', ['Unknown Artist']))
-            draw.text((40, y_offset), f"{i + 1}. {track_name} by {artists}", fill="black", font=font)
+            draw.text((40, y_offset), f"{i + 1}. {track_name} by {artists}", fill=text_color, font=medium_font)
             y_offset += 30
 
         # Add Top Genres
-        y_offset += 20  # Add space
-        draw.text((20, y_offset), "Top Genres:", fill="black", font=font)
-        y_offset += 30
+        y_offset += 30  # Add extra space
+        draw.text((20, y_offset), "Top Genres:", fill=header_color, font=bold_medium_font)
+        y_offset += 40
         for i, (genre, count) in enumerate(top_genres[:5]):  # Limit to top 5 genres
-            draw.text((40, y_offset), f"{i + 1}. {genre} ({count} occurrences)", fill="black", font=font)
+            draw.text((40, y_offset), f"{i + 1}. {genre} ({count} occurrences)", fill=text_color, font=medium_font)
             y_offset += 30
 
         # Add Top Albums
-        y_offset += 20  # Add space
-        draw.text((20, y_offset), "Top Albums:", fill="black", font=font)
-        y_offset += 30
+        y_offset += 30  # Add extra space
+        draw.text((20, y_offset), "Top Albums:", fill=header_color, font=bold_medium_font)
+        y_offset += 40
         for i, album in enumerate(top_albums[:5]):  # Limit to top 5 albums
             album_name = album.get('name', 'Unknown Album')
             artists = ", ".join(album.get('artists', ['Unknown Artist']))
-            draw.text((40, y_offset), f"{i + 1}. {album_name} by {artists}", fill="black", font=font)
+            draw.text((40, y_offset), f"{i + 1}. {album_name} by {artists}", fill=text_color, font=medium_font)
             y_offset += 30
 
         # Add Top Artists
-        y_offset += 20  # Add space
-        draw.text((20, y_offset), "Top Artists:", fill="black", font=font)
-        y_offset += 30
+        y_offset += 30  # Add extra space
+        draw.text((20, y_offset), "Top Artists:", fill=header_color, font=bold_medium_font)
+        y_offset += 40
         for i, artist in enumerate(top_artists[:5]):  # Limit to top 5 artists
             artist_name = artist.get('name', 'Unknown Artist')
-            draw.text((40, y_offset), f"{i + 1}. {artist_name}", fill="black", font=font)
+            draw.text((40, y_offset), f"{i + 1}. {artist_name}", fill=text_color, font=medium_font)
             y_offset += 30
 
         # Save image to in-memory file
@@ -105,6 +123,7 @@ def generate_wrap_image(request):
     except Exception as e:
         print(f"Error in generate_wrap_image: {e}")
         return HttpResponse("An error occurred while generating the image. Please try again later.", status=500)
+
 @login_required
 def view_friends_old_wrap(request, friend_id):
     """View to display a friend's old wraps."""
@@ -341,13 +360,71 @@ def view_wraps(request):
         wrap_data['top_genres'] = top_genres
         wrap.wrap_data = json.dumps(wrap_data)
         wrap.save()
-    # Add additional steps as needed...
 
-    elif step == 8:
-        # Ensure top genres are saved
-        wrap_data['top_genres'] = wrap_data.get('top_genres', [])
+    elif step == 6:
+        # Fetch top albums for each top artist
+        top_artists_url = 'https://api.spotify.com/v1/me/top/artists'
+        params = {'limit': 10, 'time_range': time_range}
+        top_artists_data = fetch_spotify_data(top_artists_url, spotify_token, params=params)
+        top_artists = top_artists_data.get('items', []) if 'error' not in top_artists_data else []
+        top_albums = []  # Initialize top_albums
+
+        for artist in top_artists:
+            artist_albums_url = f'https://api.spotify.com/v1/artists/{artist["id"]}/albums'
+            albums_data = fetch_spotify_data(artist_albums_url, spotify_token, params={'limit': 3})
+            albums = [
+                {
+                    'name': album['name'],
+                    'artists': [artist['name'] for artist in album['artists']],
+                    'image_url': album['images'][0]['url'] if album['images'] else None
+                }
+                for album in albums_data.get('items', [])
+            ]
+            top_albums.extend(albums)  # Add fetched albums to top_albums
+
+        # Limit top_albums to the first 10 entries
+        top_albums = top_albums[:10]
+
+        # Save or update wrap data with top albums
+        wrap_data['top_albums'] = top_albums  # Add top_albums to wrap_data
+        wrap_data['step'] = step
+        wrap_data['time_range'] = time_range
         wrap.wrap_data = json.dumps(wrap_data)
         wrap.save()
+
+    elif step == 8:
+
+        # Retrieve top genres if they were saved in step 2
+
+        if wrap and wrap.wrap_data:
+            wrap_data = json.loads(wrap.wrap_data)
+
+            top_genres = wrap_data.get('top_genres', [])
+
+        # If top_genres wasn't saved, calculate it again (in case user skipped directly to step 4)
+
+        if not top_genres:
+            top_artists_data = fetch_spotify_data(top_artists_url, spotify_token, params=params)
+
+            top_artists = [
+
+                {
+
+                    'name': artist['name'],
+
+                    'genres': artist.get('genres', [])
+
+                }
+
+                for artist in top_artists_data.get('items', [])
+
+            ]
+
+            genres = [genre for artist in top_artists for genre in artist['genres']]
+
+            genre_counts = Counter(genres)
+
+            top_genres = genre_counts.most_common(10)
 
     return render(request, 'wraps.html', {
         'step': step,
@@ -355,7 +432,8 @@ def view_wraps(request):
         'top_tracks': wrap_data.get('top_tracks', []),
         'top_artists': wrap_data.get('top_artists', []),
         'top_genres': wrap_data.get('top_genres', []),
-        'creation_month_day': wrap.created_at.strftime('%m-%d')
+        'top_albums': wrap_data.get('top_albums', []),  # Ensure this is included
+        'creation_month_day': wrap.created_at.strftime('%m-%d'),
     })
 
 
