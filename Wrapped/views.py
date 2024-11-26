@@ -654,4 +654,65 @@ def view_old_wrap(request, wrap_id):
         'top_albums': top_albums,
     })
 
+import random
 
+
+import requests
+import random
+from django.shortcuts import render, redirect
+
+def song_guess_game(request):
+    # Get the Spotify access token
+    access_token = request.session.get('access_token')  # Adjust to how you store the token
+
+    if not access_token:
+        return redirect('spotify_login')  # Redirect to Spotify login if no token is available
+
+    # Fetch user's top tracks from Spotify API
+    top_tracks_url = 'https://api.spotify.com/v1/me/top/tracks'
+    headers = {
+        'Authorization': f'Bearer {access_token}',  # Use the access token in the Authorization header
+    }
+
+    # Make the request to get the top tracks
+    response = requests.get(top_tracks_url, headers=headers)
+
+    if response.status_code != 200:
+        print(f"Error fetching top tracks: {response.status_code}")
+        return redirect('profile')  # Redirect to profile if there’s an error fetching data
+
+    top_tracks_data = response.json()
+
+    if not top_tracks_data.get('items'):
+        return redirect('profile')  # Redirect if no top tracks are available
+
+    if request.method == "POST":
+        # Get the selected song from the session
+        game_song = request.session.get('game_song')
+
+        if not game_song:
+            return redirect('profile')  # Redirect if no song was saved in the session
+
+        song_name = game_song.get('name', '')  # Get the song name for comparison
+        guessed_song = request.POST.get('song_name', '').strip()  # Get the user's guess from the form
+
+        if not guessed_song:
+            result = "Please enter a song name."
+        else:
+            if guessed_song.lower() == song_name.lower():
+                result = "Correct!"
+            else:
+                result = f"Incorrect! The correct song was {song_name}"
+
+        # Pass the result and game data to the result template
+        return render(request, 'game_result.html', {'result': result, 'game_song': game_song})
+
+    else:  # GET request
+        # Pick a random song for the game
+        game_song = random.choice(top_tracks_data['items'])
+        song_preview_url = game_song.get('preview_url', '')  # Get preview URL if available
+
+        # Store the selected game song in the session
+        request.session['game_song'] = game_song
+
+        return render(request, 'song_guess_game.html', {'song_preview_url': song_preview_url, 'game_song': game_song})

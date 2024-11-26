@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-24 21:46+0000\n"
+"POT-Creation-Date: 2024-11-25 20:26-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,234 +19,387 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
 "1 : 2;\n"
 
+#: Wrapped/templates/choose_time.html:7
 msgid "Select Time Range"
 msgstr "Selecciona el rango de tiempo"
 
+#: Wrapped/templates/choose_time.html:14
 msgid "Select Your Spotify Wrapped Time Range"
 msgstr "Selecciona tu rango de tiempo de Spotify Wrapped"
 
+#: Wrapped/templates/choose_time.html:15 Wrapped/templates/profile.html:14
+#: Wrapped/templates/view_old_wrap.html:81
+#: Wrapped/templates/view_old_wrap.html:164
+#: Wrapped/templates/view_old_wrap.html:207
+#: Wrapped/templates/view_old_wrap.html:249
+#: Wrapped/templates/view_old_wrap.html:266 Wrapped/templates/wraps.html:81
+#: Wrapped/templates/wraps.html:164 Wrapped/templates/wraps.html:207
+#: Wrapped/templates/wraps.html:249 Wrapped/templates/wraps.html:270
 msgid "View Profile"
 msgstr "Ver perfil"
 
+#: Wrapped/templates/choose_time.html:24
 msgid "Short Term (Last 4 Weeks)"
 msgstr "Corto plazo (últimas 4 semanas)"
 
+#: Wrapped/templates/choose_time.html:28
 msgid "Medium Term (Last 6 Months)"
 msgstr "Mediano plazo (últimos 6 meses)"
 
+#: Wrapped/templates/choose_time.html:32
 msgid "Long Term (All Time)"
 msgstr "Largo plazo (todo el tiempo)"
 
+#: Wrapped/templates/choose_time.html:34
 msgid "Submit"
 msgstr "Enviar"
 
+#: Wrapped/templates/choose_time.html:37 Wrapped/templates/contact.html:25
+#: Wrapped/templates/home.html:32 Wrapped/templates/login.html:40
+#: Wrapped/templates/register.html:40
 msgid "Toggle Dark Mode"
 msgstr "Activar/desactivar modo oscuro"
 
+#: Wrapped/templates/contact.html:8 Wrapped/templates/home.html:20
 msgid "Contact Developers"
 msgstr "Contactar a los desarrolladores"
 
+#: Wrapped/templates/contact.html:16
 msgid "Contact the Developers"
 msgstr "Contactar a los desarrolladores"
 
-msgid "If you have any questions, issues, or suggestions, feel free to reach out!"
-msgstr "Si tienes alguna pregunta, problema o sugerencia, no dudes en contactarnos!"
+#: Wrapped/templates/contact.html:17
+msgid ""
+"If you have any questions, issues, or suggestions, feel free to reach out!"
+msgstr ""
+"Si tienes alguna pregunta, problema o sugerencia, no dudes en contactarnos!"
 
+#: Wrapped/templates/contact.html:21
 msgid "Email the Developers"
 msgstr "Enviar correo a los desarrolladores"
 
+#: Wrapped/templates/game_result.html:6 Wrapped/templates/game_result.html:36
+msgid "Game Result"
+msgstr "Resultado del juego"
+
+msgid "The correct song was:"
+msgstr "La canción correcta era:"
+
+msgid "Play Again"
+msgstr "Jugar de nuevo"
+#: Wrapped/templates/game_result.html:42
+#: Wrapped/templates/song_guess_game.html:48
+#, fuzzy
+#| msgid "Save to Profile"
+msgid "Back to Profile"
+msgstr "Guardar en el perfil"
+
+#: Wrapped/templates/home.html:8
 msgid "Welcome to Spotify Wrapped"
 msgstr "Bienvenido a Spotify Wrapped"
 
+#: Wrapped/templates/home.html:14
 msgid "Welcome to Spotify Wrapped!"
 msgstr "¡Bienvenido a Spotify Wrapped!"
 
+#: Wrapped/templates/home.html:15
 msgid "Spotify Logo"
 msgstr "Logo de Spotify"
 
+#: Wrapped/templates/home.html:17 Wrapped/templates/login.html:7
+#: Wrapped/templates/login.html:30 Wrapped/templates/register.html:7
 msgid "Login"
 msgstr "Iniciar sesión"
 
+#: Wrapped/templates/home.html:18
 msgid "Register"
 msgstr "Registrarse"
 
+#: Wrapped/templates/home.html:26
 msgid "English"
 msgstr "Inglés"
 
+#: Wrapped/templates/home.html:27
 msgid "Spanish"
 msgstr "Español"
 
+#: Wrapped/templates/home.html:28
 msgid "French"
 msgstr "Francés"
 
+#: Wrapped/templates/login.html:16
 msgid "Log in to Your"
 msgstr "Inicia sesión en tu"
 
+#: Wrapped/templates/login.html:16
 msgid "Spotify Wrapped Account"
 msgstr "Cuenta de Spotify Wrapped"
 
+#: Wrapped/templates/login.html:22 Wrapped/templates/register.html:21
 msgid "Username"
 msgstr "Nombre de usuario"
 
+#: Wrapped/templates/login.html:27 Wrapped/templates/register.html:25
 msgid "Password"
 msgstr "Contraseña"
 
+#: Wrapped/templates/login.html:33
 msgid "Don't have an account? Register here"
 msgstr "¿No tienes cuenta? Regístrate aquí"
 
+#: Wrapped/templates/login.html:38
 msgid "Go Back to Home Page"
 msgstr "Volver a la página de inicio"
 
+#: Wrapped/templates/profile.html:7
 msgid "Profile"
 msgstr "Perfil"
 
+#: Wrapped/templates/profile.html:13
 msgid "Spotify Wraps"
 msgstr "Spotify Wraps"
 
+#: Wrapped/templates/profile.html:21
 msgid "Logout"
 msgstr "Cerrar sesión"
 
+#: Wrapped/templates/profile.html:30
+#, fuzzy
+#| msgid "Back to Friends"
+msgid "Manage Friends"
+msgstr "Volver a los amigos"
+
+#: Wrapped/templates/profile.html:38
 msgid "Go Back to Wrapped Page"
 msgstr "Volver a la página de Wrapped"
 
+#: Wrapped/templates/profile.html:45
 msgid "Your Saved Wraps"
 msgstr "Tus Wraps guardados"
 
+#: Wrapped/templates/profile.html:52
 msgid "Wrap Date"
 msgstr "Fecha del Wrap"
 
+#: Wrapped/templates/profile.html:56 Wrapped/templates/view_old_wrap.html:262
 msgid "Time Range"
 msgstr "Rango de tiempo"
 
+#: Wrapped/templates/profile.html:59
 msgid "View Wrap Details"
 msgstr "Ver detalles del Wrap"
 
+#: Wrapped/templates/profile.html:69
 msgid "No wraps have been saved to your profile yet."
 msgstr "Aún no se han guardado Wraps en tu perfil."
 
+#: Wrapped/templates/profile.html:75
 msgid "Account Actions"
 msgstr "Acciones de la cuenta"
 
+#: Wrapped/templates/profile.html:79
 msgid "Delete Account"
 msgstr "Eliminar cuenta"
 
+#: Wrapped/templates/register.html:16
 msgid "Create an Account"
 msgstr "Crear una cuenta"
 
+#: Wrapped/templates/register.html:29
 msgid "Confirm Password"
 msgstr "Confirmar contraseña"
 
-msgid "Your password can’t be too similar to your other personal information. Your password must contain at least 8 characters and cannot be entirely numeric. Your password can’t be a commonly used password."
-msgstr "Tu contraseña no puede ser demasiado similar a tu otra información personal. Debe contener al menos 8 caracteres y no puede ser completamente numérica. No puede ser una contraseña comúnmente usada."
+#: Wrapped/templates/register.html:33
+msgid ""
+"Your password can’t be too similar to your other personal information. Your "
+"password must contain at least 8 characters and cannot be entirely numeric. "
+"Your password can’t be a commonly used password."
+msgstr ""
+"Tu contraseña no puede ser demasiado similar a tu otra información personal. "
+"Debe contener al menos 8 caracteres y no puede ser completamente numérica. "
+"No puede ser una contraseña comúnmente usada."
 
+#: Wrapped/templates/register.html:35
 msgid "Register and Link Spotify"
 msgstr "Registrarse y vincular Spotify"
 
+#: Wrapped/templates/register.html:38
 msgid "Already have an account? Log in"
 msgstr "¿Ya tienes cuenta? Inicia sesión"
 
-msgid "Your Top Songs"
-msgstr "Tus mejores canciones"
+msgid "Guess the Song Game"
+msgstr "Adivina el juego de la canción"
 
-msgid "Go Back"
-msgstr "Volver"
+msgid "Guess the Song!"
+msgstr "¡Adivina la canción!"
 
-msgid "Album Image"
-msgstr "Imagen del álbum"
+msgid "Listen to the song preview and guess the song title:"
+msgstr "Escucha la vista previa de la canción y adivina el título de la canción:"
 
-msgid "No album image available"
-msgstr "No hay imagen del álbum disponible"
-
-msgid "by"
-msgstr "por"
-
+#: Wrapped/templates/song_guess_game.html:36
 msgid "Your browser does not support the audio element."
 msgstr "Tu navegador no soporta el elemento de audio."
 
-msgid "No preview available"
+#: Wrapped/templates/song_guess_game.html:39
+#, fuzzy
+#| msgid "No preview available"
+msgid "No preview available for this song."
 msgstr "No hay vista previa disponible"
 
+#: Wrapped/templates/song_guess_game.html:44
+msgid "Enter song name"
+msgstr "Ingresa el nombre de la canción"
+
+#: Wrapped/templates/song_guess_game.html:45
+#, fuzzy
+#| msgid "Submit"
+msgid "Submit Guess"
+msgstr "Enviar"
+
+#: Wrapped/templates/view_friends_old_wrap.html:7
 msgid "Friend's Spotify Wrapped"
 msgstr "Spotify Wrapped de un amigo"
 
+#: Wrapped/templates/view_friends_old_wrap.html:16
 msgid "Old Wraps"
 msgstr "Wraps antiguos"
 
+#: Wrapped/templates/view_friends_old_wrap.html:28
 msgid "No wraps available."
 msgstr "No hay Wraps disponibles."
 
+#: Wrapped/templates/view_friends_old_wrap.html:31
 msgid "Back to Friends"
 msgstr "Volver a los amigos"
 
+#: Wrapped/templates/view_old_wrap.html:8 Wrapped/templates/wraps.html:8
 msgid "Your Spotify Wrapped"
 msgstr "Tu Spotify Wrapped"
 
-msgid "TRANSITION ONE - WELCOME"
-msgstr "TRANSICIÓN UNO - BIENVENIDO"
-
-msgid "Next: Top Songs"
-msgstr "Siguiente: Mejores canciones"
-
-msgid "Top Songs"
-msgstr "Mejores canciones"
-
-msgid "Next: Top Artists"
-msgstr "Siguiente: Mejores artistas"
-
-msgid "TRANSITION TWO"
-msgstr "TRANSICIÓN DOS"
-
-msgid "Back: Top Songs"
-msgstr "Volver: Mejores canciones"
-
-msgid "Top Artists"
-msgstr "Mejores artistas"
-
-msgid "Next: Top Albums"
-msgstr "Siguiente: Mejores álbumes"
-
-msgid "Top Genres"
-msgstr "Mejores géneros"
-
-msgid "Save to Profile"
-msgstr "Guardar en el perfil"
-
+#: Wrapped/templates/view_old_wrap.html:21 Wrapped/templates/wraps.html:21
 msgid "Christmas"
 msgstr "Navidad"
 
+#: Wrapped/templates/view_old_wrap.html:21
+#: Wrapped/templates/view_old_wrap.html:34
+#: Wrapped/templates/view_old_wrap.html:47
+#: Wrapped/templates/view_old_wrap.html:58 Wrapped/templates/wraps.html:21
+#: Wrapped/templates/wraps.html:34 Wrapped/templates/wraps.html:47
+#: Wrapped/templates/wraps.html:58
 msgid "Spotify Wrapped"
 msgstr "Spotify Wrapped"
 
+#: Wrapped/templates/view_old_wrap.html:34 Wrapped/templates/wraps.html:34
 msgid "Halloween"
 msgstr "Halloween"
 
-msgid "Valentine's Day"
+#: Wrapped/templates/view_old_wrap.html:47 Wrapped/templates/wraps.html:47
+#, fuzzy
+#| msgid "Valentine's Day"
+msgid "Valentines's Day"
 msgstr "Día de San Valentín"
 
-msgid "Play Top Songs"
-msgstr "Reproducir las mejores canciones"
+#: Wrapped/templates/view_old_wrap.html:71 Wrapped/templates/wraps.html:71
+msgid "Next: Top Songs"
+msgstr "Siguiente: Mejores canciones"
 
+#: Wrapped/templates/view_old_wrap.html:85 Wrapped/templates/wraps.html:85
+msgid "Top Songs"
+msgstr "Mejores canciones"
+
+#: Wrapped/templates/view_old_wrap.html:94 Wrapped/templates/wraps.html:94
+msgid "Album Image"
+msgstr "Imagen del álbum"
+
+#: Wrapped/templates/view_old_wrap.html:98 Wrapped/templates/wraps.html:98
+msgid "Click to Play Song"
+msgstr ""
+
+#: Wrapped/templates/view_old_wrap.html:101 Wrapped/templates/wraps.html:101
+msgid "No album image available"
+msgstr "No hay imagen del álbum disponible"
+
+#: Wrapped/templates/view_old_wrap.html:104 Wrapped/templates/wraps.html:104
+msgid "by"
+msgstr "por"
+
+#: Wrapped/templates/view_old_wrap.html:113
+#: Wrapped/templates/view_old_wrap.html:153 Wrapped/templates/wraps.html:113
+#: Wrapped/templates/wraps.html:153
+msgid "Next: Top Artists"
+msgstr "Siguiente: Mejores artistas"
+
+#: Wrapped/templates/view_old_wrap.html:146 Wrapped/templates/wraps.html:146
 msgid "The Artists That Defined Your Wrapped"
 msgstr "Los artistas que definieron tu Wrapped"
 
+#: Wrapped/templates/view_old_wrap.html:156
+#: Wrapped/templates/view_old_wrap.html:184 Wrapped/templates/wraps.html:156
+#: Wrapped/templates/wraps.html:184
+msgid "Back: Top Songs"
+msgstr "Volver: Mejores canciones"
+
+#: Wrapped/templates/view_old_wrap.html:162 Wrapped/templates/wraps.html:162
+msgid "Top Artists"
+msgstr "Mejores artistas"
+
+#: Wrapped/templates/view_old_wrap.html:181
+#: Wrapped/templates/view_old_wrap.html:196 Wrapped/templates/wraps.html:181
+#: Wrapped/templates/wraps.html:196
+msgid "Next: Top Albums"
+msgstr "Siguiente: Mejores álbumes"
+
+#: Wrapped/templates/view_old_wrap.html:189 Wrapped/templates/wraps.html:189
 msgid "The Albums You Had On Repeat"
 msgstr "Los álbumes que repetiste"
 
+#: Wrapped/templates/view_old_wrap.html:199
+#: Wrapped/templates/view_old_wrap.html:228
+#: Wrapped/templates/view_old_wrap.html:243 Wrapped/templates/wraps.html:199
+#: Wrapped/templates/wraps.html:228 Wrapped/templates/wraps.html:243
 msgid "Back: Top Artists"
 msgstr "Volver: Mejores artistas"
 
+#: Wrapped/templates/view_old_wrap.html:205 Wrapped/templates/wraps.html:205
 msgid "Your Top Albums"
 msgstr "Tus mejores álbumes"
 
+#: Wrapped/templates/view_old_wrap.html:225
+#: Wrapped/templates/view_old_wrap.html:240 Wrapped/templates/wraps.html:225
+#: Wrapped/templates/wraps.html:240
 msgid "Next: Top Genres"
 msgstr "Siguiente: Mejores géneros"
 
+#: Wrapped/templates/view_old_wrap.html:233 Wrapped/templates/wraps.html:233
 msgid "Turn It Up For Your Top Genres!"
 msgstr "¡Sube el volumen para tus mejores géneros!"
 
+#: Wrapped/templates/view_old_wrap.html:248 Wrapped/templates/wraps.html:248
+msgid "Top Genres"
+msgstr "Mejores géneros"
+
+#: Wrapped/templates/view_old_wrap.html:264 Wrapped/templates/wraps.html:263
 msgid "Back: Top Albums"
 msgstr "Volver: Mejores álbumes"
 
+#: Wrapped/templates/wraps.html:268
+msgid "Save to Profile"
+msgstr "Guardar en el perfil"
+
+#~ msgid "Your Top Songs"
+#~ msgstr "Tus mejores canciones"
+
+#~ msgid "Go Back"
+#~ msgstr "Volver"
+
+#~ msgid "TRANSITION ONE - WELCOME"
+#~ msgstr "TRANSICIÓN UNO - BIENVENIDO"
+
+#~ msgid "TRANSITION TWO"
+#~ msgstr "TRANSICIÓN DOS"
+
+#~ msgid "Play Top Songs"
+#~ msgstr "Reproducir las mejores canciones"
 
 #~ msgid "Back to Friends' Wraps"
 #~ msgstr "Volver a los Wraps de amigos"
