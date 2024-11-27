@@ -1,5 +1,4 @@
 {% load static i18n %}
-{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -199,35 +198,43 @@
             <button class="back-button">{% trans "Back: Top Artists" %}</button>
         </a>
     </body>
+
 {% elif step == 6 %}
-    <body class="top-albums-page">
-        <div class="topAlbumsTitle">
-            <h2>{% trans "Your Top Albums" %}</h2>
-        </div>
-        <a href="{% url 'profile' %}" class="profile-icon" aria-label="{% trans 'View Profile' %}">
-            <i class="bi bi-person"></i>
-        </a>
-        <div class="chart_topAlbums">
-            {% for album in top_albums %}
-                <div class="album-box">
-                    <div class="album-rank">
-                        {{ forloop.counter }}
-                    </div>
-                    <div class="album-image">
-                        <img src="{{ album.image_url }}" alt="{{ album.name }}">
-                    </div>
-                    <div class="album-title">{{ album.name }}</div>
-                    <div class="album-artist">{{ album.artists|join:", " }}</div>
+<body class="top-albums-page">
+    <div class="topAlbumsTitle">
+        <h2>{% trans "Your Top Albums" %}</h2>
+    </div>
+    <a href="{% url 'profile' %}" class="profile-icon" aria-label="{% trans 'View Profile' %}">
+        <i class="bi bi-person"></i>
+    </a>
+    <div class="chart_topAlbums">
+        {% for album in top_albums %}
+            <div class="album-box">
+                <div class="album-rank">
+                    {{ forloop.counter }}
                 </div>
-            {% endfor %}
-        </div>
-        <a href="{% url 'view_wraps' %}?step=7">
-            <button class="next-button">{% trans "Next: Top Genres" %}</button>
-        </a>
-        <a href="{% url 'view_wraps' %}?step=4&time_range={{ time_range }}">
-            <button class="back-button">{% trans "Back: Top Artists" %}</button>
-        </a>
-    </body>
+                <div class="album-image">
+                    {% if album.image_url %}
+                        <img src="{{ album.image_url }}" alt="{{ album.name }}">
+                    {% endif %}
+                </div>
+                <div class="album-title">{{ album.name }}</div>
+                <div class="album-artist">
+                    {% for artist in album.artists %}
+                        {{ artist }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <a href="{% url 'view_wraps' %}?step=7">
+        <button class="next-button">{% trans "Next: Top Genres" %}</button>
+    </a>
+    <a href="{% url 'view_wraps' %}?step=4&time_range={{ time_range }}">
+        <button class="back-button">{% trans "Back: Top Artists" %}</button>
+    </a>
+</body>
+
 {% elif step == 7 %}
     <body class="transition-page", id="transition-4">
         <div class = "trans-header" id = "swipe_header">{% trans "Turn It Up For Your Top Genres!" %}</div>
@@ -244,6 +251,57 @@
         </a>
     </body>
 {% elif step == 8 %}
+<body class="top-genres-page">
+    <h4 class="topGenresTitle">{% trans "Top Genres" %}</h4>
+    <a href="{% url 'profile' %}" class="profile-icon" aria-label="{% trans 'View Profile' %}">
+        <i class="bi bi-person"></i>
+    </a>
+    <div class="genre-container">
+        {% for genre, count in top_genres %}
+            <div class="genre-box">
+                <div class="genre-rank">{{ forloop.counter }}</div>
+                <div class="genre-info">
+                    <div class="genre-name">{{ genre }}</div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <p>{% trans "Time Range" %}: {{ time_range }}</p>
+    <a href="{% url 'view_wraps' %}?step=6&time_range={{ time_range }}">
+        <button class="back-button">{% trans "Back: Top Albums" %}</button>
+    </a>
+    <form method="post" action="{% url 'view_wraps' %}?time_range={{ time_range }}">
+        {% csrf_token %}
+        <input type="hidden" name="time_range" value="{{ time_range }}">
+        <button class="next-button" type="submit" name="save">{% trans "Save to Profile" %}</button>
+    </form>
+
+    <!-- Share and Download Buttons -->
+    <div class="actions-section">
+        <h3>{% trans "Share or Download" %}</h3>
+        <div class="buttons">
+            <!-- Download Wrapped Image -->
+            <form method="GET" action="{% url 'generate_wrap_image' %}">
+                <button type="submit" class="btn btn-secondary">{% trans "Download Wrapped Image" %}</button>
+            </form>
+
+            <!-- Share on Instagram -->
+            <a href="https://www.instagram.com/" target="_blank">
+                <button type="button" class="btn btn-secondary">{% trans "Share on Instagram" %}</button>
+            </a>
+
+            <!-- Share on Twitter -->
+            <a href="https://twitter.com/intent/tweet?text=Check%20out%20my%20Spotify%20Wrapped!%20#SpotifyWrapped" target="_blank">
+                <button type="button" class="btn btn-secondary">{% trans "Share on Twitter" %}</button>
+            </a>
+
+            <!-- Share on LinkedIn -->
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fyourwebsite.com%2Fwrapped%2F" target="_blank">
+                <button type="button" class="btn btn-secondary">{% trans "Share on LinkedIn" %}</button>
+            </a>
+        </div>
+    </div>
+</body>
     <body class="top-genres-page">
         <h4 class="topGenresTitle">{% trans "Top Genres" %}</h4>
         <a href="{% url 'profile' %}" class="profile-icon" aria-label="{% trans 'View Profile' %}">
