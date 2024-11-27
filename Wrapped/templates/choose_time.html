@@ -1,6 +1,6 @@
 {% load static i18n %}
 <!DOCTYPE html>
-<html lang="{%get_current_language as LANGUAGE_CODE %}">
+<html lang="{% get_current_language as LANGUAGE_CODE %}">
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +8,25 @@
    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
    {% block extra_head %}{% endblock %}
+   <style>
+       /* Dark mode styles */
+       body.dark-mode {
+           background-color: #121212;
+           color: #ffffff;
+       }
+
+       .time-box label {
+           cursor: pointer;
+       }
+
+       .dark-mode .timeRange-button {
+           background-color: #333333;
+           color: #ffffff;
+       }
+   </style>
 </head>
-<body class="dark-mode">
+<body>
+    
    {% block content %}
    <h2 class="timeRange">{% trans "Select Your Spotify Wrapped Time Range" %}</h2>
    <a href="{% url 'profile' %}" class="profile-icon" aria-label="{% trans 'View Profile' %}">
@@ -33,13 +50,39 @@
            </div>
            <button class="timeRange-button" type="submit">{% trans "Submit" %}</button>
        </div>
-
-       <button id="dark-mode-toggle" class="button">{% trans "Toggle Dark Mode" %}</button>
-
    </form>
    {% endblock %}
 
-   <script src="{% static 'dark-mode-toggle.js' %}"></script>
+   <script>
+       document.addEventListener("DOMContentLoaded", function () {
+           const toggleButton = document.getElementById("dark-mode-toggle");
+           const body = document.body;
 
+           // Check for saved user preference
+           const darkModePreference = localStorage.getItem("darkMode");
+
+           if (darkModePreference === "enabled") {
+               body.classList.add("dark-mode");
+               toggleButton.textContent = "{% trans 'Light Mode' %}";
+           } else {
+               toggleButton.textContent = "{% trans 'Dark Mode' %}";
+           }
+
+           // Toggle dark mode on button click
+           toggleButton.addEventListener("click", function () {
+               body.classList.toggle("dark-mode");
+               const isDarkModeEnabled = body.classList.contains("dark-mode");
+
+               // Save user preference
+               if (isDarkModeEnabled) {
+                   localStorage.setItem("darkMode", "enabled");
+                   toggleButton.textContent = "{% trans 'Light Mode' %}";
+               } else {
+                   localStorage.setItem("darkMode", "disabled");
+                   toggleButton.textContent = "{% trans 'Dark Mode' %}";
+               }
+           });
+       });
+   </script>
 </body>
 </html>
