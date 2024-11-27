@@ -5,79 +5,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% trans "Profile" %}</title>
-    <style>
-        /* Default styles */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #ffffff;
-            color: #000000;
-            margin: 0;
-            padding: 0;
-        }
-
-        .dark-mode {
-            background-color: #121212;
-            color: #ffffff;
-        }
-
-        .button {
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            margin: 10px 0;
-        }
-
-        .dark-mode .button {
-            background-color: #333333;
-            color: #ffffff;
-        }
-
-        footer {
-            text-align: center;
-            padding: 10px 0;
-        }
-
-        .dark-mode footer {
-            background-color: #222222;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 </head>
-<body>
-    <div>
-        <button id="dark-mode-toggle" class="button">{% trans "Dark Mode" %}</button>
+<body class="profile">
+    <div class="container_profile">
+        <h1 class="profile_header">{{ user.username }}'s {% trans "Spotify Wraps" %}</h1>
+           <a href="{% url 'profile' %}" class="profile-icon" aria-label="{% trans 'View Profile' %}">
+            <i class="bi bi-person"></i>
 
-        <h1>{{ user.username }}'s {% trans "Spotify Wraps" %}</h1>
-        <a href="{% url 'profile' %}" aria-label="{% trans 'View Profile' %}">
-            {% trans "View Profile" %}
         </a>
-        <form method="post" action="{% url 'logout' %}">
+    <form method="post" action="{% url 'logout' %}" class="logout-form">
             {% csrf_token %}
-            <button type="submit" class="button">{% trans "Logout" %}</button>
+            <button type="submit" class="logout-button">
+                {% trans "Logout" %}
+            </button>
         </form>
+    <div class="button-container_profile">
 
-        <div>
-            <a href="{% url 'friends_page' %}">
-                <button class="button">{% trans "Manage Friends" %}</button>
-            </a>
-            <a href="{% url 'choose_wrap_time' %}">
-                <button class="button">{% trans "Go Back to Wrapped Page" %}</button>
-            </a>
-        </div>
+        <!-- Logout Button -->
 
-        <section>
-            <h2>{% trans "Your Saved Wraps" %}</h2>
+
+        <a href="{% url 'friends_page' %}">
+            <button class="wrapped-button"> {% trans "Manage Friends"%}</button>
+        </a>
+
+
+
+        <!-- Navigation to Wrapped Page -->
+            <a href="{% url 'choose_wrap_time' %}" >
+                <button class="wrapped-button">
+                    {% trans "Go Back to Wrapped Page" %}
+                </button>
+            </a>
+
+</div>
+        <!-- Display Saved Wraps -->
+        <section class="saved-wraps-section">
+            <h2 class="section-title">{% trans "Your Saved Wraps" %}</h2>
             {% if user.profile.spotify_wraps.exists %}
-                <ul>
+                <ul class="wrap-list">
                     {% regroup user.profile.spotify_wraps.all|dictsort:"created_at" by created_at.date as grouped_wraps %}
+
                     {% for group in grouped_wraps %}
-                        <li>
+                        <li class="wrap-date">
                             <strong>{% trans "Wrap Date" %}: {{ group.grouper|date:"b d, Y" }}</strong>
-                            <ul>
+                            <ul class="wrap-items">
                                 {% for wrap in group.list %}
-                                    <li>
+                                    <li class="wrap-item">
                                         <p>{% trans "Time Range" %}: {{ wrap.time_range|title }}</p>
                                         <a href="{% url 'view_old_wrap' wrap.id %}">
-                                            <button class="button">{% trans "View Wrap Details" %}</button>
+                                            <button class="view-details-button">
+                                                {% trans "View Wrap Details" %}
+                                            </button>
                                         </a>
                                     </li>
                                 {% endfor %}
@@ -86,55 +66,30 @@
                     {% endfor %}
                 </ul>
             {% else %}
-                <p>{% trans "No wraps have been saved to your profile yet." %}</p>
+                <p class="no-wraps-message">{% trans "No wraps have been saved to your profile yet." %}</p>
             {% endif %}
         </section>
 
-        <div>
-            <h2>{% trans "Account Actions" %}</h2>
-            <form method="post" action="{% url 'delete_account' %}">
+        <!-- Delete Account Form -->
+        <div class="container">
+            <h2 class="section-title">{% trans "Account Actions" %}</h2>
+            <form method="post" action="{% url 'delete_account' %}" id="delete-account-form" class="delete-account-form">
                 {% csrf_token %}
-                <button type="submit" class="button">{% trans "Delete Account" %}</button>
+                <button type="submit" class="delete-account-button">
+                    {% trans "Delete Account" %}
+                </button>
             </form>
+            
         </div>
 
-        <a href="{% url 'song_guess_game' %}" class="button">{% trans "Play Song Guess Game" %}</a>
+    <a href="{% url 'song_guess_game' %}">Play Song Guess Game</a>
 
-        <footer>
-            <p>&copy; 2024 Spotify Wrapped Clone</p>
-        </footer>
-    </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const toggleButton = document.getElementById("dark-mode-toggle");
-            const body = document.body;
+    <footer class="profile-footer">
+        <p>&copy; 2024 Spotify Wrapped Clone</p>
+    </footer>
 
-            // Check for saved user preference
-            const darkModePreference = localStorage.getItem("darkMode");
-
-            if (darkModePreference === "enabled") {
-                body.classList.add("dark-mode");
-                toggleButton.textContent = "{% trans 'Light Mode' %}";
-            } else {
-                toggleButton.textContent = "{% trans 'Dark Mode' %}";
-            }
-
-            // Toggle dark mode on button click
-            toggleButton.addEventListener("click", function () {
-                body.classList.toggle("dark-mode");
-                const isDarkModeEnabled = body.classList.contains("dark-mode");
-
-                // Save user preference
-                if (isDarkModeEnabled) {
-                    localStorage.setItem("darkMode", "enabled");
-                    toggleButton.textContent = "{% trans 'Light Mode' %}";
-                } else {
-                    localStorage.setItem("darkMode", "disabled");
-                    toggleButton.textContent = "{% trans 'Dark Mode' %}";
-                }
-            });
-        });
-    </script>
+    <script src="{% static 'js/profile.js' %}"></script>
+       </div>
 </body>
 </html>
