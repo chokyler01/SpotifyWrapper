@@ -103,7 +103,7 @@
 
                         <strong>{{ track.name }}</strong> {% trans "by" %}
                         {% for artist in track.artists %}
-                            {{ artist.name }}{% if not forloop.last %}, {% endif %}
+                            {{ artist }}{% if not forloop.last %}, {% endif %}
                         {% endfor %}
                     </div>
                     <div class="rank_topSongs">{{ forloop.counter }}</div>
@@ -270,6 +270,35 @@
         <a href="{% url 'profile' %}" class="profile-icon" aria-label="{% trans 'View Profile' %}">
             <i class="bi bi-person"></i>
         </a>
+           <!-- Share and Download Buttons -->
+       <div class="actions-section">
+           <h3>{% trans "Share or Download" %}</h3>
+           <div class="buttons">
+               <!-- Download Wrapped Image -->
+               <form method="GET" action="{% url 'generate_wrap_image' %}">
+                   <button type="submit" class="btn btn-secondary">{% trans "Download Wrapped Image" %}</button>
+               </form>
+
+
+               <!-- Share on Instagram -->
+               <a href="https://www.instagram.com/" target="_blank">
+                   <button type="button" class="btn btn-secondary">{% trans "Share on Instagram" %}</button>
+               </a>
+
+
+               <!-- Share on Twitter -->
+               <a href="https://twitter.com/intent/tweet?text=Check%20out%20my%20Spotify%20Wrapped!%20#SpotifyWrapped" target="_blank">
+                   <button type="button" class="btn btn-secondary">{% trans "Share on Twitter" %}</button>
+               </a>
+
+
+               <!-- Share on LinkedIn -->
+               <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fyourwebsite.com%2Fwrapped%2F" target="_blank">
+                   <button type="button" class="btn btn-secondary">{% trans "Share on LinkedIn" %}</button>
+               </a>
+           </div>
+       </div>
+
     </body>
 {% endif %}
 </html>
