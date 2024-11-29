@@ -281,22 +281,26 @@ def home_view(request):
     return render(request, 'home.html')
 
 
-
-
 def register_view(request):
-  """Handle user registration and redirect to Spotify linking."""
-  if request.method == 'POST':
-      form = UserCreationForm(request.POST)
-      if form.is_valid():
-          user = form.save()
-          Profile.objects.create(user=user)  # Create profile for new user
-          login(request, user)  # Log in the user immediately after registration
-          return redirect('login')  # Redirect to choose_wrap_time after login
-  else:
-      form = UserCreationForm()
-  return render(request, 'register.html', {'form': form})
+    """Handle user registration and redirect to Spotify linking."""
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
 
+            # Check if a profile already exists to prevent duplicates
+            profile, created = Profile.objects.get_or_create(user=user)
 
+            if created:
+                print(f"Profile created for user: {user.username}")
+            else:
+                print(f"Profile already exists for user: {user.username}")
+
+            login(request, user)  # Log in the user immediately after registration
+            return redirect('login')  # Redirect to the login page after successful registration
+    else:
+        form = UserCreationForm()
+    return render(request, 'register.html', {'form': form})
 
 
 def login_view(request):

@@ -126,11 +126,11 @@ LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale'),  # Ensure this points to your translation directory
 ]
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/New_York'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 USE_L10N = True
 
