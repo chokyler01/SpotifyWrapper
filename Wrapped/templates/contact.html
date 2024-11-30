@@ -7,26 +7,152 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% trans "Contact Developers" %}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        /* Scoped styling for developers section */
+        .contact-page {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .contact-page p {
+            margin: 0.5rem 0 1rem 0;
+        }
+
+        .contact-page a.button {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
+            background-color: #1DB954;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-page a.button:hover {
+            background-color: #17a34a;
+        }
+
+        .developers-section {
+            margin-top: 2rem;
+            padding: 1rem;
+            border-radius: 10px;
+            background-color: #f5f5f5; /* Light mode */
+            color: #333; /* Light mode */
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .developer-card {
+            flex: 1 1 calc(48% - 1rem); /* 2 cards per row, adjust width as needed */
+            max-width: 350px; /* Limit card width */
+            padding: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #ffffff; /* Light mode */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .developer-card h3 {
+            margin: 0 0 0.5rem 0;
+            color: inherit;
+            font-size: 1.1rem;
+        }
+
+        .developer-card p {
+            margin: 0.4rem 0;
+            font-size: 0.9rem;
+        }
+
+        /* Dark mode adjustments */
+        body.dark-mode .developers-section {
+            background-color: #1c1c1c; /* Dark mode */
+            color: #ffffff; /* Dark mode */
+        }
+
+        body.dark-mode .developer-card {
+            background-color: #333333; /* Dark mode */
+            border: 1px solid #555555; /* Dark mode */
+        }
+
+        body.dark-mode .developer-card h3 {
+            color: #1DB954; /* Accent color for dark mode */
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .developer-card {
+                flex: 1 1 100%; /* Full width on smaller screens */
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <!-- Unique wrapper for contact page -->
+    <!-- Email Section -->
     <div class="contact-page">
-        <div class="container">
-            <h1>{% trans "Contact the Developers" %}</h1>
-            <p>{% trans "If you have any questions, issues, or suggestions, feel free to reach out!" %}</p>
+        <h1>{% trans "Contact the Developers" %}</h1>
+        <p>{% trans "If you have any questions, feel free to email us!" %}</p>
 
-            <!-- Mailto Link to Open Default Email Client -->
-            <a href="mailto:chokyler01@gmail.com?subject=Contacting%20Developers&body=Hi%20Developers,%0D%0A%0D%0AI%20would%20like%20to%20reach%20out%20regarding..." class="button">
-                {% trans "Email the Developers" %}
-            </a>
+        <!-- Mailto Link to Open Default Email Client -->
+        <a href="mailto:chokyler01@gmail.com?subject=Contacting%20Developers&body=Hi%20Developers,%0D%0A%0D%0AI%20would%20like%20to%20reach%20out%20regarding..." class="button">
+            {% trans "Email the Developers" %}
+        </a>
+    </div>
+
+    <!-- Developers Section -->
+    <div class="developers-section">
+        <div class="developer-card">
+            <h3>{% trans "Kai Lewis" %}</h3>
+            <p><strong>{% trans "Role:" %}</strong> {% trans "Scrum Master, Back-End Developer" %}</p>
+            <p><strong>{% trans "Favorite Color:" %}</strong> {% trans "Blue" %}</p>
+            <p><strong>{% trans "Key Contribution:" %}</strong> {% trans "Spotify API integration and authorization." %}</p>
         </div>
 
-        <button id="dark-mode-toggle" class="button">{% trans "Toggle Dark Mode" %}</button>
+        <div class="developer-card">
+            <h3>{% trans "Krisangi Bhargava" %}</h3>
+            <p><strong>{% trans "Role:" %}</strong> {% trans "Back-End Developer" %}</p>
+            <p><strong>{% trans "Favorite Color:" %}</strong> {% trans "Yellow" %}</p>
+            <p><strong>{% trans "Key Contribution:" %}</strong> {% trans "Generated PNGs for sharing Wrapped results." %}</p>
+        </div>
+
+        <div class="developer-card">
+            <h3>{% trans "Landon Barrett" %}</h3>
+            <p><strong>{% trans "Role:" %}</strong> {% trans "Product Owner, Full-Stack Developer" %}</p>
+            <p><strong>{% trans "Favorite Color:" %}</strong> {% trans "Green" %}</p>
+            <p><strong>{% trans "Key Contribution:" %}</strong> {% trans "Dark mode UI and Guess the Song game." %}</p>
+        </div>
+
+        <div class="developer-card">
+            <h3>{% trans "Mackenzie Czerner" %}</h3>
+            <p><strong>{% trans "Role:" %}</strong> {% trans "Full-Stack Developer" %}</p>
+            <p><strong>{% trans "Favorite Color:" %}</strong> {% trans "Purple" %}</p>
+            <p><strong>{% trans "Key Contribution:" %}</strong> {% trans "UI design consistency and debugging support." %}</p>
+        </div>
+
+        <div class="developer-card">
+            <h3>{% trans "Minhong (Kyler) Cho" %}</h3>
+            <p><strong>{% trans "Role:" %}</strong> {% trans "Full-Stack Developer" %}</p>
+            <p><strong>{% trans "Favorite Color:" %}</strong> {% trans "Sky Blue" %}</p>
+            <p><strong>{% trans "Key Contribution:" %}</strong> {% trans "Repository setup and user authentication." %}</p>
+        </div>
     </div>
 
     {% block content %}{% endblock %}
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const body = document.body;
+
+            // Check for saved user preference
+            const darkModePreference = localStorage.getItem("darkMode");
+            if (darkModePreference === "enabled") {
+                body.classList.add("dark-mode");
+            }
+        });
+    </script>
     <script src="{% static 'js/dark-mode-toggle.js' %}"></script>
 </body>
 

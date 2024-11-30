@@ -206,13 +206,16 @@ body.dark-mode .button:hover {
 
 /* Dark Mode Contact Button Styling */
 body.dark-mode .contact-button {
-    background-color: #1DB954;
-    color: #000000;
+    background-color: #444;
+    color: #ffffff;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
 }
 
 body.dark-mode .contact-button:hover {
-    background-color: #1DB954;
+    background-color: #666;
+    transform: scale(1.05);
 }
+
 
 /* Dark Mode Toggle Button Styling */
 #dark-mode-toggle {
@@ -1250,3 +1253,33 @@ input[name="song_name"]:focus {
 #last-page{
     background: radial-gradient(#1DB954, #191414);
 }
+
+/* Dark mode for Create Account page */
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+body.dark-mode h1 {
+    color: #ffffff;
+}
+
+body.dark-mode a {
+    color: #000000;
+}
+
+body.dark-mode .form-floating label {
+    color: hsl(0, 0%, 0%);
+}
+
+body.dark-mode .button {
+    background-color: #444;
+    color: #ffffff;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .button:hover {
+    background-color: #666;
+    transform: scale(1.05);
+}
+

@@ -37,10 +37,18 @@
     <br>
     <a href="{% url 'login' %}" style="color: #1DB954;">{% trans "Already have an account? Log in" %}</a>
 </div>
-<button id="dark-mode-toggle" class="button">{% trans "Toggle Dark Mode" %}</button>
-</body>
 
-{% block content %}{% endblock %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const body = document.body;
 
+        // Check for saved user preference
+        const darkModePreference = localStorage.getItem("darkMode");
+        if (darkModePreference === "enabled") {
+            body.classList.add("dark-mode");
+        }
+    });
+</script>
 <script src="{% static 'js/dark-mode-toggle.js' %}"></script>
+</body>
 </html>
