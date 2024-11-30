@@ -463,15 +463,15 @@ def view_wraps(request):
             genre_counts = Counter(genres)
             top_genres = genre_counts.most_common(10)
             wrap_data['top_genres'] = top_genres
-
+    elif step == 9:
     # Save updated wrap data
-    wrap.wrap_data = json.dumps(wrap_data)
-    wrap.save()
+        wrap.wrap_data = json.dumps(wrap_data)
+        wrap.save()
 
     # Handle "Save to Profile" submission
-    if request.method == 'POST' and 'save' in request.POST:
-        save_wrap_to_profile(request.user, wrap, time_range)
-        return redirect('profile')
+        if request.method == 'POST' and 'save' in request.POST:
+            save_wrap_to_profile(request.user, wrap, time_range)
+            return redirect('profile')
 
     # Render the wraps page with the collected data
     return render(request, 'wraps.html', {
