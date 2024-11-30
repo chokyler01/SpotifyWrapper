@@ -431,7 +431,25 @@ body.dark-mode h2.timeRange {
     background: linear-gradient(135deg, #17a34a, black); /* Slightly darker */
     transform: scale(0.98); /* Pressed effect */
 }
-
+.save-button{
+    background: linear-gradient(135deg, #1DB954, black); /*gradient */
+    color: white;
+    padding: 5px 5px;
+    font-size: 18px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Add shadow for depth */
+    width: 250px; /* Consistent width for all buttons */
+    height: 50px; /* Consistent height for all buttons */
+    text-align: center;
+}
+.save-button:hover {
+    background: linear-gradient(135deg, black, #1DB954); /* Reverse the gradient */
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
 /* for wrapped top songs */
 body.top-songs-page {
     background: radial-gradient(#DDA0DD,rgba(211, 96, 96, 0.8)); /* To avoid any other body backgrounds interfering */
@@ -614,6 +632,7 @@ h2.topArtists {
     margin-top: 5px;
 
 }
+
 /* Page background for top albums */
 body.top-albums-page {
     background: radial-gradient(#FFDB58, #ffa500);
@@ -1215,4 +1234,13 @@ input[name="song_name"]:focus {
 .game-button:hover {
     background-color: #17a34a;
     transform: scale(1.1);
+}
+.grey-box{
+    background-color: rgba(25, 20, 20, 0.5);
+    padding: 4em;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+#last-page{
+    background: radial-gradient(#1DB954, #191414);
 }

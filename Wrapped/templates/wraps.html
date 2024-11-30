@@ -259,46 +259,44 @@
                 </div>
             {% endfor %}
         </div>
+        <a href="{% url 'view_wraps' %}?step=9&time_range={{ time_range }}">
+            <button class="next-button">{% trans "Save or Share" %}</button>
+        </a>
         <a href="{% url 'view_wraps' %}?step=6&time_range={{ time_range }}">
             <button class="back-button">{% trans "Back: Top Albums" %}</button>
         </a>
-        <form method="post" action="{% url 'view_wraps' %}?time_range={{ time_range }}">
-            {% csrf_token %}
-            <input type="hidden" name="time_range" value="{{ time_range }}">
-            <button class="next-button" type="submit" name="save">{% trans "Save to Profile" %}</button>
-        </form>
-        <a href="{% url 'profile' %}" class="profile-icon" aria-label="{% trans 'View Profile' %}">
-            <i class="bi bi-person"></i>
-        </a>
-           <!-- Share and Download Buttons -->
-       <div class="actions-section">
-           <h3>{% trans "Share or Download" %}</h3>
-           <div class="buttons">
-               <!-- Download Wrapped Image -->
-               <form method="GET" action="{% url 'generate_wrap_image' %}">
-                   <button type="submit" class="btn btn-secondary">{% trans "Download Wrapped Image" %}</button>
-               </form>
-
-
-               <!-- Share on Instagram -->
-               <a href="https://www.instagram.com/" target="_blank">
-                   <button type="button" class="btn btn-secondary">{% trans "Share on Instagram" %}</button>
-               </a>
-
-
-               <!-- Share on Twitter -->
-               <a href="https://twitter.com/intent/tweet?text=Check%20out%20my%20Spotify%20Wrapped!%20#SpotifyWrapped" target="_blank">
-                   <button type="button" class="btn btn-secondary">{% trans "Share on Twitter" %}</button>
-               </a>
-
-
-               <!-- Share on LinkedIn -->
-               <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fyourwebsite.com%2Fwrapped%2F" target="_blank">
-                   <button type="button" class="btn btn-secondary">{% trans "Share on LinkedIn" %}</button>
-               </a>
-           </div>
-       </div>
-
+    </body>
+{% elif step == 9 %}
+    <body class = "top-albums-page" id = "last-page">
+    <h1> Save or Share Your Wrapped!</h1>
+    <br>
+        <div class = "grey-box">
+            <div class = "button-container">
+                <form method="post" action="{% url 'view_wraps' %}?time_range={{ time_range }}">
+                    {% csrf_token %}
+                    <input type="hidden" name="time_range" value="{{ time_range }}">
+                    <button class="save-button" type="submit">{% trans "Save to Profile" %}</button>
+                </form>
+                <form method="GET" action="{% url 'generate_wrap_image' %}">
+                    <button type="submit" class="save-button">{% trans "Download Wrapped Image" %}</button>
+                </form>
+            </div>
+            <br>
+            <div>
+                   <a href="https://www.instagram.com/" target="_blank">
+                       <button type="button" class="view-details-button">{% trans "Share on Instagram" %}</button>
+                   </a>
+                   <a href="https://twitter.com/intent/tweet?text=Check%20out%20my%20Spotify%20Wrapped!%20#SpotifyWrapped" target="_blank">
+                       <button type="button" class="view-details-button">{% trans "Share on Twitter" %}</button>
+                   </a>
+                   <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fyourwebsite.com%2Fwrapped%2F" target="_blank">
+                       <button type="button" class="view-details-button">{% trans "Share on LinkedIn" %}</button>
+                   </a>
+            </div>
+        </div>
+    <a href="{% url 'view_wraps' %}?step=8&time_range={{ time_range }}">
+            <button class="back-button">{% trans "Back: Top Genres" %}</button>
+    </a>
     </body>
 {% endif %}
 </html>
