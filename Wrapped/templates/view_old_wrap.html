@@ -266,6 +266,18 @@
         <a href="{% url 'profile' %}" class="profile-icon" aria-label="{% trans 'View Profile' %}">
             <i class="bi bi-person"></i>
         </a>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const body = document.body;
+
+            // Check for saved user preference
+            const darkModePreference = localStorage.getItem("darkMode");
+            if (darkModePreference === "enabled") {
+                body.classList.add("dark-mode");
+            }
+        });
+    </script>
+
     </body>
 {% endif %}
 </html>

@@ -9,7 +9,7 @@
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
    {% block extra_head %}{% endblock %}
 </head>
-<body class="dark-mode">
+<body>
    {% block content %}
    <h2 class="timeRange">{% trans "Select Your Spotify Wrapped Time Range" %}</h2>
    <a href="{% url 'profile' %}" class="profile-icon" aria-label="{% trans 'View Profile' %}">
@@ -34,12 +34,22 @@
            <button class="timeRange-button" type="submit">{% trans "Submit" %}</button>
        </div>
 
-       <button id="dark-mode-toggle" class="button">{% trans "Toggle Dark Mode" %}</button>
 
    </form>
    {% endblock %}
 
-   <script src="{% static 'dark-mode-toggle.js' %}"></script>
+   <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const body = document.body;
+
+            // Check for saved user preference
+            const darkModePreference = localStorage.getItem("darkMode");
+            if (darkModePreference === "enabled") {
+                body.classList.add("dark-mode");
+            }
+        });
+    </script>
+
 
 </body>
 </html>

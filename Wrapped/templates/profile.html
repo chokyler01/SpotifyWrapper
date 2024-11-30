@@ -29,6 +29,9 @@
         <a href="{% url 'friends_page' %}">
             <button class="wrapped-button"> {% trans "Manage Friends"%}</button>
         </a>
+ <a href="{% url 'song_guess_game' %}">
+        <button class="wrapped-button"> {% trans "Play Song Guess Game"%}</button>
+        </a>
 
 
 
@@ -79,17 +82,48 @@
                     {% trans "Delete Account" %}
                 </button>
             </form>
-            
+            <button id="dark-mode-toggle" class="wrapped-button">{% trans "Dark Mode" %}</button>
+            <script>
+         document.addEventListener("DOMContentLoaded", function () {
+            const toggleButton = document.getElementById("dark-mode-toggle");
+            const body = document.body;
+
+            // Check for saved user preference
+            const darkModePreference = localStorage.getItem("darkMode");
+
+            if (darkModePreference === "enabled") {
+                body.classList.add("dark-mode");
+                toggleButton.textContent = "{% trans 'Light Mode' %}";
+            } else {
+                toggleButton.textContent = "{% trans 'Dark Mode' %}";
+            }
+
+            // Toggle dark mode on button click
+            toggleButton.addEventListener("click", function () {
+                body.classList.toggle("dark-mode");
+                const isDarkModeEnabled = body.classList.contains("dark-mode");
+
+                // Save user preference
+                if (isDarkModeEnabled) {
+                    localStorage.setItem("darkMode", "enabled");
+                    toggleButton.textContent = "{% trans 'Light Mode' %}";
+                } else {
+                    localStorage.setItem("darkMode", "disabled");
+                    toggleButton.textContent = "{% trans 'Dark Mode' %}";
+                }
+            });
+        });
+    </script>
         </div>
 
-    <a href="{% url 'song_guess_game' %}">Play Song Guess Game</a>
 
 
     <footer class="profile-footer">
         <p>&copy; 2024 Spotify Wrapped Clone</p>
     </footer>
 
-    <script src="{% static 'js/profile.js' %}"></script>
-       </div>
+
+    </div>
+
 </body>
 </html>

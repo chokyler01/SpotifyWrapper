@@ -15,7 +15,7 @@
 /* Default Light Mode */
 :root {
     --bg-color: #f9f9f9;
-    --text-color: #333;
+    --text-color: #111;
     --secondary-text-color: #555;
     --button-bg-color: #007bff;
     --button-text-color: #fff;
@@ -216,15 +216,13 @@ body.dark-mode .contact-button:hover {
 
 /* Dark Mode Toggle Button Styling */
 #dark-mode-toggle {
-    position: fixed;
-    bottom: 20px;
-    left: 2%;
-    padding: 6px 12px;
-    font-size: 80%;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
     background-color: darkgrey;
     color: #ffffff;
-    border: none;
-    border-radius: 20px;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
@@ -310,7 +308,7 @@ body.dark-mode h2.timeRange {
     padding: 15px;
     margin: 10px 0;
     width: 100%;
-    background-color: #121212;
+    background-color: black;
     border-radius: 8px;
     color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
@@ -911,10 +909,15 @@ body.top-genres-page {
 /* Base styles for profile page */
 body.profile {
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #121212, #282828);
-    color: #ffffff;
+    background: #ffffff;
+    color: #121212;
+
     margin: 0;
     padding: 0;
+}
+body.profile.dark-mode{
+    background: linear-gradient(135deg, #121212, #282828);
+    color: #ffffff;
 }
 .profile_header {
     font-size: 3.2em;
@@ -1005,6 +1008,7 @@ body.profile {
     margin: 1em; /* Add spacing between sections */
     width: 80vw;
     padding: 10px;
+    color: white;
     background-color: #17a34a;
     border-radius: 8px;
     box-sizing: border-box;
@@ -1026,6 +1030,8 @@ body.profile {
     gap: 20px; /* Space between wraps */
     justify-content: center; /* Center the wraps horizontally */
     width: 100%; /* Take up the full container width */
+    max-height:400px;
+    overflow-y: auto;
     background-color: #17a34a;
     padding: 1em;
     border-radius: 8px;
@@ -1126,7 +1132,7 @@ body.profile {
     left: 0;
     width: 100%;
     text-align: center;
-    color: #ffffff;
+    color: inherit;
 }
 .image-and-audio{
     position: relative;
