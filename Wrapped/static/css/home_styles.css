@@ -142,3 +142,61 @@ body.dark-mode {
     background: black;
     color: #ffffff;  /* Text color changes to white in dark mode */
 }
+h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+    color: inherit;
+}
+.delete-account-form {
+    text-align: center;
+    margin: 15px;
+}
+.delete-account-button {
+    background-color: #17a34a;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.delete-account-button:hover {
+    background-color: #ff3333;
+    transform: scale(1.05);
+}
+
+.delete-account-button:active {
+    background-color: #cc0000;
+    transform: scale(0.98);
+}
+.button {
+    background-color: #1DB954;
+    color: #000000;
+    font-size: 1.5em;
+    font-weight: normal;
+    padding: 10px 20px;
+    text-align: center;
+    border: none;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;  /* Smooth transition */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.button:hover {
+    background-color: #1DB954;
+}
+
+/* Dark Mode Button Styling */
+body.dark-mode .button {
+    background-color: #1DB954;
+    color: #000000;
+}
+
+body.dark-mode .button:hover {
+    background-color: #1DB954;
+}

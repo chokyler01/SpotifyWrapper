@@ -67,18 +67,6 @@
             {% endif %}
         </div>
 
-        <!-- Delete Account Form -->
-        <div class="container">
-            <h2 class="section-title">{% trans "Account Actions" %}</h2>
-            <form method="post" action="{% url 'delete_account' %}" id="delete-account-form" class="delete-account-form">
-                {% csrf_token %}
-                <button type="submit" class="delete-account-button">
-                    {% trans "Delete Account" %}
-                </button>
-            </form>
-            <button id="dark-mode-toggle" class="wrapped-button">{% trans "Dark Mode" %}</button>
-        </div>
-    </div>
 
 </body>
      <script>

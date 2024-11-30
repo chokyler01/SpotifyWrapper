@@ -1,1 +1,59 @@
-<h1>Settings Page</h1>
+{% load static i18n %}
+<!DOCTYPE html>
+<body lang="{%get_current_language as LANGUAGE_CODE %}">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>{% block title %}{% trans "Select Time Range" %}{% endblock %}</title>
+   <link rel="stylesheet" href="{% static 'css/home_styles.css' %}"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+   {% block extra_head %}{% endblock %}
+</head>
+   {% block content %}
+   <nav class="navbar navbar-expand-lg navbar-custom">
+    <a class="navbar-brand" href="{%url 'choose_wrap_time' %}">MySpotifyWrapped</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'song_guess_game' %}">Play Game</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'friends_page' %}">Friends</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+             <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle profile" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                    <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url 'account_settings' %}">Settings</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+<h1>Account Settings</h1>
+    <div class="container">
+            <h2 class="section-title">{% trans "Account Actions" %}</h2>
+            <form method="post" action="{% url 'delete_account' %}" id="delete-account-form" class="delete-account-form">
+                {% csrf_token %}
+                <button type="submit" class="delete-account-button-button">
+                    {% trans "Delete Account" %}
+                </button>
+            </form>
+            <button id="dark-mode-toggle" class="wrapped-button">{% trans "Dark Mode" %}</button>
+        </div>
+    </div>
+</body>
+{% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
