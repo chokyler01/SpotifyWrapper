@@ -57,6 +57,12 @@ def generate_wrap_image(request):
         top_albums = wrap_data.get('top_albums', [])
         top_artists = wrap_data.get('top_artists', [])
 
+        print("Wrap Data Retrieved:", wrap_data)
+        print("Top Tracks:", wrap_data.get('top_tracks'))
+        print("Top Genres:", wrap_data.get('top_genres'))
+        print("Top Albums:", wrap_data.get('top_albums'))
+        print("Top Artists:", wrap_data.get('top_artists'))
+
         # Check for data validity
         if not (top_tracks or top_genres or top_albums or top_artists):
             return HttpResponse("No data available in the wrap. Ensure you've completed your Spotify Wrapped.",
@@ -424,6 +430,8 @@ def view_wraps(request):
 
         wrap_data['top_artists'] = top_artists
         wrap_data['top_genres'] = top_genres
+        wrap.wrap_data = json.dumps(wrap_data)
+        wrap.save()
 
     elif step == 6:
         # Fetch and save top albums from top artists
@@ -446,6 +454,8 @@ def view_wraps(request):
 
         top_albums = top_albums[:10]
         wrap_data['top_albums'] = top_albums
+        wrap.wrap_data = json.dumps(wrap_data)
+        wrap.save()
 
     elif step == 8:
         # Retrieve top genres if they were saved
@@ -463,6 +473,8 @@ def view_wraps(request):
             genre_counts = Counter(genres)
             top_genres = genre_counts.most_common(10)
             wrap_data['top_genres'] = top_genres
+            wrap.wrap_data = json.dumps(wrap_data)
+            wrap.save()
     elif step == 9:
     # Save updated wrap data
         wrap.wrap_data = json.dumps(wrap_data)
