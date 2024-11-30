@@ -30,5 +30,17 @@
         </section>
         <a href="{% url 'friends_page' %}">{% trans "Back to Friends" %}</a>
     </main>
+<script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const body = document.body;
+
+            // Check for saved user preference
+            const darkModePreference = localStorage.getItem("darkMode");
+            if (darkModePreference === "enabled") {
+                body.classList.add("dark-mode");
+            }
+        });
+    </script>
+
 </body>
 </html>

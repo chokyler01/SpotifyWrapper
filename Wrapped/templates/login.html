@@ -37,10 +37,22 @@
     <!-- Go Back to Home Page Button -->
     <a href="{% url 'home' %}" class="btn btn-secondary mt-3">{% trans "Go Back to Home Page" %}</a>
     
-    <button id="dark-mode-toggle" class="button mt-4">{% trans "Toggle Dark Mode" %}</button>
+<script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const body = document.body;
+
+            // Check for saved user preference
+            const darkModePreference = localStorage.getItem("darkMode");
+            if (darkModePreference === "enabled") {
+                body.classList.add("dark-mode");
+            }
+        });
+    </script>
 </body>
 
 {% block content %}{% endblock %}
 
-<script src="{% static 'dark-mode-toggle.js' %}"></script>
+
+
+
 </html>

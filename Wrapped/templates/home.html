@@ -29,10 +29,20 @@
         </form>
     </div>
     </div>
-    <button id="dark-mode-toggle" class="button">{% trans "Toggle Dark Mode" %}</button>
 
     {% block content %}{% endblock %}
 
-    <script src="{% static 'dark-mode-toggle.js' %}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const body = document.body;
+
+            // Check for saved user preference
+            const darkModePreference = localStorage.getItem("darkMode");
+            if (darkModePreference === "enabled") {
+                body.classList.add("dark-mode");
+            }
+        });
+    </script>
+
 </body>
 </html>

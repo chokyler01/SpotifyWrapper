@@ -21,6 +21,17 @@
 
         <a href="{% url 'song_guess_game' %}" class="game-button">{% trans "Play Again" %}</a>
     </div>
+<script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const body = document.body;
+
+            // Check for saved user preference
+            const darkModePreference = localStorage.getItem("darkMode");
+            if (darkModePreference === "enabled") {
+                body.classList.add("dark-mode");
+            }
+        });
+    </script>
 
 </body>
 </html>
