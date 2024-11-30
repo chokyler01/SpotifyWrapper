@@ -498,9 +498,10 @@ def view_wraps(request):
 def delete_account(request):
   """Allow user to delete their account."""
   if request.method == 'POST':
-      request.user.delete()
-      return redirect('register')
-  return render(request, 'delete_account.html')
+      if 'confirm_delete' in request.POST:
+          request.user.delete()
+          return redirect('register')
+  return render(request, 'account_settings.html')
 
 
 
