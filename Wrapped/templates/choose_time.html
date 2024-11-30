@@ -5,17 +5,45 @@
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>{% block title %}{% trans "Select Time Range" %}{% endblock %}</title>
-   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+   <link rel="stylesheet" href="{% static 'css/home_styles.css' %}"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
    {% block extra_head %}{% endblock %}
 </head>
-<body>
    {% block content %}
+   <nav class="navbar navbar-expand-lg navbar-custom">
+    <a class="navbar-brand" href="{%url 'choose_wrap_time' %}">MySpotifyWrapped</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'song_guess_game' %}">Play Game</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'friends_page' %}">Friends</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+             <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle profile" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                    <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url 'account_settings' %}">Settings</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+<body>
    <h2 class="timeRange">{% trans "Select Your Spotify Wrapped Time Range" %}</h2>
-   <a href="{% url 'profile' %}" class="profile-icon" aria-label="{% trans 'View Profile' %}">
-       <i class="bi bi-person"></i>
-   </a>
-
+<br>
    <form method="POST" action="{% url 'choose_wrap_time' %}">
        {% csrf_token %}
        <div class="time-range-container">
@@ -37,7 +65,7 @@
 
    </form>
    {% endblock %}
-
+</body>
    <script>
         document.addEventListener("DOMContentLoaded", function () {
             const body = document.body;
@@ -49,7 +77,6 @@
             }
         });
     </script>
-
-
-</body>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </html>
