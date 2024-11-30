@@ -275,7 +275,7 @@
                 <form method="post" action="{% url 'view_wraps' %}?time_range={{ time_range }}">
                     {% csrf_token %}
                     <input type="hidden" name="time_range" value="{{ time_range }}">
-                    <button class="save-button" type="submit">{% trans "Save to Profile" %}</button>
+                    <button class="save-button" type="submit" name ="save">{% trans "Save to Profile" %}</button>
                 </form>
                 <form method="GET" action="{% url 'generate_wrap_image' %}">
                     <button type="submit" class="save-button">{% trans "Download Wrapped Image" %}</button>

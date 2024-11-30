@@ -467,12 +467,9 @@ def view_wraps(request):
     # Save updated wrap data
         wrap.wrap_data = json.dumps(wrap_data)
         wrap.save()
-
-    # Handle "Save to Profile" submission
-        if request.method == 'POST' and 'save' in request.POST:
-            save_wrap_to_profile(request.user, wrap, time_range)
-            return redirect('profile')
-
+    if request.method == 'POST' and 'save' in request.POST:
+        save_wrap_to_profile(request.user, wrap, time_range)
+        return redirect('profile')
     # Render the wraps page with the collected data
     return render(request, 'wraps.html', {
         'step': step,
