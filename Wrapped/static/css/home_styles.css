@@ -1,0 +1,202 @@
+.logout-button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.logout-button:hover {
+    background-color: #ff0000;
+}
+
+h2.timeRange {
+    color: var(--text-color); /* Dynamic color for light/dark mode */
+    font-size: 60px;
+    position: absolute;
+    top: 75px; /* Adjust for vertical position */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Ensure perfect horizontal centering */
+    text-align: center;
+    text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.8); /* Add shadow for better visibility */
+    transition: color 0.3s ease, text-shadow 0.3s ease; /* Smooth transitions */
+}
+
+body.dark-mode h2.timeRange {
+    color: #ffffff; /* White text in dark mode */
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8); /* Softer shadow in dark mode */
+}
+
+.timeRange {
+    color: white;
+    font-size: 60px;
+    position: absolute;
+    top: 75px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.time-range-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 150px; /* Adjust this for spacing below the title */
+    padding: 20px;
+    background-color: rgba(29, 185, 84);
+    border-radius: 8px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+    opacity: .8;
+}
+
+.time-box {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin: 10px 0;
+    width: 100%;
+    background-color: black;
+    border-radius: 8px;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    font-weight: bold;
+    z-index: 1;
+}
+
+.time-box input[type="radio"] {
+    margin-right: 10px;
+}
+.timeRange-button {
+    bottom: 20px;
+    background: black;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Add shadow for depth */
+    width: 150px;
+    height: 50px;
+    text-align: center;
+    position: center;
+
+}
+
+.timeRange-button:active {
+    transform: scale(0.98); /* Pressed effect */
+}
+
+
+
+.navbar .profile i {
+    font-size: 1.8em; /* Adjust icon size as needed */
+    line-height: 0;
+    padding: 0;
+    align-items: center;
+    color: #1DB954;
+}
+
+
+:root {
+    --navbar-bg-color: rgb(0, 0, 0,.1); /* Light mode */
+    --navbar-text-color: black;
+}
+
+body.dark-mode {
+    --navbar-bg-color: rgba(255, 255, 255, 0.1);
+    --navbar-text-color: white;
+}
+
+.navbar-custom {
+    background-color: var(--navbar-bg-color);
+    color: var(--navbar-text-color);
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link {
+    color: var(--navbar-text-color);
+    padding: 0.5rem 1rem;
+}
+
+.navbar .nav-link {
+    padding: 0.5rem 1rem;
+}
+body {
+    background: white;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    color: black;
+    transition: background 0.3s, color 0.3s;
+    justify-content: center;
+}
+
+body.dark-mode {
+    background: black;
+    color: #ffffff;  /* Text color changes to white in dark mode */
+}
+h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+    color: inherit;
+}
+.delete-account-form {
+    text-align: center;
+    margin: 15px;
+}
+.delete-account-button {
+    background-color: #17a34a;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.delete-account-button:hover {
+    background-color: #ff3333;
+    transform: scale(1.05);
+}
+
+.delete-account-button:active {
+    background-color: #cc0000;
+    transform: scale(0.98);
+}
+.button {
+    background-color: #1DB954;
+    color: #000000;
+    font-size: 1.5em;
+    font-weight: normal;
+    padding: 10px 20px;
+    text-align: center;
+    border: none;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;  /* Smooth transition */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.button:hover {
+    background-color: #1DB954;
+}
+
+/* Dark Mode Button Styling */
+body.dark-mode .button {
+    background-color: #1DB954;
+    color: #000000;
+}
+
+body.dark-mode .button:hover {
+    background-color: #1DB954;
+}

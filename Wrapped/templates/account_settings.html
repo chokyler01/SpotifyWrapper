@@ -1,6 +1,6 @@
 {% load static i18n %}
 <!DOCTYPE html>
-<html lang="{%get_current_language as LANGUAGE_CODE %}">
+<body lang="{%get_current_language as LANGUAGE_CODE %}">
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,42 +41,19 @@
         </ul>
     </div>
 </nav>
-<body>
-   <h2 class="timeRange">{% trans "Select Your Spotify Wrapped Time Range" %}</h2>
-<br>
-   <form method="POST" action="{% url 'choose_wrap_time' %}">
-       {% csrf_token %}
-       <div class="time-range-container">
-           <div class="time-box">
-               <input type="radio" id="short" name="time_range" value="short_term" required>
-               <label for="short">{% trans "Short Term (Last 4 Weeks)" %}</label>
-           </div>
-           <div class="time-box">
-               <input type="radio" id="medium" name="time_range" value="medium_term">
-               <label for="medium">{% trans "Medium Term (Last 6 Months)" %}</label>
-           </div>
-           <div class="time-box">
-               <input type="radio" id="long" name="time_range" value="long_term">
-               <label for="long">{% trans "Long Term (All Time)" %}</label>
-           </div>
-           <button class="timeRange-button" type="submit">{% trans "Submit" %}</button>
-       </div>
-
-
-   </form>
-   {% endblock %}
+<h1>Account Settings</h1>
+    <div class="container">
+            <h2 class="section-title">{% trans "Account Actions" %}</h2>
+            <form method="post" action="{% url 'delete_account' %}" id="delete-account-form" class="delete-account-form">
+                {% csrf_token %}
+                <button type="submit" class="delete-account-button-button">
+                    {% trans "Delete Account" %}
+                </button>
+            </form>
+            <button id="dark-mode-toggle" class="wrapped-button">{% trans "Dark Mode" %}</button>
+        </div>
+    </div>
 </body>
-   <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const body = document.body;
-
-            // Check for saved user preference
-            const darkModePreference = localStorage.getItem("darkMode");
-            if (darkModePreference === "enabled") {
-                body.classList.add("dark-mode");
-            }
-        });
-    </script>
+{% endblock %}
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-</html>

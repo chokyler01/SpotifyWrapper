@@ -766,3 +766,6 @@ def song_guess_game(request):
         request.session['game_song'] = game_song
 
         return render(request, 'song_guess_game.html', {'song_preview_url': song_preview_url, 'game_song': game_song})
+
+def account_settings(request):
+    return render(request, 'account_settings.html')
