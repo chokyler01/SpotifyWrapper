@@ -70,7 +70,7 @@ body.dark-mode h2.timeRange {
     border-radius: 25px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Add shadow for depth */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
     width: 150px;
     height: 50px;
     text-align: center;
@@ -205,123 +205,21 @@ body.dark-mode .button:hover {
     align-items: center;
     padding-top: 1em;
 }
-body.profile {
-    font-family: Arial, sans-serif;
-    background: #ffffff;
-    color: #121212;
 
-    margin: 0;
-    padding: 0;
-}
-body.profile.dark-mode{
-    background: linear-gradient(135deg, #121212, #282828);
-    color: #ffffff;
-}
-.profile_header {
-    font-size: 3.2em;
-    font-weight: bold;
-    color: inherit; /* Adapts to light or dark mode */
-    margin: .4em;
-}
-
-.container_profile {
-    display: flex;
+.card{
+    width: 18rem;
     text-align: center;
-    margin-bottom: 30px;
-    overflow-y: auto;
-    flex-direction: column; /* Align wraps horizontally */
-    flex-wrap: wrap;
-}
-
-.saved-wraps-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center align the items */
-    gap: 20px; /* Add space between elements */
-    margin: 1em; /* Add spacing between sections */
-    width: 80vw;
-    padding: 10px;
-    color: white;
-    background-color: #17a34a;
-    border-radius: 8px;
-    border: box-border;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow-x: auto; /* Enables horizontal scrolling */
-}
-
-.saved-wraps-section h3 {
-    text-align: center;
-    font-size: 2rem;
-    color: #17a34a;
-}
-
-.wrap-list {
-    list-style: none;
-    display: flex;
-    flex-direction: row; /* Align wraps horizontally */
-    flex-wrap: wrap; /* Allow wraps to go to the next line if needed */
-    gap: 20px; /* Space between wraps */
-    justify-content: center; /* Center the wraps horizontally */
-    width: 100%; /* Take up the full container width */
-    max-height:400px;
-    overflow-y: auto;
-    background-color: #17a34a;
-    padding: 1em;
-    border-radius: 8px;
-    overflow-x: auto; /* Allows scrolling if items exceed container width */
-    white-space: nowrap; /* Prevents wrapping to the next line */
-}
-
-.wrap-date {
-    margin-bottom: 20px;
-    text-transform: capitalize;
-}
-
-.wrap-date strong {
-    font-size: 18px;
-    color: white;
-    text-transform: capitalize;
-}
-
-.wrap-items {
-    list-style: none;
-    padding-left: 20px;
-}
-
-.wrap-item {
-    margin: 15px;
-    padding: 10px;
-    background-color:#149142;
-    border-radius:10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    transition: all 0.3s ease;
-    width: 30vw;
-    flex: 0 0 auto;
-}
-
-.wrap-item:hover {
-    background-color: #17a34a;;
-    transform: scale(1.02);
-}
-
-.view-details-button {
-    background-color: #1DB954;
-    color: white;
-    padding: 5px 15px;
-    border: none;
     border-radius: 20px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    padding: -5rem 10rem 5rem 10rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    border-width: medium;
+    border-color: darkgrey;
 }
-
-.view-details-button:hover {
-    background-color: #17a34a;
-    transform: scale(1.1);
+body.dark-mode .card{
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
 }
-
-.view-details-button:active {
-    background-color: #145a2c;
+.row, .container{
+    text-align: center;
+    justify-content: center;
 }
