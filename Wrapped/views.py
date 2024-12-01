@@ -212,6 +212,7 @@ def friends_page(request):
             except User.DoesNotExist:
                 messages.error(request, f"User with username {username} does not exist.")
 
+
     return render(request, 'friends_page.html', {'friends': friends})
 
 
