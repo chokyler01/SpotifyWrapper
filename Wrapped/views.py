@@ -83,7 +83,7 @@ def generate_wrap_image(request):
                                 status=404)
 
         # Create a blank image with lighter green background
-        img = Image.new('RGB', (1400, 1000), color=(144, 238, 144))  # Lighter green background
+        img = Image.new('RGB', (1800, 1000), color=(144, 238, 144))  # Lighter green background
         draw = ImageDraw.Draw(img)
 
         # Set font paths (update based on your system)
@@ -152,7 +152,7 @@ def generate_wrap_image(request):
         top_track_image = download_image(top_tracks[0].get('album_image')) if top_tracks else None
 
         # Resize and overlay images with captions
-        x_offset = 900  # Right side of the image
+        x_offset = 1100  # Right side of the image
         y_offset = 50  # Top offset for the images
         image_size = (250, 250)
         captions = [
