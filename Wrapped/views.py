@@ -29,6 +29,20 @@ from PIL import Image, ImageDraw, ImageFont, ImageOps
 from io import BytesIO
 from django.http import FileResponse
 import requests
+from django.shortcuts import redirect, get_object_or_404
+from django.contrib import messages
+from .models import SpotifyWrap
+
+def delete_wrap(request, wrap_id):
+    wrap = get_object_or_404(SpotifyWrap, id=wrap_id)
+
+    if request.method == "POST":
+        wrap.delete()
+        messages.success(request, "Wrap deleted successfully!")
+        return redirect("profile")  # Replace "home" with the URL name of your main view
+
+    return redirect("profile")
+
 
 
 def generate_wrap_image(request):

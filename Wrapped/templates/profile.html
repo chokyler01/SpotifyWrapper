@@ -255,6 +255,13 @@
                             <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}">
                                 <button class="button" type="submit">View Wrap Details</button>
                             </a>
+                            <form action="{% url 'delete_wrap' wrap_id=group.list.0.id %}" method="POST" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this wrap?');">
+                                    Delete
+                                </button>
+                            </form>
+                            
                         </div>
                     </div>
                 </div>
@@ -280,6 +287,13 @@
                             <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}">
                                 <button class="button" type="submit">View Wrap Details</button>
                             </a>
+                            <form action="{% url 'delete_wrap' wrap_id=group.list.0.id %}" method="POST" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this wrap?');">
+                                    Delete
+                                </button>
+                            </form>
+                            
                         </div>
                     </div>
                 </div>
@@ -305,6 +319,13 @@
                             <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}">
                                 <button class="button" type="submit">View Wrap Details</button>
                             </a>
+                            <form action="{% url 'delete_wrap' wrap_id=group.list.0.id %}" method="POST" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this wrap?');">
+                                    Delete
+                                </button>
+                            </form>
+                            
                         </div>
                     </div>
                 </div>
