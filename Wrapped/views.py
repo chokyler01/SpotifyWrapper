@@ -733,6 +733,7 @@ def view_old_wrap(request, wrap_id):
     # Render the wrap details in a template, including the 'is_mine' flag
     return render(request, 'view_old_wrap.html', {
         'wrap_id': wrap.id,
+        'wrap': wrap,
         'step': step,
         'time_range': time_range,
         'top_tracks': top_tracks,
