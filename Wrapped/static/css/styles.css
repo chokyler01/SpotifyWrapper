@@ -531,15 +531,27 @@ h3.topSongs {
 
 /* Song Title and Artist Styling */
 .song-title_topSongs {
-    font-size: 12px;
+    font-size: 16px;
     font-weight: bold;
-    color: #ffffff;
     margin-top: 5px;
+    color: white;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide any text that overflows */
+    text-overflow: ellipsis; /* Add "..." for overflowed text */
+    width: 100%; /* Ensure proper sizing */
+    display: block; /* Ensure it behaves like a block for width */
+    text-align: center; /* Center the text */
 }
 
 .song-artist_topSongs {
     font-size: 10px;
     color: #dddddd;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide any text that overflows */
+    text-overflow: ellipsis; /* Add "..." for overflowed text */
+    width: 100%; /* Ensure proper sizing */
+    display: block; /* Ensure it behaves like a block for width */
+    text-align: center; /* Center the text */
 }
 
 /* Rank Styling */

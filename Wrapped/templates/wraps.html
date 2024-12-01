@@ -100,10 +100,11 @@
                             <p>{% trans 'No album image available' %}</p>
                         {% endif %}
 
-                        <strong class = "song-name">{{ track.name }}</strong> {% trans "by" %}
+                        <strong class = "song-title_topSongs">{{ track.name }}</strong> <div class = "song-artist_topSongs"> {% trans "by" %}
                         {% for artist in track.artists %}
                             {{ artist}}{% if not forloop.last %}, {% endif %}
                         {% endfor %}
+                    </div>
                     </div>
                     <div class="rank_topSongs">{{ forloop.counter }}</div>
                 </div>
