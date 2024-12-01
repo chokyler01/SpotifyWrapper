@@ -1,60 +1,101 @@
-{% load static i18n %}
+{% load i18n static %}
 <!DOCTYPE html>
 <html lang="{% get_current_language as LANGUAGE_CODE %}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Friends</title>
+    <title>{% trans "Profile" %}</title>
     <link rel="stylesheet" href="{% static 'css/nav_styles.css' %}"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
+   {% block extra_head %}{% endblock %}
 </head>
+   {% block content %}
    <nav class="navbar navbar-expand-lg navbar-custom">
-        <a class="navbar-brand" href="{%url 'choose_wrap_time' %}"><img src="{% static 'images/spotify_logo.png' %}" alt="{% trans 'Spotify Logo' %}" class="spotify-logo-small"></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'song_guess_game' %}">Play Game</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'friends_page' %}">Friends</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ms-auto">
-                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle profile" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-                        <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{% url 'account_settings' %}">Settings</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{% url 'contact' %}">Contact Developers/a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <a class="navbar-brand" href="{%url 'choose_wrap_time' %}"><img src="{% static 'images/spotify_logo.png' %}" alt="{% trans 'Spotify Logo' %}" class="spotify-logo-small"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'song_guess_game' %}">Play Game</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'friends_page' %}">Friends</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+             <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle profile" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                    <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url 'account_settings' %}">Settings</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url 'contact' %}">Contact Developers</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
 <body>
-        <h1>{{ user.username }}'s Friends</h1>
-            <h2>Add or Remove Friends</h2>
-            <form method="post">
-                {% csrf_token %}
-                <input type="text" name="username" placeholder="Enter username" required>
-                <button type="submit" name="action" value="add">Add Friend</button>
-                <button type="submit" name="action" value="remove">Remove Friend</button>
-            </form>
+{#<div class="container">#}
+{#    <h1 style="color: #1DB954; text-align: center;">{{ user.username }}'s Friends</h1>#}
+{#<br>#}
+{#            <h2>Add or Remove Friends</h2>#}
+{#            <form method="post">#}
+{#                {% csrf_token %}#}
+{#                <input type="text" name="username" placeholder="Enter username" required>#}
+{#                <button type="submit" name="action" value="add">Add Friend</button>#}
+{#                <button type="submit" name="action" value="remove">Remove Friend</button>#}
+{#            </form>#}
+{#<br>#}
+{#            <h2>Your Friends</h2>#}
+{#            {% if friends %}#}
+{#                <ul>#}
+{#                    {% for friend in friends %}#}
+{#                        <li>#}
+{#                            <a href="{% url 'view_friends_old_wrap' friend.user.id %}">#}
+{#                                {{ friend.user.username }}#}
+{#                            </a>#}
+{#                        </li>#}
+{#                    {% endfor %}#}
+{#                </ul>#}
+{#            {% else %}#}
+{#                <p>You have no friends added.</p>#}
+{#            {% endif %}#}
+{#</div>#}
+{#</body>#}
+       <div class="container">
+    <h1 style="color: #1DB954; text-align: center;">{{ user.username }}'s Friends</h1>
+    <br>
 
+    <div class="row">
+        <!-- Left Section: Add/Remove Friends Form -->
+        <div class="col-lg-8 col-md-7">
+            <h2>Add or Remove Friends</h2>
+            <form method="post" class="mb-4">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="username" placeholder="Enter username" required>
+                </div>
+                <button type="submit" class="account-button" name="action" value="add">Add Friend</button>
+                <button type="submit" class="account-button" id ="delete-account-btn" name="action" value="remove">Remove Friend</button>
+            </form>
+        </div>
+
+        <!-- Right Section: Friends List -->
+        <div class="col-lg-4 col-md-5">
             <h2>Your Friends</h2>
             {% if friends %}
-                <ul>
+                <ul class="list-group">
                     {% for friend in friends %}
-                        <li>
+                        <li class="list-group-item">
                             <a href="{% url 'view_friends_old_wrap' friend.user.id %}">
                                 {{ friend.user.username }}
                             </a>
@@ -64,6 +105,14 @@
             {% else %}
                 <p>You have no friends added.</p>
             {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
 
 <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -76,7 +125,5 @@
             }
         });
     </script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-</body>
+
 </html>
