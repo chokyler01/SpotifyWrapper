@@ -41,31 +41,60 @@
         </ul>
     </div>
 </nav>
-<h1>Account Settings</h1>
-<div class="container">
-    <h2 class="section-title">{% trans "Account Actions" %}</h2>
-
-    <!-- Button to trigger confirmation dialog -->
-    <button id="delete-account-btn" class="delete-account-button">
-        {% trans "Delete Account" %}
-    </button>
-
-    <!-- Confirmation dialog -->
-    <div id="confirmation-dialog" style="display: none;">
-        <h3>{% trans "Are you sure you want to delete your account?" %}</h3>
-        <form method="post" action="{% url 'delete_account' %}" id="delete-account-form" class="delete-account-form">
-            {% csrf_token %}
-            <button type="submit" class="delete-account-button-button">
-                {% trans "Yes, Delete My Account" %}
-            </button>
-            <button type="button" id="cancel-btn" class="cancel-button">
-                {% trans "Cancel" %}
-            </button>
-        </form>
+<div class = "settings-container">
+    <h1>Account Settings</h1>
+    <br>
+    <div style="gap: 2em;">
+        <button id="delete-account-btn" class="account-button">
+            {% trans "Delete Account" %}
+        </button>
+        <button id="dark-mode-toggle" class="account-button">{% trans "Dark Mode" %}</button>
     </div>
-
-    <button id="dark-mode-toggle" class="delete-account-button">{% trans "Dark Mode" %}</button>
 </div>
+       <div id="confirmation-dialog" style="display: none;">
+            <h3>{% trans "Are you sure you want to delete your account?" %}</h3>
+            <form method="post" action="{% url 'delete_account' %}" id="delete-account-form" class="delete-account-form">
+                {% csrf_token %}
+                <button type="submit" class="delete-account-button-button">
+                    {% trans "Yes, Delete My Account" %}
+                </button>
+                <button type="button" id="cancel-btn" class="cancel-button">
+                    {% trans "Cancel" %}
+                </button>
+            </form>
+        </div>
+          <script>
+         document.addEventListener("DOMContentLoaded", function () {
+            const toggleButton = document.getElementById("dark-mode-toggle");
+            const body = document.body;
+
+            // Check for saved user preference
+            const darkModePreference = localStorage.getItem("darkMode");
+
+            if (darkModePreference === "enabled") {
+                body.classList.add("dark-mode");
+                toggleButton.textContent = "{% trans 'Light Mode' %}";
+            } else {
+                toggleButton.textContent = "{% trans 'Dark Mode' %}";
+            }
+
+            // Toggle dark mode on button click
+            toggleButton.addEventListener("click", function () {
+                body.classList.toggle("dark-mode");
+                const isDarkModeEnabled = body.classList.contains("dark-mode");
+
+                // Save user preference
+                if (isDarkModeEnabled) {
+                    localStorage.setItem("darkMode", "enabled");
+                    toggleButton.textContent = "{% trans 'Light Mode' %}";
+                } else {
+                    localStorage.setItem("darkMode", "disabled");
+                    toggleButton.textContent = "{% trans 'Dark Mode' %}";
+                }
+            });
+        });
+    </script>
+
 <script>
     document.getElementById('delete-account-btn').addEventListener('click', function(event) {
         // Show confirmation pop-up

@@ -151,7 +151,7 @@ h1 {
     text-align: center;
     margin: 15px;
 }
-.delete-account-button {
+.account-button {
     background-color: #17a34a;
     color: white;
     padding: 10px 20px;
@@ -163,13 +163,16 @@ h1 {
     transition: all 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
-.delete-account-button:hover {
+#dark-mode-toggle:hover {
+    background-color: dimgrey;
+    transform: scale(1.05);
+}
+#delete-account-btn:hover {
     background-color: #ff3333;
     transform: scale(1.05);
 }
 
-.delete-account-button:active {
+#delete-account-btn:active {
     background-color: #cc0000;
     transform: scale(0.98);
 }
@@ -199,4 +202,10 @@ body.dark-mode .button {
 
 body.dark-mode .button:hover {
     background-color: #1DB954;
+}
+.settings-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 1em;
 }
