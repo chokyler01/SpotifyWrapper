@@ -1305,9 +1305,8 @@ body.dark-mode .button:hover {
     background-color: #666;
     transform: scale(1.05);
 }
-#game-button{
+#game-wrap-button{
     position: absolute;
     top: 180px;
     left: 45%;
-
 }

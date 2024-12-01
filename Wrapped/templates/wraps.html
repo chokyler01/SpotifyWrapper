@@ -84,7 +84,7 @@
             <h2 class="topSongs">{% trans "Top Songs" %}</h2>
         </div>
             <a href="{% url 'song_guess_game' %}">
-                <button class="next-button" id = "game-button">{% trans "Play a Game!" %}</button>
+                <button class="next-button" id = "game-wrap-button">{% trans "Play a Game!" %}</button>
             </a>
         <div class="chart_topSongs">
             {% for track in top_tracks %}
