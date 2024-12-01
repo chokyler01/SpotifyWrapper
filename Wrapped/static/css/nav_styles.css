@@ -223,3 +223,39 @@ body.dark-mode .card{
     text-align: center;
     justify-content: center;
 }
+.game-container {
+    background-color:#17a34a;
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px;
+    border-radius: 8px; /* Rounds the corners */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
+    margin-left: 10%;
+    margin-right: 10%;
+}
+.game-container h1 {
+    font-size: 3em;
+    color: inherit; /* Adapts to light or dark mode */
+}
+.game-container form {
+    margin: 25px;
+    font-size: 1.2em;
+    padding: 10px;
+}
+
+.game-container p {
+    font-size: 1.5em;
+    margin: 30px;
+
+}
+input[name="song_name"] {
+    font-size: 1rem; /* Enlarges the text size */
+    background-color: black; /* Sets the background color (light blue, change as needed) */
+    color:#1DB954 ; /* Sets the text color (dark gray, change as needed) */
+    padding: 10px; /* Adds padding for a better appearance */
+    border: 2px solid black;/* Adds a border */
+    border-radius: 5px; /* Rounds the corners */
+    width: 100%; /* Makes the input take full width of the container */
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+]
