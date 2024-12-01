@@ -51,7 +51,7 @@
                                 {% for wrap in group.list %}
                                     <li class="wrap-item">
                                         <p>{% trans "Time Range" %}: {{ wrap.time_range|title }}</p>
-                                        <a href="{% url 'view_old_wrap' wrap.id %}">
+                                        <a href="{% url 'view_old_wrap' wrap.id %}?time_range={{ wrap.time_range}}">
                                             <button class="view-details-button">
                                                 {% trans "View Wrap Details" %}
                                             </button>

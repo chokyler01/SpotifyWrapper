@@ -365,7 +365,19 @@ def view_wraps(request):
     valid_time_ranges = ['short_term', 'medium_term', 'long_term']
     if time_range not in valid_time_ranges:
         print("Invalid time_range detected:", time_range)
-        return redirect('choose_wrap_time')
+
+        # Retrieve the wrap_id from the URL
+        wrap_id = request.GET.get('wrap_id')  # or get from the URL if needed
+        wrap = SpotifyWrap.objects.filter(id=wrap_id).first()
+
+        if wrap:
+            time_range = wrap.time_range  # Use the time_range from the current wrap
+            print("Time Range after fallback from wrap:", time_range)
+        else:
+            # If no wrap found, fallback to session or a default time_range
+            time_range = request.session.get('time_range', 'short_term')
+            print("No wrap found. Using session or default:", time_range)
+
 
     # Spotify API URLs
     top_tracks_url = 'https://api.spotify.com/v1/me/top/tracks'
@@ -682,6 +694,15 @@ def view_old_wrap(request, wrap_id):
     # Load the wrap data from the database
 
     wrap_data = json.loads(wrap.wrap_data)
+
+    time_range = request.GET.get('time_range', request.session.get('time_range'))
+
+    # Set the session time_range to the wrap's time_range if it's available
+    if time_range:
+        request.session['time_range'] = time_range
+        request.session.modified = True  # Ensure session is saved after modification
+        print(f"Session time_range set to: {request.session.get('time_range')}")
+
 
     # Ensure 'step' starts from 1 if not present
     step = 1
