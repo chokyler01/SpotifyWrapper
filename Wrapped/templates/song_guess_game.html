@@ -45,7 +45,7 @@
 </nav>
 <body>
 
-    <div class="game-container">
+    <div class="time-range-container" id ="game">
     <h1>{% trans "Guess the Song!" %}</h1>
 
         <p>{% trans "Listen to the song preview and guess the song title:" %}</p>
@@ -61,9 +61,8 @@
 
         <form method="POST">
             {% csrf_token %}
-            <div>
-                <input type="text" name="song_name" placeholder="{% trans 'Enter song name' %}" required>
-            </div>
+            <input type="text" name="song_name" placeholder="{% trans 'Enter song name' %}" required>
+            <br><br>
             <button class="timeRange-button" type="submit">{% trans 'Submit Guess' %}</button>
         </form>
     </div>

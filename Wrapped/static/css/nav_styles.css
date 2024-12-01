@@ -8,7 +8,7 @@ h2.timeRange {
     left: 50%; /* Center horizontally */
     transform: translateX(-50%); /* Ensure perfect horizontal centering */
     text-align: center;
-    text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.8); /* Add shadow for better visibility */
+    text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.4); /* Add shadow for better visibility */
     transition: color 0.3s ease, text-shadow 0.3s ease; /* Smooth transitions */
 }
 
@@ -33,13 +33,12 @@ body.dark-mode h2.timeRange {
     align-items: center;
     margin-top: 150px; /* Adjust this for spacing below the title */
     padding: 20px;
-    background-color: rgba(29, 185, 84);
+    background-color: rgba(29, 185, 84, .8);
     border-radius: 8px;
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
-    opacity: .8;
 }
 
 .time-box {
@@ -53,7 +52,6 @@ body.dark-mode h2.timeRange {
     color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
     font-weight: bold;
-    z-index: 1;
 }
 
 .time-box input[type="radio"] {
@@ -74,8 +72,6 @@ body.dark-mode h2.timeRange {
     width: 150px;
     height: 50px;
     text-align: center;
-    position: center;
-
 }
 
 .timeRange-button:active {
@@ -223,39 +219,19 @@ body.dark-mode .card{
     text-align: center;
     justify-content: center;
 }
-.game-container {
-    background-color:#17a34a;
-    text-align: center;
-    margin-top: 50px;
-    padding: 20px;
-    border-radius: 8px; /* Rounds the corners */
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
-    margin-left: 10%;
-    margin-right: 10%;
-}
-.game-container h1 {
+#game h1 {
     font-size: 3em;
     color: inherit; /* Adapts to light or dark mode */
 }
-.game-container form {
-    margin: 25px;
-    font-size: 1.2em;
-    padding: 10px;
-}
 
-.game-container p {
+#game p {
     font-size: 1.5em;
-    margin: 30px;
-
 }
 input[name="song_name"] {
-    font-size: 1rem; /* Enlarges the text size */
+    font-size: 1.2rem; /* Enlarges the text size */
     background-color: black; /* Sets the background color (light blue, change as needed) */
     color:#1DB954 ; /* Sets the text color (dark gray, change as needed) */
-    padding: 10px; /* Adds padding for a better appearance */
     border: 2px solid black;/* Adds a border */
     border-radius: 5px; /* Rounds the corners */
-    width: 100%; /* Makes the input take full width of the container */
-    box-sizing: border-box; /* Ensures padding doesn't affect width */
+    width: 30vw;
 }
-]
