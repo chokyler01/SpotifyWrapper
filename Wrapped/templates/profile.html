@@ -19,10 +19,10 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto">
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'song_guess_game' %}">Play Game</a>
+                <a class="nav-link" href="{% url 'song_guess_game' %}">{% trans "Play Game" %}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'friends_page' %}">Friends</a>
+                <a class="nav-link" href="{% url 'friends_page' %}">{% trans "Friends" %}</a>
             </li>
         </ul>
         <ul class="navbar-nav ms-auto">
@@ -31,13 +31,13 @@
                     <i class="bi bi-person"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-                    <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+                    <li><a class="dropdown-item" href="{% url 'profile' %}">{% trans "Profile" %}</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="{% url 'account_settings' %}">Settings</a></li>
+                    <li><a class="dropdown-item" href="{% url 'account_settings' %}">{% trans "Settings" %}</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="{% url 'contact' %}">Contact Developers</a></li>
+                    <li><a class="dropdown-item" href="{% url 'contact' %}">{% trans "Contact Developers" %}</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">{% trans "Logout" %}</a></li>
                 </ul>
             </li>
         </ul>
@@ -252,10 +252,10 @@
                             <h4 class="card-title" style="font-weight: bold;">{{ group.grouper }}</h4>
                             <img src="{% static 'images/spotify_logo.png' %}" class="card-img-top w-50 mx-auto d-block" alt="Spotify Logo">
                             <p class="card-text">Spotify Wrapped - 4 Weeks <br> Created on {{ group.grouper }}</p>
-                            <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}">
+                            <a href="{% url 'view_old_wrap' wrap_id=group.list.0.id %}?time_range={{ group.list.0.time_range }}">
                                 <button class="button" type="submit">View Wrap Details</button>
                             </a>
-                            <form action="{% url 'delete_wrap' wrap_id=group.list.0.id %}" method="POST" style="display: inline;">
+                            <form action="{% url 'delete_wrap' wrap_id=group.list.0.id %}?time_range={{ group.list.0.time_range }}" method="POST" style="display: inline;">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this wrap?');">
                                     Delete
@@ -284,10 +284,10 @@
                             <h4 class="card-title" style="font-weight: bold;">{{ group.grouper }}</h4>
                             <img src="{% static 'images/spotify_logo.png' %}" class="card-img-top w-50 mx-auto d-block" alt="Spotify Logo">
                             <p class="card-text">Spotify Wrapped - 6 Months <br> Created on {{ group.grouper }}</p>
-                            <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}">
+                            <a href="{% url 'view_old_wrap' wrap_id=group.list.0.id %}?time_range={{ group.list.0.time_range }}">
                                 <button class="button" type="submit">View Wrap Details</button>
                             </a>
-                            <form action="{% url 'delete_wrap' wrap_id=group.list.0.id %}" method="POST" style="display: inline;">
+                            <form action="{% url 'delete_wrap' wrap_id=group.list.0.id %}?time_range={{ group.list.0.time_range }}" method="POST" style="display: inline;">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this wrap?');">
                                     Delete
@@ -316,10 +316,10 @@
                             <h4 class="card-title" style="font-weight: bold;">{{ group.grouper }}</h4>
                             <img src="{% static 'images/spotify_logo.png' %}" class="card-img-top w-50 mx-auto d-block" alt="Spotify Logo">
                             <p class="card-text">Spotify Wrapped - All Time <br> Created on {{ group.grouper }}</p>
-                            <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}">
+                            <a href="{% url 'view_old_wrap' wrap_id=group.list.0.id %}?time_range={{ group.list.0.time_range }}">
                                 <button class="button" type="submit">View Wrap Details</button>
                             </a>
-                            <form action="{% url 'delete_wrap' wrap_id=group.list.0.id %}" method="POST" style="display: inline;">
+                            <form action="{% url 'delete_wrap' wrap_id=group.list.0.id %}?time_range={{ group.list.0.time_range }}" method="POST" style="display: inline;">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this wrap?');">
                                     Delete

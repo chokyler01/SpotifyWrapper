@@ -390,7 +390,7 @@ def view_wraps(request):
             print("Time Range after fallback from wrap:", time_range)
         else:
             # If no wrap found, fallback to session or a default time_range
-            time_range = request.session.get('time_range', 'short_term')
+            time_range = request.session.get('time_range')
             print("No wrap found. Using session or default:", time_range)
 
 
