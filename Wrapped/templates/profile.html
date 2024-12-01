@@ -5,9 +5,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% trans "Profile" %}</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'css/nav_styles.css' %}"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+   {% block extra_head %}{% endblock %}
 </head>
+   {% block content %}
+   <nav class="navbar navbar-expand-lg navbar-custom">
+    <a class="navbar-brand" href="{%url 'choose_wrap_time' %}"><img src="{% static 'images/spotify_logo.png' %}" alt="{% trans 'Spotify Logo' %}" class="spotify-logo-small"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'song_guess_game' %}">Play Game</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'friends_page' %}">Friends</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+             <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle profile" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                    <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url 'account_settings' %}">Settings</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
 <body class="profile">
     <div class="container_profile">
         <h1 class="profile_header">{{ user.username }}'s {% trans "Spotify Wraps" %}</h1>
@@ -15,29 +48,6 @@
             <i class="bi bi-person"></i>
 
         </a>
-        <form method="post" action="{% url 'logout' %}" class="logout-form">
-            {% csrf_token %}
-            <button type="submit" class="logout-button">
-                {% trans "Logout" %}
-            </button>
-        </form>
-        <div class="button-container_profile">
-
-            <a href="{% url 'friends_page' %}">
-                <button class="wrapped-button"> {% trans "Manage Friends"%}</button>
-            </a>
-            <a href="{% url 'song_guess_game' %}">
-            <button class="wrapped-button"> {% trans "Play Song Guess Game"%}</button>
-            </a>
-
-            <a href="{% url 'choose_wrap_time' %}" >
-                <button class="wrapped-button">
-                    {% trans "Go Back to Wrapped Page" %}
-                </button>
-            </a>
-
-        </div>
-        <!-- Display Saved Wraps -->
         <div class="saved-wraps-section">
             <h2 class="section-title">{% trans "Your Saved Wraps" %}</h2>
             {% if user.profile.spotify_wraps.exists %}
@@ -99,6 +109,9 @@
                 }
             });
         });
-    </script>
+</script>
 
-</html>
+{% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
