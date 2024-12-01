@@ -1,72 +1,319 @@
 {% load i18n static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{% get_current_language as LANGUAGE_CODE %}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% trans "Profile" %}</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'css/nav_styles.css' %}"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+   {% block extra_head %}{% endblock %}
 </head>
-<body class="profile">
-    <div class="container_profile">
-        <h1 class="profile_header">{{ user.username }}'s {% trans "Spotify Wraps" %}</h1>
-           <a href="{% url 'profile' %}" class="profile-icon" aria-label="{% trans 'View Profile' %}">
-            <i class="bi bi-person"></i>
-
-        </a>
-        <form method="post" action="{% url 'logout' %}" class="logout-form">
-            {% csrf_token %}
-            <button type="submit" class="logout-button">
-                {% trans "Logout" %}
-            </button>
-        </form>
-        <div class="button-container_profile">
-
-            <a href="{% url 'friends_page' %}">
-                <button class="wrapped-button"> {% trans "Manage Friends"%}</button>
-            </a>
-            <a href="{% url 'song_guess_game' %}">
-            <button class="wrapped-button"> {% trans "Play Song Guess Game"%}</button>
-            </a>
-
-            <a href="{% url 'choose_wrap_time' %}" >
-                <button class="wrapped-button">
-                    {% trans "Go Back to Wrapped Page" %}
-                </button>
-            </a>
-
-        </div>
-        <!-- Display Saved Wraps -->
-        <div class="saved-wraps-section">
-            <h2 class="section-title">{% trans "Your Saved Wraps" %}</h2>
-            {% if user.profile.spotify_wraps.exists %}
-                <ul class="wrap-list">
-                    {% regroup user.profile.spotify_wraps.all|dictsort:"created_at" by created_at.date as grouped_wraps %}
-
-                    {% for group in grouped_wraps %}
-                        <li class="wrap-date">
-                            <strong>{% trans "Wrap Date" %}: {{ group.grouper|date:"b d, Y" }}</strong>
-                            <ul class="wrap-items">
-                                {% for wrap in group.list %}
-                                    <li class="wrap-item">
-                                        <p>{% trans "Time Range" %}: {{ wrap.time_range|title }}</p>
-                                        <a href="{% url 'view_old_wrap' wrap.id %}?time_range={{ wrap.time_range}}">
-                                            <button class="view-details-button">
-                                                {% trans "View Wrap Details" %}
-                                            </button>
-                                        </a>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                    {% endfor %}
+   {% block content %}
+   <nav class="navbar navbar-expand-lg navbar-custom">
+    <a class="navbar-brand" href="{%url 'choose_wrap_time' %}"><img src="{% static 'images/spotify_logo.png' %}" alt="{% trans 'Spotify Logo' %}" class="spotify-logo-small"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'song_guess_game' %}">Play Game</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'friends_page' %}">Friends</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+             <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle profile" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                    <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url 'account_settings' %}">Settings</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url 'contact' %}">Contact Developers</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                 </ul>
-            {% else %}
-                <p class="no-wraps-message">{% trans "No wraps have been saved to your profile yet." %}</p>
-            {% endif %}
-        </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+{#<body class="profile">#}
+{#    <div class="container_profile">#}
+{#        <h1 class="profile_header">{{ user.username }}'s {% trans "Spotify Wraps" %}</h1>#}
+{#           <a href="{% url 'profile' %}" class="profile-icon" aria-label="{% trans 'View Profile' %}">#}
+{#            <i class="bi bi-person"></i>#}
+{##}
+{#        </a>#}
+{#        <div class="saved-wraps-section">#}
+{#            <h2 class="section-title">{% trans "Your Saved Wraps" %}</h2>#}
+{#            {% if user.profile.spotify_wraps.exists %}#}
+{#                <ul class="wrap-list">#}
+{#                    {% regroup user.profile.spotify_wraps.all|dictsort:"created_at" by created_at.date as grouped_wraps %}#}
+{##}
+{#                    {% for group in grouped_wraps %}#}
+{#                        <li class="wrap-date">#}
+{#                            <strong>{% trans "Wrap Date" %}: {{ group.grouper|date:"b d, Y" }}</strong>#}
+{#                            <ul class="wrap-items">#}
+{#                                {% for wrap in group.list %}#}
+{#                                    <li class="wrap-item">#}
+{#                                        <p>{% trans "Time Range" %}: {{ wrap.time_range|title }}</p>#}
+{#                                        <a href="{% url 'view_old_wrap' wrap.id %}?time_range={{ wrap.time_range}}">#}
+{#                                            <button class="view-details-button">#}
+{#                                                {% trans "View Wrap Details" %}#}
+{#                                            </button>#}
+{#                                        </a>#}
+{#                                    </li>#}
+{#                                {% endfor %}#}
+{#                            </ul>#}
+{#                        </li>#}
+{#                    {% endfor %}#}
+{#                </ul>#}
+{#            {% else %}#}
+{#                <p class="no-wraps-message">{% trans "No wraps have been saved to your profile yet." %}</p>#}
+{#            {% endif %}#}
+{#        </div>#}
+ <link href =" https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-..." crossorigin="anonymous">
 
+{#<div class = "container">#}
+{#<h1 style="color: #1DB954">{{ user.username }}'s Spotify Wraps</h1>#}
+{#    <div class= "row">#}
+{#        <h3 style = "font-weight: bold; text-align: center;">Short Term Wraps</h3>#}
+{#    </div>#}
+{#    <div class = "row" id = "length_title">#}
+{#        {% if short_term_wraps %}#}
+{#            <ul>#}
+{#                {% regroup short_term_wraps by created_at.date as grouped_short_term_wraps %}#}
+{#                {% for group in grouped_short_term_wraps %}#}
+{#                    <div class="card">#}
+{#                        <div class="card-body">#}
+{#                        <h4 class="card-title" style = "font-weight: bold">{{ group.grouper }}</h4>#}
+{#                            <br>#}
+{#                        <img src="{% static 'images/spotify_logo.png' %}" class="card-img-top w-50" alt="...">#}
+{#                          <br> <br>#}
+{#                        <p class="card-text">Spotify Wrapped - 4 Weeks <br> Created on {{ group.grouper }}</p>#}
+{#                          <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}"> <button class="button" type = "submit">View Wrap Details</button></a>#}
+{#                      </div>#}
+{#                    </div>#}
+{#                {% endfor %}#}
+{#            </ul>#}
+{#        {% else %}#}
+{#            <p>No short-term wraps available.</p>#}
+{#        {% endif %}#}
+{#    </div>#}
+{#    <div class = "row">#}
+{#        <h3 style = "font-weight: bold;">Medium Term Wraps</h3>#}
+{#    </div>#}
+{#    <div class = "row" >#}
+{#        {% if medium_term_wraps %}#}
+{#            <ul>#}
+{#                {% regroup medium_term_wraps by created_at.date as grouped_medium_term_wraps %}#}
+{#                {% for group in grouped_medium_term_wraps %}#}
+{#                    <div class="card">#}
+{#                        <div class="card-body">#}
+{#                        <h4 class="card-title" style = "font-weight: bold">{{ group.grouper }}</h4>#}
+{#                            <br>#}
+{#                        <img src="{% static 'images/spotify_logo.png' %}" class="card-img-top w-50" alt="...">#}
+{#                          <br> <br>#}
+{#                        <p class="card-text">Spotify Wrapped - 6 Months  <br> Created on {{ group.grouper }}</p>#}
+{#                          <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}"> <button class="button" type = "submit">View Wrap Details</button></a>#}
+{#                      </div>#}
+{#                    </div>#}
+{#                {% endfor %}#}
+{#            </ul>#}
+{#        {% else %}#}
+{#            <p>No medium-term wraps available.</p>#}
+{#        {% endif %}#}
+{#    </div>#}
+{#    <div class = "row" id = "length_title">#}
+{#        <h3 style = "font-weight: bold;">Long Term Wraps</h3>#}
+{#    </div>#}
+{#    <div class = "row">#}
+{#        {% if long_term_wraps %}#}
+{#            <ul>#}
+{#                {% regroup long_term_wraps by created_at.date as grouped_long_term_wraps %}#}
+{#                {% for group in grouped_long_term_wraps %}#}
+{#                    <div class="card">#}
+{#                        <div class="card-body">#}
+{#                        <h4 class="card-title" style = "font-weight: bold">{{ group.grouper }}</h4>#}
+{#                            <br>#}
+{#                        <img src="{% static 'images/spotify_logo.png' %}" class="card-img-top w-50" alt="...">#}
+{#                          <br> <br>#}
+{#                        <p class="card-text">Spotify Wrapped - All Time <br> Created on {{ group.grouper }}</p>#}
+{#                          <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}"> <button class="button" type = "submit">View Wrap Details</button></a>#}
+{#                      </div>#}
+{#                    </div>#}
+{#                {% endfor %}#}
+{#            </ul>#}
+{#        {% else %}#}
+{#            <p>No long-term wraps available.</p>#}
+{#        {% endif %}#}
+{#    </div>#}
+{#</div>#}
+{#<div class="container">#}
+{#    <h1 style="color: #1DB954">{{ user.username }}'s Spotify Wraps</h1>#}
+{##}
+{#    <!-- Short Term Wraps -->#}
+{#    <div class="row mb-4">#}
+{#        <h3 style="font-weight: bold; text-align: center;">Short Term Wraps</h3>#}
+{#    </div>#}
+{#    <div class="row">#}
+{#        {% if short_term_wraps %}#}
+{#            {% regroup short_term_wraps by created_at.date as grouped_short_term_wraps %}#}
+{#            {% for group in grouped_short_term_wraps %}#}
+{#                <div class="col-md-4 mb-4">#}
+{#                    <div class="card">#}
+{#                        <div class="card-body text-center">#}
+{#                            <h4 class="card-title" style="font-weight: bold">{{ group.grouper }}</h4>#}
+{#                            <img src="{% static 'images/spotify_logo.png' %}" class="card-img-top w-50 mx-auto d-block" alt="Spotify Logo">#}
+{#                            <p class="card-text">Spotify Wrapped - 4 Weeks <br> Created on {{ group.grouper }}</p>#}
+{#                            <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}">#}
+{#                                <button class="button" type="submit">View Wrap Details</button>#}
+{#                            </a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            {% endfor %}#}
+{#        {% else %}#}
+{#            <p>No short-term wraps available.</p>#}
+{#        {% endif %}#}
+{#    </div>#}
+{##}
+{#    <!-- Medium Term Wraps -->#}
+{#    <div class="row mb-4">#}
+{#        <h3 style="font-weight: bold; text-align: center;">Medium Term Wraps</h3>#}
+{#    </div>#}
+{#    <div class="row">#}
+{#        {% if medium_term_wraps %}#}
+{#            {% regroup medium_term_wraps by created_at.date as grouped_medium_term_wraps %}#}
+{#            {% for group in grouped_medium_term_wraps %}#}
+{#                <div class="col-md-4 mb-4">#}
+{#                    <div class="card">#}
+{#                        <div class="card-body text-center">#}
+{#                            <h4 class="card-title" style="font-weight: bold">{{ group.grouper }}</h4>#}
+{#                            <img src="{% static 'images/spotify_logo.png' %}" class="card-img-top w-50 mx-auto d-block" alt="Spotify Logo">#}
+{#                            <p class="card-text">Spotify Wrapped - 6 Months <br> Created on {{ group.grouper }}</p>#}
+{#                            <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}">#}
+{#                                <button class="button" type="submit">View Wrap Details</button>#}
+{#                            </a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            {% endfor %}#}
+{#        {% else %}#}
+{#            <p>No medium-term wraps available.</p>#}
+{#        {% endif %}#}
+{#    </div>#}
+{##}
+{#    <!-- Long Term Wraps -->#}
+{#    <div class="row mb-4">#}
+{#        <h3 style="font-weight: bold; text-align: center;">Long Term Wraps</h3>#}
+{#    </div>#}
+{#    <div class="row">#}
+{#        {% if long_term_wraps %}#}
+{#            {% regroup long_term_wraps by created_at.date as grouped_long_term_wraps %}#}
+{#            {% for group in grouped_long_term_wraps %}#}
+{#                <div class="col-md-4 mb-4">#}
+{#                    <div class="card">#}
+{#                        <div class="card-body text-center">#}
+{#                            <h4 class="card-title" style="font-weight: bold">{{ group.grouper }}</h4>#}
+{#                            <img src="{% static 'images/spotify_logo.png' %}" class="card-img-top w-50 mx-auto d-block" alt="Spotify Logo">#}
+{#                            <p class="card-text">Spotify Wrapped - All Time <br> Created on {{ group.grouper }}</p>#}
+{#                            <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}">#}
+{#                                <button class="button" type="submit">View Wrap Details</button>#}
+{#                            </a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            {% endfor %}#}
+{#        {% else %}#}
+{#            <p>No long-term wraps available.</p>#}
+{#        {% endif %}#}
+{#    </div>#}
+{#</div>#}
+<div class="container">
+    <h1 style="color: #1DB954; text-align: center;">{{ user.username }}'s Spotify Wraps</h1>
+<br>
+    <div class="section-header">
+        <h3>Short Term Wraps</h3>
+    </div>
+    <div class="row justify-content-center">
+        {% if short_term_wraps %}
+            {% regroup short_term_wraps by created_at.date as grouped_short_term_wraps %}
+            {% for group in grouped_short_term_wraps %}
+                <div class="col-md-4 d-flex justify-content-center mb-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h4 class="card-title" style="font-weight: bold;">{{ group.grouper }}</h4>
+                            <img src="{% static 'images/spotify_logo.png' %}" class="card-img-top w-50 mx-auto d-block" alt="Spotify Logo">
+                            <p class="card-text">Spotify Wrapped - 4 Weeks <br> Created on {{ group.grouper }}</p>
+                            <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}">
+                                <button class="button" type="submit">View Wrap Details</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No short-term wraps available.</p>
+        {% endif %}
+    </div>
+
+    <div class="section-header">
+        <h3>Medium Term Wraps</h3>
+    </div>
+    <div class="row justify-content-center">
+        {% if medium_term_wraps %}
+            {% regroup medium_term_wraps by created_at.date as grouped_medium_term_wraps %}
+            {% for group in grouped_medium_term_wraps %}
+                <div class="col-md-4 d-flex justify-content-center mb-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h4 class="card-title" style="font-weight: bold;">{{ group.grouper }}</h4>
+                            <img src="{% static 'images/spotify_logo.png' %}" class="card-img-top w-50 mx-auto d-block" alt="Spotify Logo">
+                            <p class="card-text">Spotify Wrapped - 6 Months <br> Created on {{ group.grouper }}</p>
+                            <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}">
+                                <button class="button" type="submit">View Wrap Details</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No medium-term wraps available.</p>
+        {% endif %}
+    </div>
+
+    <div class="section-header">
+        <h3>Long Term Wraps</h3>
+    </div>
+    <div class="row justify-content-center">
+        {% if long_term_wraps %}
+            {% regroup long_term_wraps by created_at.date as grouped_long_term_wraps %}
+            {% for group in grouped_long_term_wraps %}
+                <div class="col-md-4 d-flex justify-content-center mb-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h4 class="card-title" style="font-weight: bold;">{{ group.grouper }}</h4>
+                            <img src="{% static 'images/spotify_logo.png' %}" class="card-img-top w-50 mx-auto d-block" alt="Spotify Logo">
+                            <p class="card-text">Spotify Wrapped - All Time <br> Created on {{ group.grouper }}</p>
+                            <a href="{% url 'view_wraps' %}?wrap_id={{ group.list.0.id }}">
+                                <button class="button" type="submit">View Wrap Details</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No long-term wraps available.</p>
+        {% endif %}
+    </div>
+</div>
 
 </body>
      <script>
@@ -99,6 +346,9 @@
                 }
             });
         });
-    </script>
+</script>
 
-</html>
+{% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
