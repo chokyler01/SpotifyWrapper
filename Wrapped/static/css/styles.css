@@ -466,7 +466,13 @@ body.topSongs {
     background-color: rgba(211, 96, 96, 0.8);
     color: #ffffff;
 }
-
+.song-name{
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap; /* Prevents text from wrapping to the next line */
+    overflow: hidden; /* Hides overflow content */
+    text-overflow: ellipsis; /* Adds '...' to indicate overflow */
+}
 /* Title Styling */
 h2.topSongs {
     color: #ffffff;
