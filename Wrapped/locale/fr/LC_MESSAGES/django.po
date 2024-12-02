@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-02 09:19-0500\n"
+"POT-Creation-Date: 2024-12-02 09:34-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,8 +31,21 @@ msgstr "Sélectionnez la plage horaire"
 msgid "Spotify Logo"
 msgstr "Logo Spotify"
 
+#: Wrapped/templates/account_settings.html:22
+#: Wrapped/templates/choose_time.html:22 Wrapped/templates/friends_page.html:22
+#: Wrapped/templates/profile.html:22 Wrapped/templates/song_guess_game.html:22
+#: Wrapped/templates/view_friends_old_wrap.html:21
+msgid "Play Game"
+msgstr "Jouer à nouveau"
+
+#: Wrapped/templates/account_settings.html:25
+#: Wrapped/templates/choose_time.html:25 Wrapped/templates/friends_page.html:25
+#: Wrapped/templates/profile.html:25 Wrapped/templates/song_guess_game.html:25
+#: Wrapped/templates/view_friends_old_wrap.html:24
+msgid "Friends"
+msgstr "Amis"
+
 #: Wrapped/templates/account_settings.html:47
-#| msgid "Account Actions"
 msgid "Account Settings"
 msgstr "Actions du compte"
 
@@ -57,7 +70,6 @@ msgid "Are you sure you want to delete your account?"
 msgstr "Êtes-vous sûr de vouloir supprimer votre compte ?"
 
 #: Wrapped/templates/account_settings.html:61
-#| msgid "Delete Account"
 msgid "Yes, Delete My Account"
 msgstr "Supprimer le compte"
 
@@ -72,18 +84,6 @@ msgstr "Annuler"
 #: Wrapped/templates/view_friends_old_wrap.html:109
 msgid "Light Mode"
 msgstr "Mode clair"
-
-#: Wrapped/templates/choose_time.html:22 Wrapped/templates/friends_page.html:22
-#: Wrapped/templates/profile.html:22 Wrapped/templates/song_guess_game.html:22
-#: Wrapped/templates/view_friends_old_wrap.html:21
-msgid "Play Game"
-msgstr "Jouer à nouveau"
-
-#: Wrapped/templates/choose_time.html:25 Wrapped/templates/friends_page.html:25
-#: Wrapped/templates/profile.html:25 Wrapped/templates/song_guess_game.html:25
-#: Wrapped/templates/view_friends_old_wrap.html:24
-msgid "Friends"
-msgstr "Amis"
 
 #: Wrapped/templates/choose_time.html:34 Wrapped/templates/friends_page.html:7
 #: Wrapped/templates/friends_page.html:34 Wrapped/templates/profile.html:7
@@ -344,7 +344,6 @@ msgid "Long Term Wraps"
 msgstr "Récapitulatifs à long terme"
 
 #: Wrapped/templates/profile.html:132
-#| msgid "Delete Account"
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -552,9 +551,13 @@ msgid "Play a Game!"
 msgstr "Jouer à nouveau"
 
 #: Wrapped/templates/wraps.html:266
-#, fuzzy
 #| msgid "Save to Profile"
 msgid "Save or Share"
+msgstr "Enregistrer dans le profil"
+
+#: Wrapped/templates/wraps.html:274
+#| msgid "Save to Profile"
+msgid "Save or Share Your Wrapped!"
 msgstr "Enregistrer dans le profil"
 
 #: Wrapped/templates/wraps.html:281
@@ -562,7 +565,6 @@ msgid "Save to Profile"
 msgstr "Enregistrer dans le profil"
 
 #: Wrapped/templates/wraps.html:284
-#, fuzzy
 #| msgid "Go Back to Wrapped Page"
 msgid "Download Wrapped Image"
 msgstr "Retour à la page Wrapped"
